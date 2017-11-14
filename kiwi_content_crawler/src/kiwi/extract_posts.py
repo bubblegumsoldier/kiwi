@@ -1,4 +1,4 @@
-from kiwi.insert_functions import insert_posts_manually, get_many
+from insert_functions import insert_posts_manually, get_many
 
 
 def extract_posts_from_gallery(gallery_response):
@@ -24,7 +24,6 @@ def store_and_return_new_posts(gallery_response):
     new_ids = store_posts_and_return_new_ids(gallery_response)
     return get_new_posts(new_ids)
 
+
 def get_new_posts(post_ids):
     return get_many(post_ids)
-
-

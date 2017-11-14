@@ -13,12 +13,12 @@ def insert_post(post):
     try:
         response = COLLECTION.insert_one(update_post_with_id(post))
         return response.inserted_id, response.acknowledged
-    except DuplicateKeyError as e:
-        logging.warn("Duplicate key.")
+    except DuplicateKeyError:
+        logging.warning("Duplicate key.")
         return None, False
 
 
-def insert_posts_manually(posts):
+def insert_posts_filter_duplicates(posts):
     results = [insert_post(post)[0] for post in posts]
     return filter(lambda x: x is not None, results)
 

@@ -1,4 +1,4 @@
-from insert_functions import insert_posts_manually, get_many
+from kiwi.mongo_functions import insert_posts_filter_duplicates, get_many
 
 
 def extract_posts_from_gallery(gallery_response):
@@ -16,7 +16,7 @@ def store_posts_and_return_new_ids(gallery_response):
     """
 
     extracted_posts = extract_posts_from_gallery(gallery_response)
-    results = insert_posts_manually(extracted_posts)
+    results = insert_posts_filter_duplicates(extracted_posts)
     return list(results)
 
 

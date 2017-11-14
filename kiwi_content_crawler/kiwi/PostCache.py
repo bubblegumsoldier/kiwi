@@ -24,3 +24,6 @@ class PostCache(object):
             self._post_ids = []
             self._counter.decrement(len(content))
             return content
+    
+    def is_empty(self):
+        return not self._post_ids

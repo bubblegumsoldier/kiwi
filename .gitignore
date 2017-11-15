@@ -15,8 +15,10 @@ _mailinglist
 .idea/
 .vscode/
 */venv/
+/**/*.pyc
 # Coverage reports
 htmlcov
 .coverage
 .coverage.*
 *,cover
+

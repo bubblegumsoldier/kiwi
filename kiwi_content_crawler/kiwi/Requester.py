@@ -16,16 +16,16 @@ class Requester(object):
         self._base_params = base_params
         self._page = 1
 
-    def request(self):
+    def request(self, continuation):
         tag, sort, window, *_ = self._base_params
 
         url = BASE_URL.format(tag=tag,
                               sort=sort,
                               window=window,
                               page=self._page)
-                              
+
         response = requests.get(url, headers=AUTH_HEADER)
         posts = extract_posts_from_gallery(
             response.json()["data"])
         self._page += 1
-        return posts
+        return continuation(posts)

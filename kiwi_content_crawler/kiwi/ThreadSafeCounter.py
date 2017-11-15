@@ -12,10 +12,8 @@ class ThreadSafeCounter(object):
         with self._lock:
             self._count += value
             if(self._count >= self._required_count):
-                self._callback(self._count)
-
+                self._callback()
 
     def decrement(self, value):
         with self._lock:
             self._count -= value
-        

@@ -1,6 +1,6 @@
 import unittest
 
-from kiwi.extract_posts import extract_posts_from_gallery
+from kiwi.extract_posts import (extract_posts_from_gallery, filter_duplicates)
 
 
 class DataStoreTest(unittest.TestCase):
@@ -14,3 +14,12 @@ class DataStoreTest(unittest.TestCase):
 
         self.assertEqual([{"id": 2, "data": "test2", "is_album": False}],
                          extracted_posts)
+
+    def test_filter_duplicates(self):
+        docs = [{"id": 1, "data": "test"}, {"id": 2, "data": "test"}]
+
+        def predicate(x):
+            return x is 1
+
+        self.assertEqual(list(filter_duplicates(docs, predicate=predicate)),
+                         [docs[1]])

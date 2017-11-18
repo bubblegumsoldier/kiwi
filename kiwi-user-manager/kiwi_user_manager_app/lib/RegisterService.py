@@ -1,3 +1,5 @@
+from lib.username_validator import validate
+
 class RegisterService(object):
     def __init__(self, user_database_connection):
         """
@@ -7,3 +9,9 @@ class RegisterService(object):
                                     wraps the database connection
         """
         self.user_database_connection = user_database_connection
+
+    def register(self, username):
+        if not validate(username):
+            return False
+            
+        return self.user_database_connection.insert(username)

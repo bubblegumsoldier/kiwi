@@ -1,24 +1,21 @@
 #python
-import os
 import json
+from http import HTTPStatus
 
 #flask
-from flask import request
-
-#kiwi
-import database_initializer
-import Authenticator
-
-#main
-if __name__ == "__main__":
-    main()
-
-user_database_connection = None
+from flask import (Flask, request)
 
 #initializing code
-def main():
-    user_database_connection = database_initializer.initialize_database()
-    app = Flask(__name__)
+app = Flask(__name__)
+
+
+#kiwi
+from lib.Authenticator import Authenticator
+from lib.RegisterService import RegisterService
+from lib.database_initializer import initialize_database
+
+
+user_database_connection = initialize_database()
 
 @app.route("/authenticate", methods=['GET', 'POST'])
 def authenticate():
@@ -33,14 +30,32 @@ def authenticate():
     if not username:
         return ('Post data invalid', HTTPStatus.BAD_REQUEST)
     
-    authenticator = Authenticator(username, user_database_connection)
-    result = authenticator.authenticate()
+    authenticator = Authenticator(user_database_connection)
+    result = authenticator.authenticate(username)
     response = {
         'valid': result
     }
-    return (json.encode(response), HTTPStatus.ACCEPTED)
+    return (json.dumps(response), HTTPStatus.ACCEPTED)
 
-@app.route("/register", methods=["POST"])
+@app.route("/register", methods=["POST", "GET"])
 def register():
-    #TODO
-    pass
+    """
+    Registration Endpoint (/register).
+
+    The request parameter "username" will be needed.
+
+    A JSON response will be returned containing a dict with the attribute "success" (true/false).
+    """
+    username = request.values.get("username")
+    if not username:
+        return ('Post data invalid', HTTPStatus.BAD_REQUEST)
+
+    register_service = RegisterService(user_database_connection)
+    result = register_service.register(username)
+    response = {
+        "success": result
+    }
+
+    return (json.dumps(response), HTTPStatus.ACCEPTED)
+
+app.run()

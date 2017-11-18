@@ -2,7 +2,7 @@
 import os
 
 #kiwi
-from UserDatabaseConnection import UserDatabaseConnection
+from lib.UserDatabaseConnection import UserDatabaseConnection
 
 def initialize_database(connection_details = None):
     if connection_details is None:
@@ -13,4 +13,5 @@ def initialize_database(connection_details = None):
             'database': os.environ.get("KIWI_USER_MANAGER_DB_DATABASE")
         }
     connection = UserDatabaseConnection(connection_details)
+    connection.establish()
     return connection

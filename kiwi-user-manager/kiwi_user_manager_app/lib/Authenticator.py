@@ -21,5 +21,5 @@ class Authenticator(object):
         if not self.user_database_connection or not self.user_database_connection.has_connection():
             #TODO: Add exception or something
             return False
-        search_result = self.user_database_connection.has_username(self.username)
+        search_result = self.user_database_connection.has_username(username)
         return False if not search_result else True

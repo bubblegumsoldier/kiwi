@@ -33,12 +33,14 @@ def wrap_into_connection(func):
 
 
 @wrap_into_connection
-async def get_random_unvoted(user, conn=None, cur=None):
+async def get_random_unvoted(username, count, conn=None, cur=None):
     if cur:
-        await cur.execute(RANDOM_SELECT, [user.name])
-        products = [row[0] for row in await cur.fetchmany(2)]
-        unseen = cur.rowcount - 2
-        return {"posts": products, "unseen":unseen}
+        await cur.execute(RANDOM_SELECT, username)
+        products = [row[0] for row in await cur.fetchmany(count)]
+
+        return {"posts": products,
+                "unvoted": cur.rowcount,
+                "user": username}
 
 
 @wrap_into_connection
@@ -49,9 +51,9 @@ async def insert_vote(vote, conn=None, cur=None):
 
 
 @wrap_into_connection
-async def insert_user(user, conn=None, cur=None):
+async def insert_user(username, conn=None, cur=None):
     if conn and cur:
-        await cur.execute("INSERT INTO users values(%s)", [*user])
+        await cur.execute("INSERT INTO users values(%s)", username)
         await conn.commit()
 
 
@@ -63,7 +65,15 @@ async def insert_posts(posts, conn=None, cur=None):
 
 
 @wrap_into_connection
-async def is_user_known(user, conn=None, cur=None):
+async def is_user_known(username, conn=None, cur=None):
     if cur:
-        await cur.execute("SELECT * FROM users WHERE users.uname = %s", [user.name])
+        await cur.execute("SELECT * FROM users WHERE users.uname = %s",
+                          username)
         return cur.rowcount > 0
+
+
+@wrap_into_connection
+async def vote_count(username, conn=None, cur=None):
+    if cur:
+        await cur.execute("SELECT * FROM votes v WHERE v.user = %s", username)
+        return cur.rowcount

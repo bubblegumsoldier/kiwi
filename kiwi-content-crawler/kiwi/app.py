@@ -6,7 +6,7 @@ from functools import partial
 from http import HTTPStatus
 from flask import (Flask, request)
 from kiwi.Collector import Collector
-from kiwi.Sender import print_response_json
+from kiwi.Sender import send_response_json
 from kiwi.store_posts import store_posts_continuation
 
 app = Flask(__name__)
@@ -23,7 +23,7 @@ def new_items():
     post_data = request.json
     # ToDo: More thorough validation
     if post_data:
-        send = partial(print_response_json,
+        send = partial(send_response_json,
                        post_data["return_url"])
         store = partial(store_posts_continuation, send)
         collector = Collector(post_data["count"], store)

@@ -1,4 +1,5 @@
 import logging
+from copy import deepcopy
 from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
 
@@ -9,7 +10,7 @@ COLLECTION = DB.get_collection("posts")
 
 
 def insert_posts(posts):
-    COLLECTION.insert_many(posts)
+    COLLECTION.insert_many(deepcopy(posts))
     return posts
 
 

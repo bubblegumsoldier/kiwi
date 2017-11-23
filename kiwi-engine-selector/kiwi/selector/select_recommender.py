@@ -2,21 +2,21 @@ from kiwi.selector.Recommender import Recommender, Voting, Endpoints
 
 # should be read from config
 REGISTERED_RECOMMENDERS = {
-    'random': Recommender(base_url='localhost:7000',
-                          endpoints=Endpoints(pics='/new/items', feedback='feedback'))
+    'random': Recommender(base_url='localhost:8901',
+                          endpoints=Endpoints(recommend='recommendation',
+                                              feedback='feedback',
+                                              content='content'))
 }
 
 
+# somewhere here we need to choose the recommender
 
-#somewhere here we need to choose the recommender
-
-#probably shouldnt be async, if we need heavy calculation.
-# Maybe run in executor
+# probably shouldnt be async, if we need heavy calculation.
+# Maybe run in process pool?
 async def choose_recommenders(user):
-    #todo
+    # todo
 
     return REGISTERED_RECOMMENDERS['random']
-
 
 
 async def get_pictures(session, user):
@@ -25,4 +25,7 @@ async def get_pictures(session, user):
     return pics
 
 
-
+async def distribute_content(session, posts):
+    async for recommender in REGISTERED_RECOMMENDERS.values():
+        result = await recommender.push_content(session, posts)
+        print(result)

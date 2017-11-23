@@ -2,7 +2,7 @@ from kiwi.selector.Recommender import Recommender, Voting, Endpoints
 
 # should be read from config
 REGISTERED_RECOMMENDERS = {
-    'random': Recommender(base_url='localhost:8901',
+    'random': Recommender(base_url='http://localhost:8901',
                           endpoints=Endpoints(recommend='recommendation',
                                               feedback='feedback',
                                               content='content'))
@@ -26,6 +26,6 @@ async def get_pictures(session, user):
 
 
 async def distribute_content(session, posts):
-    async for recommender in REGISTERED_RECOMMENDERS.values():
+    for recommender in REGISTERED_RECOMMENDERS.values():
         result = await recommender.push_content(session, posts)
         print(result)

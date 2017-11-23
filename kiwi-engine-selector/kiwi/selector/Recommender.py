@@ -1,4 +1,3 @@
-from json import dumps
 from collections import namedtuple
 from aiohttp.client import ClientSession
 
@@ -27,11 +26,11 @@ class Recommender:
 
     async def send_feedback(self, session: ClientSession, voting: Voting):
         url = self._format_template(self.endpoints.feedback)
-        async with session.post(url, json=dumps(voting)):
+        async with session.post(url, json={"vote": voting}):
             return
 
     async def push_content(self, session: ClientSession, posts):
         url = self._format_template(self.endpoints.content)
-        async with session.post(url, json=dumps(posts)) as response:
+        async with session.post(url, json={"posts": posts}) as response:
             res = await response.json()
             print(res)

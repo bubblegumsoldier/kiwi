@@ -28,18 +28,18 @@ async def images(request: Request):
 
 @app.post('/content')
 async def content(request: Request):
-    post_json = request.json["posts"]
+    post_json = request.json
     async with ClientSession() as session:
-        await distribute_content(session, post_json)
+        await distribute_content(session, post_json["posts"])
         return json("OK")
 
 
 async def request_content():
-    data = {"count": 50, "return_url": "http://localhost/8000/content"}
+    data = {"count": 50, "return_url": "http://localhost:8000/content"}
     async with ClientSession() as session:
-        post = session.post('http://localhost/7000/items', json=dumps(data))
+        post = session.post('http://localhost:7000/items', json=data)
         async with post as response:
-            res = await response.json()
+            res = await response
             print(res)
 
 

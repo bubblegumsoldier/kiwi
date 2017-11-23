@@ -13,7 +13,7 @@ app = Flask(__name__)
 # ToDo: Configure logging
 
 
-@app.route("/new/items", methods=["POST"])
+@app.route("/items", methods=["POST"])
 def new_items():
     """
     Parses the request, expexts a json object of form {count, return_url}.

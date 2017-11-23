@@ -22,13 +22,11 @@ def return_exception_as_json(exceptions=(Exception)):
     return decorator
 
 
-@app.get('/recommendation/<user>')
-@app.get('/recommendation/<user>/<count>')
+@app.get('/recommendation')
 @return_exception_as_json()
-async def recommend(request: Request, user, count=None):
-    pictures = await (recommend_for(user, int(count))
-                      if count
-                      else recommend_for(user))
+async def recommend(request: Request):
+    args = request.raw_args
+    pictures = await recommend_for(args["user"], int(args.get("count", 10))) 
     return json(pictures)
 
 

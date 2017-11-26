@@ -5,6 +5,7 @@ import logging
 HANDLER = 'logging.FileHandler'
 FORMATTER = '%(asctime)s - %(levelname)s: %(message)s'
 LOGGER = logging.getLogger('kiwi_logger')
+SANIC_LOGGER = logging.getLogger("sanic.error")
 
 
 def setup_logging():
@@ -32,6 +33,7 @@ def log_exception(exceptions=(Exception), reraise=True):
                 return await func(*args, **kwargs)
             except exceptions as e:
                 LOGGER.exception('{0!r}'.format(e))
+                SANIC_LOGGER.exception('{0!r}'.format(e))
                 if reraise:
                     raise e
         return helper

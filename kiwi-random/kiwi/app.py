@@ -5,7 +5,7 @@ from sanic.response import json
 from sanic.config import LOGGING
 from kiwi.recommender.recommend import (recommend_for, store_feedback,
                                         add_content)
-from kiwi.Logging import setup_logging
+from kiwi.Logging import setup_logging, log_exception
 
 app = Sanic(__name__)
 
@@ -24,6 +24,7 @@ def return_exception_as_json(exceptions=(Exception)):
 
 @app.get('/recommendation')
 @return_exception_as_json()
+@log_exception()
 async def recommend(request: Request):
     args = request.raw_args
     pictures = await recommend_for(args["user"], int(args.get("count", 10))) 
@@ -32,16 +33,18 @@ async def recommend(request: Request):
 
 @app.post('/feedback')
 @return_exception_as_json()
+@log_exception()
 async def feedback(request: Request):
-    vote = await store_feedback(request.json['vote'])
-    return json(vote)
+    vote_info = await store_feedback(request.json['vote'])
+    return json(vote_info)
 
 
 @app.post('/content')
 @return_exception_as_json()
+@log_exception()
 async def add_posts(request: Request):
-    inserted = await add_content(request.json['posts'])
-    return json({"inserted": inserted})
+    inserted_info = await add_content(request.json['posts'])
+    return json(inserted_info)
 
 
 setup_logging()

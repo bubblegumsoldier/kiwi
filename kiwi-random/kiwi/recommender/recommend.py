@@ -1,20 +1,30 @@
-from kiwi.database.data_access import (get_random_unvoted, insert_vote,
-                                       is_user_known, insert_user,
-                                       insert_posts)
+from kiwi.database.DataAccessor import DataAccessor
 from kiwi.Types import Vote
 
+
 async def recommend_for(user, with_count=10):
-    if not await is_user_known(user):
-        await insert_user(user)
-    return await get_random_unvoted(user, with_count)
+    accessor = await DataAccessor.create(pool_count=3)
+    if not await accessor.is_user_known(user):
+        await accessor.insert_user(user)
+    return await accessor.get_random_unvoted(user, with_count)
 
 
 async def store_feedback(vote):
+    accessor = await DataAccessor.create(pool_count=3)
     vote = Vote(**vote)
-    await insert_vote(vote)
+    await accessor.insert_vote(vote)
+    unvoted = await get_unvoted_count(accessor, vote.user)
+    return {'user': vote.user, 'unvoted': unvoted}
 
 
 async def add_content(posts):
+    accessor = await DataAccessor.create()
     filtered_posts = [post['id'] for post in posts]
-    await insert_posts(filtered_posts)
-    return filtered_posts
+    await accessor.insert_posts(filtered_posts)
+    return {'inserted_count': len(posts)}
+
+
+async def get_unvoted_count(accessor, user):
+    post_count = await accessor.count_posts()
+    voted = await accessor.vote_count(user)
+    return post_count - voted

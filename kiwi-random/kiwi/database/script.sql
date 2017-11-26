@@ -11,7 +11,7 @@ Create Table products(
 Create Table votes(
     user VARCHAR(100) NOT NULL, 
     product VARCHAR(50) NOT NULL,
-    vote BOOLEAN,
+    vote BIT,
     vote_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user, product),
     FOREIGN KEY (user) REFERENCES users(uname),

@@ -5,6 +5,6 @@ with open(path.join(path.dirname(__file__), 'config.json')) as file:
     CONFIG = load(file)
 
 
-CONTENT_CONFIG = CONFIG["content"]
-RECOMMENDERS = CONFIG["recommenders"]
-APP_CONFIG = CONFIG["app"]
+CONTENT_CONFIG = CONFIG['content']
+RECOMMENDERS = CONFIG['recommenders']
+APP_CONFIG = CONFIG['app']

@@ -14,9 +14,6 @@ from lib.Authenticator import Authenticator
 from lib.RegisterService import RegisterService
 from lib.database_initializer import initialize_database
 
-
-user_database_connection = initialize_database()
-
 @app.route("/authenticate", methods=['GET', 'POST'])
 def authenticate():
     """
@@ -30,7 +27,7 @@ def authenticate():
     if not username:
         return ('Post data invalid', HTTPStatus.BAD_REQUEST)
     
-    authenticator = Authenticator(user_database_connection)
+    authenticator = Authenticator(initialize_database())
     result = authenticator.authenticate(username)
     response = {
         'valid': result
@@ -50,7 +47,7 @@ def register():
     if not username:
         return ('Post data invalid', HTTPStatus.BAD_REQUEST)
 
-    register_service = RegisterService(user_database_connection)
+    register_service = RegisterService(initialize_database())
     result = register_service.register(username)
     response = {
         "success": result

@@ -1,6 +1,4 @@
-from sanic.exceptions import ServerError
 from kiwi.selector.Recommender import Recommender
-from kiwi.selector.Types import Voting, Endpoints
 import kiwi.selector.recommender_distribution as distribution
 
 
@@ -15,14 +13,14 @@ class RecommenderSelector:
             recommenders[label] = Recommender.from_config(config)
         return cls(recommenders)
 
-    async def choose_recommenders(self, user):
-        # todo
-        return self.recommenders['random']
-
     async def get_pictures(self, session, user):
         recommender = await self.choose_recommenders(user)
         pics = await recommender.get_pics_for_user(session, user)
         return pics
+
+    async def choose_recommenders(self, user):
+        # todo
+        return self.recommenders['random']
 
     async def distribute_posts(self, session, posts):
         return await distribution.content(session, self.recommenders, posts)

@@ -7,6 +7,8 @@ import { ImagebrowserComponent } from './imagebrowser/imagebrowser.component';
 import { UsermanagerService } from './shared/usermanager/usermanager.service';
 import { ImageloaderService } from './shared/imageloader/imageloader.service';
 
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,7 +16,8 @@ import { ImageloaderService } from './shared/imageloader/imageloader.service';
     ImagebrowserComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [
     UsermanagerService

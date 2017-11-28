@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  currentView :number = 1;
+  currentView :number = 0;
 
   ngOnInit()
   {

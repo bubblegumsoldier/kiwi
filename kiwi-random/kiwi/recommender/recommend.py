@@ -1,6 +1,7 @@
+from collections import namedtuple
 from kiwi.database.DataAccessor import DataAccessor
-from kiwi.Types import Vote
 
+Vote = namedtuple('Vote', 'user post vote')
 
 async def recommend_for(user, with_count=10):
     accessor = await DataAccessor.create(pool_count=3)

@@ -1,15 +1,8 @@
 from os import environ
-from aiomysql import connect, create_pool
-from kiwi.Logging import log_exception
-from pymysql.err import OperationalError, IntegrityError
+from aiomysql import create_pool
+from kiwi.config import read_mysql_config
 
-CONNECTION = {
-    'host': environ['MSQL_HOST'],
-    'port': int(environ['MSQL_PORT']),
-    'user': environ['MSQL_USER'],
-    'password': environ['MSQL_PWD'],
-    'db': environ['MSQL_DATABASE']
-}
+CONNECTION = read_mysql_config()._asdict()
 
 RANDOM_SELECT = '''
             SELECT p.post_id

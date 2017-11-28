@@ -6,11 +6,11 @@
         <div class="login-inner">
             <div class="username-wrapper">
                 <label for="username">Username</label>
-                <input type="text" class="username-input" name="username" id="username" [(ngModel)]="username" />
+                <input [disabled]="this.isLoading()" type="text" class="username-input" name="username" id="username" [(ngModel)]="username" />
             </div>
             <div class="login-buttons">
-                <button class="login-button register" (click)="onRegister()">Register</button>
-                <button class="login-button login" (click)="onLogin()">Login</button>
+                <button [disabled]="this.isLoading()" class="login-button register" (click)="onRegister()">Register</button>
+                <button [disabled]="this.isLoading()" class="login-button login" (click)="onLogin()">Login</button>
             </div>
         </div>
     </div>

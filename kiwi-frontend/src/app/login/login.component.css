@@ -26,7 +26,7 @@
     width: 100%;
 }
 
-.username-wrapper label {
+label {
     font-size: 12pt;
     color: #333;
     display: block;
@@ -83,9 +83,15 @@
     background-color: #397CAA;
 }
 
-.login-loading {
-    flex: 1;
+.login-loading, .login-error {
+    flex: 2;
     text-align: center;
+}
+
+.login-error label
+{
+    color: #B40404;
+    margin: 30px;
 }
 
 *:disabled {

@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  kiwiAPIUrl: "https://kiwi.gonecrazy.de/api/"
+  kiwiAPIUrl: "http://localhost:5000"
 };

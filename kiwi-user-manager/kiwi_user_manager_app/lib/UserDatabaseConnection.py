@@ -24,14 +24,17 @@ class UserDatabaseConnection(object):
         try:
             c_client = MongoClient('mongodb://%s:%s@%s' % (username, password, host))
             c_db = c_client[database]
+            print("ssss")
         except Exception as e:
+            print("exception!!!")
             print(e)
             self._client = None
-            self.db = None
+            self._db = None
             return False
         else:
             self._client = c_client
             self._db = c_db
+            print("established connection")
             return True
 
     def has_connection(self):

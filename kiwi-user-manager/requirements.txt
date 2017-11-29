@@ -1,2 +1,3 @@
 mongodb
 flask
+flask-cors

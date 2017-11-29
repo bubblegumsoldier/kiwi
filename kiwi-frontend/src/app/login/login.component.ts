@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   private username :string = "";
   private loading :boolean = false;
+  private errorMsg :string = "";
 
   constructor(private usermanager :UsermanagerService) { }
 
@@ -25,23 +26,23 @@ export class LoginComponent implements OnInit {
         this.stopLoading();
         return;
       }
-      this.usermanager.getCurrentUser().then(this.doLogin).catch(console.log);
+      this.usermanager.getCurrentUser().then(this.doLogin.bind(this)).catch(console.log);
     }).catch(console.log);
   }
 
   onRegister()
   {
     let userinformation :UserInformation = new UserInformation(this.username);
-    console.log("Register " + userinformation);
+    console.log("Register " + JSON.stringify(userinformation));
     this.startLoading();
-    this.usermanager.tryRegister(userinformation).then(this.onLogin).catch(console.log);
+    this.usermanager.tryRegister(userinformation).then(this.onLogin.bind(this)).catch(this.printErrorMessage.bind(this));
   }
 
   onLogin()
   {
     let userinformation :UserInformation = new UserInformation(this.username);
     this.startLoading();
-    this.usermanager.tryLogin(userinformation, false).then(this.doLogin).catch(console.log);
+    this.usermanager.tryLogin(userinformation, false).then(this.doLogin.bind(this)).catch(this.printErrorMessage.bind(this));
   }
 
   private isLoading()
@@ -59,13 +60,16 @@ export class LoginComponent implements OnInit {
     this.loading = false;
   }
 
-  @Output()
-  login :EventEmitter<LoggedInUser> = new EventEmitter<LoggedInUser>();
-
   private doLogin(user :LoggedInUser)
   {
-    this.login.emit(user);
+    this.usermanager.broadcastLogin(user);
     console.log("loggin in user");
     console.log(user);
+  }
+
+  printErrorMessage(msg :string)
+  {
+    this.stopLoading();
+    this.errorMsg = msg;
   }
 }

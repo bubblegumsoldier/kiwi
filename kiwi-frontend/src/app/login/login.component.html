@@ -9,12 +9,15 @@
                 <input [disabled]="this.isLoading()" type="text" class="username-input" name="username" id="username" [(ngModel)]="username" />
             </div>
             <div class="login-buttons">
-                <button [disabled]="this.isLoading()" class="login-button register" (click)="onRegister()">Register</button>
-                <button [disabled]="this.isLoading()" class="login-button login" (click)="onLogin()">Login</button>
+                <button [disabled]="this.isLoading() || this.username.length < 3" class="login-button register" (click)="onRegister()">Register</button>
+                <button [disabled]="this.isLoading() || this.username.length < 3" class="login-button login" (click)="onLogin()">Login</button>
             </div>
         </div>
     </div>
     <div class="login-loading" *ngIf="this.isLoading()">
         <img src="assets/animations/loading_80.svg" />
+    </div>
+    <div class="login-error" *ngIf="this.errorMsg.length > 0">
+        <label>{{this.errorMsg}}</label>
     </div>
 </div>

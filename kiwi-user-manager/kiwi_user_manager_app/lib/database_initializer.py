@@ -12,6 +12,8 @@ def initialize_database(connection_details = None):
             'password': os.environ.get("KIWI_USER_MANAGER_DB_PASSWORD"),
             'database': os.environ.get("KIWI_USER_MANAGER_DB_DATABASE")
         }
+        print(connection_details)
     connection = UserDatabaseConnection(connection_details)
+    print("establishing")
     connection.establish()
     return connection

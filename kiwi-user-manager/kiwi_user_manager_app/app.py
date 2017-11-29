@@ -1,21 +1,21 @@
 #python
 import json
 from http import HTTPStatus
-
+from flask_cors import CORS
 #flask
 from flask import (Flask, request)
 
 #initializing code
 app = Flask(__name__)
-
+CORS(app)
 
 #kiwi
 from lib.Authenticator import Authenticator
 from lib.RegisterService import RegisterService
 from lib.database_initializer import initialize_database
 
-@app.route("/authenticate", methods=['GET', 'POST'])
-def authenticate():
+@app.route("/authenticate/<username>", methods=['GET', 'POST'])
+def authenticate(username):
     """
     Authentication endpoint (/authenticate).
 
@@ -23,7 +23,6 @@ def authenticate():
 
     A JSON response will be returned containing a dict with the attribute "valid" (true/false).
     """
-    username = request.values.get("username")
     if not username:
         return ('Post data invalid', HTTPStatus.BAD_REQUEST)
     
@@ -34,8 +33,8 @@ def authenticate():
     }
     return (json.dumps(response), HTTPStatus.ACCEPTED)
 
-@app.route("/register", methods=["POST", "GET"])
-def register():
+@app.route("/register/<username>", methods=["POST", "GET"])
+def register(username):
     """
     Registration Endpoint (/register).
 
@@ -43,7 +42,6 @@ def register():
 
     A JSON response will be returned containing a dict with the attribute "success" (true/false).
     """
-    username = request.values.get("username")
     if not username:
         return ('Post data invalid', HTTPStatus.BAD_REQUEST)
 

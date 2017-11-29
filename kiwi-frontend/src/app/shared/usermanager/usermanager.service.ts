@@ -8,13 +8,20 @@ import { UserInformation } from '../model/UserInformation';
 @Injectable()
 export class UsermanagerService {
 
-  private static API_SUFFIX :string = "user";
+  private static API_SUFFIX :string = "";
 
   private currentUser :LoggedInUser = null;
+
+  private loginListeners :((user :LoggedInUser)=>void)[] = [];
 
   constructor(private http :Http)
   {
 
+  }
+
+  addLoginListener(listener :(user :LoggedInUser)=>void)
+  {
+    this.loginListeners.push(listener);
   }
 
   private getFullAPIPath() :string
@@ -90,7 +97,7 @@ export class UsermanagerService {
   tryLogin(userInformation :UserInformation, registerIfNotFound? :boolean) :Promise<LoggedInUser>
   {
     let promise :Promise<LoggedInUser> = new Promise<LoggedInUser>((resolve, reject) => {
-      this.http.post(this.getFullAPIPath() + "/authenticate", JSON.stringify(userInformation))
+      this.http.post(this.getFullAPIPath() + "/authenticate/" + userInformation.name, {})
             .subscribe((rawResponse: Response) => {
                 let response = rawResponse.json();
                 if(response.valid === true)
@@ -104,7 +111,7 @@ export class UsermanagerService {
                     this.tryLogin(userInformation, false).then(resolve).catch(reject);
                   }).catch(reject);
                 }
-                reject(); //TODO error message
+                reject("Invalid username"); //TODO error message
             });
     });
     return promise;
@@ -113,7 +120,7 @@ export class UsermanagerService {
   tryRegister(userInformation :UserInformation) :Promise<void>
   {
     let promise :Promise<void> = new Promise<void>((resolve, reject) => {
-      this.http.post(this.getFullAPIPath() + "/register", JSON.stringify(userInformation))
+      this.http.post(this.getFullAPIPath() + "/register/" + userInformation.name, {})
             .subscribe((rawResponse :Response) => {
               let response = rawResponse.json();
               if(response.success === true)
@@ -121,9 +128,15 @@ export class UsermanagerService {
                 resolve();
                 return;
               }
-              reject(); //TODO message
+              reject("Could not register... Invalid username (maybe already taken)"); //TODO message
             });
     });
     return promise;
+  }
+
+  broadcastLogin(user :LoggedInUser)
+  {
+    console.log(this.loginListeners.length);
+    this.loginListeners.forEach(el => {el(user);});
   }
 }

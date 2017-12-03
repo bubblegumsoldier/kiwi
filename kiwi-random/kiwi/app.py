@@ -51,4 +51,4 @@ async def add_posts(request: Request):
 
 setup_logging()
 
-app.run(**read_app_config()._asdict(), log_config=LOGGING)
+app.run(**read_app_config()._asdict(), log_config=LOGGING, workers=4)

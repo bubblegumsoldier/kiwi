@@ -1,0 +1,10 @@
+{
+    "user-manager": {
+        "host": "localhost",
+        "port": 7000
+    },
+    "recommender-router": {
+        "host": "localhost",
+        "port": 8000
+    }
+}

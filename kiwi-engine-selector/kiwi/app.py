@@ -11,15 +11,17 @@ app = Sanic(__name__)
 selector = RecommenderSelector.from_config(RECOMMENDERS)
 
 
-@app.post('/images')
+@app.post('/recommendation')
 async def images(request: Request):
     post_json = request.json
     user = User(**post_json['user'])
     async with ClientSession() as session:
-        response = await selector.get_pictures(session, user)
+        response = await selector.get_recommendations(session, user)
         if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
             await request_content()
-        return json({'pictures': response.json})
+        return json({'recommendations': {
+            'user': response.json['user'],
+            'posts': response.json['posts']}})
 
 
 @app.post('/content')
@@ -32,14 +34,14 @@ async def content(request: Request):
 @app.post('/feedback')
 async def feedback(request: Request):
     post_json = request.json
-    voting = Voting(**post_json['vote'])
+    voting = Voting(**post_json['feedback'])
     async with ClientSession() as session:
         await selector.distribute_vote(session, voting)
         return json({'accepted': True})
 
 
 async def request_content():
-    data = {'count': CONTENT_CONFIG['unvoted_threshold'], 
+    data = {'count': CONTENT_CONFIG['unvoted_threshold'],
             'return_url': app.url_for('content')}
     async with ClientSession() as session:
         post = session.post(CONTENT_CONFIG['address'], json=data)

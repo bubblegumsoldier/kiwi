@@ -14,7 +14,7 @@ app = Sanic(__name__)
 @app.get('/recommendation')
 @return_exception_as_json()
 @log_exception()
-async def recommend(request: Request):
+async def recommend(request):
     '''
     Gets recommendations for user
     Expects args in query string form -> user=x&count=n

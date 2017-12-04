@@ -26,14 +26,16 @@ def wrap_method_into_connection(func):
 
 
 class DataAccessor:
-    def __init__(self, pool):
-        self.pool = pool
+    def __init__(self, pool_count=1):
+        self.pool_count = pool_count
 
-    @classmethod
-    async def create(cls, pool_count=1):
-        pool = await create_pool(**CONNECTION, maxsize=pool_count)
-        self = DataAccessor(pool)
+    async def __aenter__(self):
+        self.pool = await create_pool(**CONNECTION, maxsize=self.pool_count)
         return self
+
+    async def __aexit__(self, exc_type, exc_value, traceback):
+        self.pool.close()
+        await self.pool.wait_closed()
 
     @wrap_method_into_connection
     async def get_random_unvoted(self, username, count, cursor=None):

@@ -9,6 +9,7 @@ services:
       - "8000:8000"
     networks:
       - random-network
+    restart: always
   
   mysqldb:
     build:
@@ -18,6 +19,7 @@ services:
       - random-network
     ports:
       - "3306"
+    restart: always
 
 networks:
   random-network:

@@ -5,14 +5,14 @@ TEMPLATE = '{base}/{endpoint}'
 
 
 class Recommender:
-    def __init__(self, address, endpoints: Endpoints):
-        self.base = address
+    def __init__(self, host, port, endpoints: Endpoints):
+        self.base = 'http://{}:{}'.format(host, port)
         self.endpoints = endpoints
 
     @classmethod
     def from_config(cls, config_dict):
         endpoints = Endpoints(**config_dict['endpoints'])
-        self = Recommender(config_dict['address'], endpoints)
+        self = Recommender(**config_dict['address'], endpoints=endpoints)
         return self
 
     async def get_pics_for_user(self, session: ClientSession, user):

@@ -1,15 +1,22 @@
 {
     "app": {
-        "host": "0.0.0.0",
+        "host": "engine",
         "port": 8000
     },
     "content": {
         "unvoted_threshold": 50,
-        "address": "http://localhost:5000"
+        "address": {
+            "host": "content",
+            "port": 5000,
+            "endpoint": "items"
+        }
     },
     "recommenders": {
         "random": {
-            "address": "http://localhost:8901",
+            "address": {
+                "host": "random",
+                "port": 8000
+            },
             "endpoints": {
                 "recommendation": "recommendation",
                 "feedback": "feedback",

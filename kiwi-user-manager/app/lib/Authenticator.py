@@ -1,3 +1,5 @@
+from werkzeug.exceptions import abort
+
 class Authenticator(object):
     def __init__(self, user_database_connection):
         """
@@ -19,7 +21,6 @@ class Authenticator(object):
         Returns False if non-existant and True if existant
         """
         if not self.user_database_connection or not self.user_database_connection.has_connection():
-            #TODO: Add exception or something
-            return False
+            abort(500)
         search_result = self.user_database_connection.has_username(username)
         return False if not search_result else True

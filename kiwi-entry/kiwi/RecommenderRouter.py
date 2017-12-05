@@ -18,7 +18,7 @@ class RecommenderRouter:
 
     async def feedback(self, session, feedback_data):
         url = '{}/{}'.format(self.base_url,
-                             'recommendation')
+                             'feedback')
         async with session.post(url, json=feedback_data) as response:
             if response.status == HTTPStatus.OK:
                 return await response.json()

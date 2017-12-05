@@ -12,7 +12,7 @@ class RecommenderRouter:
         json = {'user': {'name': user}, 'count': count}
         async with session.post(url, json=json) as response:
             if response.status == HTTPStatus.OK:
-                return response.json()
+                return await response.json()
             abort(response.status)
 
 
@@ -20,7 +20,7 @@ class RecommenderRouter:
         url = '{}/{}'.format(self.base_url,
                              'recommendation')
         async with session.post(url, json=feedback_data) as response:
-            if response.status = HTTPStatus.OK:
+            if response.status == HTTPStatus.OK:
                 return await response.json()
             abort(response.status)
 

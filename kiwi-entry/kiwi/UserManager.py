@@ -24,7 +24,7 @@ class UserManager:
             return await self._is_response_valid(resp, meta['key'])
 
     async def _is_response_valid(self, response, key):
-        if response.status == HTTPStatus.ACCEPTED:
+        if response.status == HTTPStatus.OK:
             content = await response.json()
             return content[key]
         abort(response.status)

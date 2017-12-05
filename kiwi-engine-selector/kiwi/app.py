@@ -1,3 +1,4 @@
+from os import environ
 from sanic import Sanic
 from sanic.response import json
 from sanic.request import Request
@@ -42,11 +43,17 @@ async def feedback(request: Request):
 
 async def request_content():
     data = {'count': CONTENT_CONFIG['unvoted_threshold'],
-            'return_url': app.url_for('content')}
+            'return_url': build_url(**APP_CONFIG, endpoint='content')}
     async with ClientSession() as session:
-        post = session.post(CONTENT_CONFIG['address'], json=data)
+        url = build_url(**CONTENT_CONFIG['address'])
+        
+        post = session.post(url, json=data)
         async with post as response:
-            await response
+            await response.text()
+
+def build_url(**kwargs):
+    return 'http://{host}:{port}/{endpoint}'.format_map(kwargs)
+
 
 if __name__ == '__main__':
-    app.run(host=APP_CONFIG['host'], port=APP_CONFIG['port'])
+    app.run(host='0.0.0.0', port=APP_CONFIG['port'])

@@ -1,7 +1,0 @@
-FROM python:3
-
-COPY kiwi /usr/src/kiwi
-
-RUN pip install -r requirements.txt
-
-

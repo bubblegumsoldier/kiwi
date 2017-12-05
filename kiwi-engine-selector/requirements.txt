@@ -1,4 +1,2 @@
 Sanic
-pytest
-pytest-sanic
 aiohttp

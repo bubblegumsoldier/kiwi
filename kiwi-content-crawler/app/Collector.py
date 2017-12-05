@@ -1,26 +1,23 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from kiwi.extract_posts import filter_duplicates
-from kiwi.PostCache import PostCache
-from kiwi.ThreadSafeCounter import ThreadSafeCounter
-from kiwi.Requester import Requester, Params
+from extract_posts import filter_duplicates
+from PostCache import PostCache
+from ThreadSafeCounter import ThreadSafeCounter
+from Requester import Requester
 
 
-DEFINED_TOPICS = ["funny", "aww"]  # ToDo: Read these from config
-
-
-class Collector(object):
-    def __init__(self, count, callback):
+class Collector:
+    def __init__(self, count, callback, requester_config):
         self.callback = callback
 
         self.post_cache = PostCache(
             ThreadSafeCounter(count, self.post_results))
 
-        self.requesters = [Requester(
-            Params(tag=topic, window="week", sort="top"))
-            for topic in DEFINED_TOPICS]
+        self.requesters = [Requester(url=requester_config.url, params=topic)
+                           for topic in requester_config.topics]
 
     def run_requests(self):
-        with ThreadPoolExecutor(len(DEFINED_TOPICS)) as executor:
+        print('starting requests')
+        with ThreadPoolExecutor(len(self.requesters)) as executor:
             while True:
                 futures = [
                     executor.submit(r.request, filter_duplicates)

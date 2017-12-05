@@ -1,0 +1,27 @@
+{
+    "app": {
+        "host": "engine",
+        "port": 8000
+    },
+    "content": {
+        "unvoted_threshold": 50,
+        "address": {
+            "host": "content",
+            "port": 5000,
+            "endpoint": "items"
+        }
+    },
+    "recommenders": {
+        "random": {
+            "address": {
+                "host": "random",
+                "port": 8000
+            },
+            "endpoints": {
+                "recommendation": "recommendation",
+                "feedback": "feedback",
+                "content": "content"
+            }
+        }
+    }
+}

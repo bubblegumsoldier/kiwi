@@ -1,0 +1,93 @@
+version: '2'
+
+services: 
+  entry: 
+    build:
+      context: ./kiwi-entry
+      dockerfile: entry.dockerfile
+    ports:
+      - "9000:8000"
+    networks:
+      - user-network
+      - service-network
+
+  user: 
+    build: 
+      context: ./kiwi-user-manager
+      dockerfile: user.dockerfile
+    ports:
+      - "80"
+    networks:
+      - user-network
+
+  engine:
+    build:
+      context: ./kiwi-engine-selector
+      dockerfile: engine.dockerfile
+    ports: 
+      - "8000"
+    networks:
+      - service-network
+    restart: always
+
+  content:
+    build:
+      context: ./kiwi-content-crawler
+      dockerfile: content.dockerfile
+    ports:
+      - "5000"
+    networks:
+      - service-network
+      - content-network
+    restart: always
+  
+  mongodb-content:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=12345
+    ports:
+      - "27017"
+    networks:
+      - content-network
+
+  mongodb-user:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=12345
+    ports:
+      - "27017"
+    networks:
+      - user-network
+
+  random:
+    build:
+      context: ./kiwi-random
+      dockerfile: service.dockerfile
+    ports:
+      - "8000"
+    networks:
+      - random-network
+      - service-network
+    restart: always
+
+  mysqldb:
+    build:
+      context: ./kiwi-random
+      dockerfile: mysql.dockerfile
+    networks:
+      - random-network
+    ports:
+      - "3306"
+    restart: always
+
+networks:
+  random-network:
+    driver: bridge
+  service-network:
+    driver: bridge
+  content-network:
+    driver: bridge
+  user-network:
+    driver: bridge

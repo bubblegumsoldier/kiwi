@@ -3,7 +3,7 @@ import json
 from http import HTTPStatus
 from flask_cors import CORS
 #flask
-from flask import (Flask, request)
+from flask import (Flask, request, jsonify)
 
 #initializing code
 app = Flask(__name__)
@@ -31,7 +31,7 @@ def authenticate(username):
     response = {
         'valid': result
     }
-    return (json.dumps(response), HTTPStatus.ACCEPTED)
+    return jsonify(response)
 
 @app.route("/register/<username>", methods=["POST", "GET"])
 def register(username):
@@ -51,6 +51,7 @@ def register(username):
         "success": result
     }
 
-    return (json.dumps(response), HTTPStatus.ACCEPTED)
+    return jsonify(response)
 
-app.run()
+if __name__ == '__main__':
+    app.run()

@@ -1,0 +1,10 @@
+{
+    "user-manager": {
+        "host": "user",
+        "port": 80
+    },
+    "recommender-router": {
+        "host": "engine",
+        "port": 8000
+    }
+}

@@ -11,7 +11,7 @@ import { UsermanagerService } from './shared/usermanager/usermanager.service';
 })
 export class AppComponent {
   title = 'app';
-  currentView :number = 0;
+  currentView :number = 1;
 
   constructor(private usermanager :UsermanagerService) {
     this.usermanager.addLoginListener(this.onLogin.bind(this));

@@ -20,6 +20,8 @@
 
 .login-inner {
     padding: 10%;
+    max-width: 500px;
+    margin: auto;
 }
 
 .username-wrapper {
@@ -83,13 +85,13 @@ label {
     background-color: #397CAA;
 }
 
-.login-loading, .login-error {
+.login-loading,
+.login-error {
     flex: 2;
     text-align: center;
 }
 
-.login-error label
-{
+.login-error label {
     color: #B40404;
     margin: 30px;
 }

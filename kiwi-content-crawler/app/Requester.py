@@ -20,9 +20,11 @@ class Requester:
                               sort=sort,
                               window=window,
                               page=self._page)
-
+        print(url)
+        print(AUTH_HEADER)
         response = requests.get(url, headers=AUTH_HEADER)
         posts = extract_posts_from_gallery(
             response.json()['data'])
         self._page += 1
+        print('requested')
         return continuation(posts)

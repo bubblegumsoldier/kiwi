@@ -1,10 +1,10 @@
 from copy import deepcopy
 from pymongo import MongoClient
-from kiwi.config import read_mongo_config
+from config import read_mongo_config
 
 
 CONFIG = read_mongo_config()
-CLIENT = MongoClient(host=CONFIG.host, port=CONFIG.port, authSource=CONFIG.db,
+CLIENT = MongoClient(host=CONFIG.host, port=CONFIG.port,
                      username=CONFIG.username, password=CONFIG.password)
 
 

@@ -1,8 +1,8 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from kiwi.extract_posts import filter_duplicates
-from kiwi.PostCache import PostCache
-from kiwi.ThreadSafeCounter import ThreadSafeCounter
-from kiwi.Requester import Requester
+from extract_posts import filter_duplicates
+from PostCache import PostCache
+from ThreadSafeCounter import ThreadSafeCounter
+from Requester import Requester
 
 
 class Collector:
@@ -16,6 +16,7 @@ class Collector:
                            for topic in requester_config.topics]
 
     def run_requests(self):
+        print('starting requests')
         with ThreadPoolExecutor(len(self.requesters)) as executor:
             while True:
                 futures = [

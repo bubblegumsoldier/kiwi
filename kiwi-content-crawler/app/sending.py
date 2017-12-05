@@ -2,6 +2,7 @@ import requests
 
 
 def send_response_json(send_url, data):
+    print('sending')
     requests.post(send_url, json={'posts': data})
 
 

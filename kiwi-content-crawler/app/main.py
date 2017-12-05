@@ -1,11 +1,13 @@
+import logging
 from threading import Thread
 from functools import partial
 from http import HTTPStatus
 from flask import (Flask, request)
-from kiwi.Collector import Collector
-from kiwi.sending import send_response_json
-from kiwi.store_posts import store_posts_continuation
-from kiwi.config import read_config, read_mongo_config
+from Collector import Collector
+from sending import send_response_json
+from store_posts import store_posts_continuation
+from config import read_config, read_mongo_config
+
 
 app = Flask(__name__)
 requester_config = read_config()
@@ -20,12 +22,16 @@ def new_items():
     '''
     post_data = request.json
     if post_data:
-
+        print('received request {!r}'.format(post_data))
         send = partial(send_response_json,
                        post_data['return_url'])
         store = partial(store_posts_continuation, send)
         collector = Collector(post_data['count'], store, requester_config)
 
         Thread(target=collector.run_requests).start()
-        return ('', HTTPStatus.ACCEPTED)
+        return ('Accepted', HTTPStatus.ACCEPTED)
     return ('Post data invalid', HTTPStatus.BAD_REQUEST)
+
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000)

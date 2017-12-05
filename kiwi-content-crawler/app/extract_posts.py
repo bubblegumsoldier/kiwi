@@ -1,4 +1,4 @@
-from kiwi.data_access_functions import (get_many, post_exists)
+from data_access_functions import (get_many, post_exists)
 
 
 def extract_posts_from_gallery(gallery_response):

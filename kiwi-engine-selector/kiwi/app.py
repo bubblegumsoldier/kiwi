@@ -7,6 +7,7 @@ from aiohttp import ClientSession
 from kiwi.config import APP_CONFIG, CONTENT_CONFIG, RECOMMENDERS
 from kiwi.selector.Types import User, Voting
 from kiwi.selector.RecommenderSelector import RecommenderSelector
+from kiwi.enricher.Enricher import Enricher
 
 app = Sanic(__name__)
 selector = RecommenderSelector.from_config(RECOMMENDERS)
@@ -22,7 +23,7 @@ async def images(request: Request):
             await request_content()
         return json({'recommendations': {
             'user': response.json['user'],
-            'posts': response.json['posts']}})
+            'posts': await Enricher().enrich(response.json['posts'])}})
 
 
 @app.post('/content')

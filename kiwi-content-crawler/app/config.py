@@ -5,15 +5,17 @@ from json import load
 Topic = namedtuple('Topic', 'tag order window')
 MongoConfig = namedtuple(
     'MongoConfig', 'host port db collection username password')
-Config = namedtuple('Config', 'url topics')
+Config = namedtuple('Config', 'url topics forbidden_types')
 
 
 def read_config():
     with open(path.join(path.dirname(__file__), 'config.json')) as file:
         config = load(file)
         topics = [Topic(**topic) for topic in config['topics']]
-        url = config['url']
-        return Config(url=url, topics=topics)
+        
+        return Config(url=config['url'],
+                      topics=topics,
+                      forbidden_types=config['forbidden_types'])
 
 
 def read_mongo_config():

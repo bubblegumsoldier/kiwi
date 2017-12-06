@@ -11,5 +11,6 @@
             "window": "week"
         }
     ],
-    "url": "https://api.imgur.com/3/gallery/t/{tag}/{sort}/{window}/{page}"
+    "url": "https://api.imgur.com/3/gallery/t/{tag}/{sort}/{window}/{page}",
+    "forbidden_types": ["video"]
 }

@@ -12,7 +12,7 @@ class Collector:
         self.post_cache = PostCache(
             ThreadSafeCounter(count, self.post_results))
 
-        self.requesters = [Requester(url=requester_config.url, params=topic)
+        self.requesters = [Requester(url=requester_config.url, params=topic, forbidden_types=requester_config.forbidden_types)
                            for topic in requester_config.topics]
 
     def run_requests(self):

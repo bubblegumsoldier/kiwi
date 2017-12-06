@@ -1,2 +1,3 @@
 Sanic
 aiohttp
+motor

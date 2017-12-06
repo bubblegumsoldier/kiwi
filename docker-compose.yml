@@ -28,6 +28,7 @@ services:
       - "8000"
     networks:
       - service-network
+      - content-network
     restart: always
 
   content:
@@ -80,7 +81,6 @@ services:
       - random-network
     ports:
       - "3306"
-    restart: always
 
 networks:
   random-network:

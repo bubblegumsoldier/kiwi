@@ -1,2 +1,2 @@
-Sanic
+sanic==0.7.0
 aiomysql

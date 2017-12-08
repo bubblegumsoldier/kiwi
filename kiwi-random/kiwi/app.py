@@ -1,10 +1,9 @@
 from sanic import Sanic
 from sanic.request import Request
 from sanic.response import json
-from sanic.config import LOGGING
 from kiwi.recommender.recommend import (recommend_for, store_feedback,
                                         add_content)
-from kiwi.Logging import setup_logging, log_exception
+from kiwi.Logging import log_exception
 from kiwi.exception_handling import return_exception_as_json
 from kiwi.config import read_app_config
 
@@ -49,6 +48,5 @@ async def add_posts(request: Request):
     return json(inserted_info)
 
 
-setup_logging()
 
-app.run(**read_app_config()._asdict(), log_config=LOGGING, workers=4)
+app.run(**read_app_config()._asdict(), workers=4)

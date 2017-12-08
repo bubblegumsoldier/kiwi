@@ -8,8 +8,8 @@ import { UserInformation } from '../model/UserInformation';
 @Injectable()
 export class UsermanagerService {
 
-  private static API_SUFFIX :string = "users";
 
+  private static API_SUFFIX :string = "users";
   private currentUser :LoggedInUser = null;
 
   private loginListeners :((user :LoggedInUser)=>void)[] = [];
@@ -94,6 +94,7 @@ export class UsermanagerService {
     return promise;
   }
 
+  //TODO: This method is too long
   tryLogin(userInformation :UserInformation, registerIfNotFound? :boolean) :Promise<LoggedInUser>
   {
     let promise :Promise<LoggedInUser> = new Promise<LoggedInUser>((resolve, reject) => {

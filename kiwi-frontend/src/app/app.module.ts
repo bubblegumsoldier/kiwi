@@ -23,7 +23,8 @@ import { HttpModule } from '@angular/http';
     HttpModule
   ],
   providers: [
-    UsermanagerService
+    UsermanagerService,
+    ImageloaderService
   ],
   bootstrap: [AppComponent]
 })

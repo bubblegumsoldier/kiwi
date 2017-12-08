@@ -62,8 +62,8 @@ export class LoginComponent implements OnInit {
 
   private doLogin(user :LoggedInUser)
   {
-    this.usermanager.broadcastLogin(user);
     console.log("loggin in user");
+    this.usermanager.broadcastLogin(user);
     console.log(user);
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 
 import { environment } from '../../../environments/environment';
 import { LoggedInUser } from '../model/LoggedInUser';
@@ -8,7 +8,7 @@ import { UserInformation } from '../model/UserInformation';
 @Injectable()
 export class UsermanagerService {
 
-  private static API_SUFFIX :string = "";
+  private static API_SUFFIX :string = "users";
 
   private currentUser :LoggedInUser = null;
 
@@ -97,19 +97,17 @@ export class UsermanagerService {
   tryLogin(userInformation :UserInformation, registerIfNotFound? :boolean) :Promise<LoggedInUser>
   {
     let promise :Promise<LoggedInUser> = new Promise<LoggedInUser>((resolve, reject) => {
-      this.http.post(this.getFullAPIPath() + "/authenticate/" + userInformation.name, {})
+      this.http.get(this.getFullAPIPath() + "/" + userInformation.name, {})
             .subscribe((rawResponse: Response) => {
-                let response = rawResponse.json();
-                if(response.valid === true)
-                {
-                  this.login(userInformation).then(resolve).catch(reject);
-                  return;
-                }
+                this.login(userInformation).then(resolve).catch(reject);
+            }, error => {
+                console.log("response");
                 if(registerIfNotFound === true)
                 {
                   this.tryRegister(userInformation).then(_ => {
                     this.tryLogin(userInformation, false).then(resolve).catch(reject);
                   }).catch(reject);
+                  return;
                 }
                 reject("Invalid username"); //TODO error message
             });
@@ -120,14 +118,12 @@ export class UsermanagerService {
   tryRegister(userInformation :UserInformation) :Promise<void>
   {
     let promise :Promise<void> = new Promise<void>((resolve, reject) => {
-      this.http.post(this.getFullAPIPath() + "/register/" + userInformation.name, {})
+      let headers = new Headers({ 'Content-Type': 'text/plain' });
+      let options = new RequestOptions({ headers: headers });
+      this.http.post(this.getFullAPIPath() + "/" + userInformation.name, "", options)
             .subscribe((rawResponse :Response) => {
-              let response = rawResponse.json();
-              if(response.success === true)
-              {
-                resolve();
-                return;
-              }
+              resolve();
+            }, error => {
               reject("Could not register... Invalid username (maybe already taken)"); //TODO message
             });
     });

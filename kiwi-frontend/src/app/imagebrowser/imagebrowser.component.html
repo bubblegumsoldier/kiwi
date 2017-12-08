@@ -1,5 +1,5 @@
 <div class="imagebrowser">
-    <div *ngFor="let image of images.slice().reverse()" [class.imagewrapper]="true" [class.animateup]="image?.animateUp" [class.animatedown]="image?.animateDown" [class.firstElement]="images.length > 0 && image === images[0]">
+    <div *ngFor="let image of images.slice().reverse()" [class.imagewrapper]="true" [class.animateup]="image.animateUp" [class.animatedown]="image.animateDown" [class.firstElement]="images.length > 0 && image === images[0]">
         <div class="image_title">{{image.title}}</div>
         <div class="image_img"><img src="{{image.src}}" /></div>
         <div class="placeholder"></div>

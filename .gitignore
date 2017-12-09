@@ -5,6 +5,7 @@
 *.pyo
 env
 env*
+!kiwi-mobile-frontend/src/**
 dist
 build
 *.egg

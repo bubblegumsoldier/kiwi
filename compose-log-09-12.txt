@@ -1,0 +1,1185 @@
+Attaching to kiwi_content_1, kiwi_entry_1, kiwi_user_1, kiwi_engine_1, kiwi_random_1, kiwi_mongodb-user_1, kiwi_mysqldb_1, kiwi_mongodb-content_1, kiwi_webapp_1
+[36;1mmysqldb_1          |[0m Initializing database
+[36;1mmysqldb_1          |[0m 2017-12-09T16:03:10.328346Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+[36;1mmysqldb_1          |[0m 2017-12-09T16:04:01.342375Z 0 [Warning] InnoDB: New log files created, LSN=45790
+[36;1mmysqldb_1          |[0m 2017-12-09T16:04:08.899123Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:04:13.286702Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 9978fa50-dcfa-11e7-b4c0-0242ac130002.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:04:14.633525Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:04:14.634621Z 1 [Warning] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+[33;1mmongodb-content_1  |[0m about to fork child process, waiting until server is ready for connections.
+[34mmongodb-user_1     |[0m about to fork child process, waiting until server is ready for connections.
+[34mmongodb-user_1     |[0m forked process: 18
+[33;1mmongodb-content_1  |[0m forked process: 18
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:21.039+0000 I CONTROL  [main] ***** SERVER RESTARTED *****
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:21.041+0000 I CONTROL  [main] ***** SERVER RESTARTED *****
+[32;1mkiwi_webapp_1 exited with code 1
+[0m[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] MongoDB starting : pid=18 port=27017 dbpath=/data/db 64-bit host=bfb3634adbb4
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] db version v3.6.0
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] git version: a57d8e71e6998a2d0afde7edc11bd23e5661c915
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1t  3 May 2016
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] allocator: tcmalloc
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] modules: none
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] build environment:
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten]     distmod: debian81
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten]     distarch: x86_64
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten]     target_arch: x86_64
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] MongoDB starting : pid=18 port=27017 dbpath=/data/db 64-bit host=e6f8df589859
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] db version v3.6.0
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] git version: a57d8e71e6998a2d0afde7edc11bd23e5661c915
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1t  3 May 2016
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] allocator: tcmalloc
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] modules: none
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] build environment:
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten]     distmod: debian81
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten]     distarch: x86_64
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten]     target_arch: x86_64
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.633+0000 I CONTROL  [initandlisten] options: { net: { bindIp: "127.0.0.1", port: 27017, ssl: { mode: "disabled" } }, processManagement: { fork: true, pidFilePath: "/tmp/tmp.FmK0E49VNJ" }, security: { authorization: "enabled" }, systemLog: { destination: "file", logAppend: true, path: "/proc/1/fd/1" } }
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.636+0000 I CONTROL  [initandlisten] options: { net: { bindIp: "127.0.0.1", port: 27017, ssl: { mode: "disabled" } }, processManagement: { fork: true, pidFilePath: "/tmp/tmp.vxy09kqB92" }, security: { authorization: "enabled" }, systemLog: { destination: "file", logAppend: true, path: "/proc/1/fd/1" } }
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.636+0000 I STORAGE  [initandlisten] 
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.637+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.638+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:22.638+0000 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=256M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.637+0000 I STORAGE  [initandlisten] 
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.638+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.638+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:22.638+0000 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=256M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+[32muser_1             |[0m /usr/lib/python2.7/dist-packages/supervisor/options.py:298: UserWarning: Supervisord is running as root and it is searching for its configuration file in default locations (including its current working directory); you probably want to specify a "-c" argument specifying an absolute path to a configuration file for improved security.
+[32muser_1             |[0m   'Supervisord is running as root and it is searching '
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:30.586+0000 I CONTROL  [initandlisten] 
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:30.586+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:30.587+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:30.588+0000 I CONTROL  [initandlisten] 
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:30.589+0000 I STORAGE  [initandlisten] createCollection: admin.system.version with provided UUID: a1c7c488-9667-46cd-90d1-5e8738369959
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:30.986+0000 I CONTROL  [initandlisten] 
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:30.986+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:30.986+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:30.986+0000 I CONTROL  [initandlisten] 
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:30.987+0000 I STORAGE  [initandlisten] createCollection: admin.system.version with provided UUID: 3012f119-c1e7-40c5-9638-1742ccb284e1
+[32muser_1             |[0m 2017-12-09 16:04:31,340 CRIT Supervisor running as root (no user in config file)
+[32muser_1             |[0m 2017-12-09 16:04:31,340 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:31.883+0000 I COMMAND  [initandlisten] setting featureCompatibilityVersion to 3.6
+[32muser_1             |[0m 2017-12-09 16:04:31,949 INFO RPC interface 'supervisor' initialized
+[32muser_1             |[0m 2017-12-09 16:04:31,950 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+[32muser_1             |[0m 2017-12-09 16:04:31,951 INFO supervisord started with pid 1
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:31.986+0000 I STORAGE  [initandlisten] createCollection: local.startup_log with generated UUID: f1b22b5d-7f52-466b-8b4f-b84945402088
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:32.189+0000 I COMMAND  [initandlisten] setting featureCompatibilityVersion to 3.6
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:32.196+0000 I STORAGE  [initandlisten] createCollection: local.startup_log with generated UUID: 5647289d-67fb-4109-a897-af5519657412
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:32.938+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:32.938+0000 I NETWORK  [initandlisten] waiting for connections on port 27017
+[33;1mmongodb-content_1  |[0m child process started successfully, parent exiting
+[32muser_1             |[0m 2017-12-09 16:04:32,953 INFO spawned: 'nginx' with pid 7
+[32muser_1             |[0m 2017-12-09 16:04:32,955 INFO spawned: 'uwsgi' with pid 8
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:33.439+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:33.440+0000 I NETWORK  [initandlisten] waiting for connections on port 27017
+[34mmongodb-user_1     |[0m child process started successfully, parent exiting
+[32muser_1             |[0m 2017-12-09 16:04:33,963 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+[32muser_1             |[0m 2017-12-09 16:04:33,964 INFO success: uwsgi entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+[32muser_1             |[0m [uWSGI] getting INI configuration from /app/uwsgi.ini
+[32muser_1             |[0m [uWSGI] getting INI configuration from /etc/uwsgi/uwsgi.ini
+[32muser_1             |[0m *** Starting uWSGI 2.0.15 (64bit) on [Sat Dec  9 16:04:40 2017] ***
+[32muser_1             |[0m compiled with version: 6.3.0 20170516 on 09 December 2017 03:58:40
+[32muser_1             |[0m os: Linux-4.11.0-1016-azure #16-Ubuntu SMP Tue Dec 5 22:52:08 UTC 2017
+[32muser_1             |[0m nodename: c27c17903643
+[32muser_1             |[0m machine: x86_64
+[32muser_1             |[0m clock source: unix
+[32muser_1             |[0m pcre jit disabled
+[32muser_1             |[0m detected number of CPU cores: 1
+[32muser_1             |[0m current working directory: /app
+[32muser_1             |[0m detected binary path: /usr/local/bin/uwsgi
+[32muser_1             |[0m your memory page size is 4096 bytes
+[32muser_1             |[0m detected max file descriptor number: 1048576
+[32muser_1             |[0m lock engine: pthread robust mutexes
+[32muser_1             |[0m thunder lock: disabled (you can enable it with --thunder-lock)
+[32muser_1             |[0m uwsgi socket 0 bound to UNIX address /tmp/uwsgi.sock fd 3
+[32muser_1             |[0m uWSGI running as root, you can use --uid/--gid/--chroot options
+[32muser_1             |[0m *** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+[31mrandom_1           |[0m [2017-12-09 16:04:42 +0000] [1] [INFO] Goin' Fast @ http://0.0.0.0:8000
+[32muser_1             |[0m Python version: 3.6.3 (default, Nov  4 2017, 22:14:56)  [GCC 6.3.0 20170516]
+[31mrandom_1           |[0m [2017-12-09 16:04:43 +0000] [8] [INFO] Starting worker [8]
+[31mrandom_1           |[0m [2017-12-09 16:04:43 +0000] [7] [INFO] Starting worker [7]
+[31mrandom_1           |[0m [2017-12-09 16:04:43 +0000] [5] [INFO] Starting worker [5]
+[31mrandom_1           |[0m [2017-12-09 16:04:43 +0000] [6] [INFO] Starting worker [6]
+[32muser_1             |[0m *** Python threads support is disabled. You can enable it with --enable-threads ***
+[32muser_1             |[0m Python main interpreter initialized at 0xf7a6f2bb80
+[32muser_1             |[0m your server socket listen backlog is limited to 100 connections
+[32muser_1             |[0m your mercy for graceful operations on workers is 60 seconds
+[32muser_1             |[0m mapped 1237056 bytes (1208 KB) for 16 cores
+[32muser_1             |[0m *** Operational MODE: preforking ***
+[33mentry_1            |[0m [2017-12-09 16:04:50 +0000] [1] [INFO] Goin' Fast @ http://0.0.0.0:8000
+[33mentry_1            |[0m [2017-12-09 16:04:52 +0000] [1] [INFO] Starting worker [1]
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:54.283+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:50558 #1 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:54.284+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:50560 #1 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:54.682+0000 I ACCESS   [conn1] note: no users configured in admin.system.users, allowing localhost access
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:54.683+0000 I ACCESS   [conn1] note: no users configured in admin.system.users, allowing localhost access
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:54.736+0000 I NETWORK  [conn1] received client metadata from 127.0.0.1:50558 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.0" }, os: { type: "Linux", name: "PRETTY_NAME="Debian GNU/Linux 8 (jessie)"", architecture: "x86_64", version: "Kernel 4.11.0-1016-azure" } }
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:54.736+0000 I NETWORK  [conn1] received client metadata from 127.0.0.1:50560 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.0" }, os: { type: "Linux", name: "PRETTY_NAME="Debian GNU/Linux 8 (jessie)"", architecture: "x86_64", version: "Kernel 4.11.0-1016-azure" } }
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:54.984+0000 I COMMAND  [conn1] command admin.$cmd appName: "MongoDB Shell" command: isMaster { isMaster: 1, client: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.0" }, os: { type: "Linux", name: "PRETTY_NAME="Debian GNU/Linux 8 (jessie)"", architecture: "x86_64", version: "Kernel 4.11.0-1016-azure" } }, $db: "admin" } numYields:0 reslen:223 locks:{ Global: { acquireCount: { r: 4 } }, Database: { acquireCount: { r: 2 } }, Collection: { acquireCount: { r: 2 } } } protocol:op_query 349ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:54.984+0000 I COMMAND  [conn1] command admin.$cmd appName: "MongoDB Shell" command: isMaster { isMaster: 1, client: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.0" }, os: { type: "Linux", name: "PRETTY_NAME="Debian GNU/Linux 8 (jessie)"", architecture: "x86_64", version: "Kernel 4.11.0-1016-azure" } }, $db: "admin" } numYields:0 reslen:223 locks:{ Global: { acquireCount: { r: 4 } }, Database: { acquireCount: { r: 2 } }, Collection: { acquireCount: { r: 2 } } } protocol:op_query 349ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:55.183+0000 I COMMAND  [conn1] command admin.$cmd appName: "MongoDB Shell" command: whatsmyuri { whatsmyuri: 1, $db: "admin" } numYields:0 reslen:47 locks:{ Global: { acquireCount: { r: 4 } }, Database: { acquireCount: { r: 2 } }, Collection: { acquireCount: { r: 2 } } } protocol:op_msg 197ms
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:55.184+0000 I COMMAND  [conn1] command admin.$cmd appName: "MongoDB Shell" command: whatsmyuri { whatsmyuri: 1, $db: "admin" } numYields:0 reslen:47 locks:{ Global: { acquireCount: { r: 4 } }, Database: { acquireCount: { r: 2 } }, Collection: { acquireCount: { r: 2 } } } protocol:op_msg 198ms
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:55.736+0000 I NETWORK  [conn1] end connection 127.0.0.1:50558 (0 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:55.737+0000 I NETWORK  [conn1] end connection 127.0.0.1:50560 (0 connections now open)
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:58.701+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:50576 #2 (1 connection now open)
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:58.702+0000 I NETWORK  [conn2] received client metadata from 127.0.0.1:50576 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.0" }, os: { type: "Linux", name: "PRETTY_NAME="Debian GNU/Linux 8 (jessie)"", architecture: "x86_64", version: "Kernel 4.11.0-1016-azure" } }
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:58.699+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:50578 #2 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:58.700+0000 I NETWORK  [conn2] received client metadata from 127.0.0.1:50578 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.0" }, os: { type: "Linux", name: "PRETTY_NAME="Debian GNU/Linux 8 (jessie)"", architecture: "x86_64", version: "Kernel 4.11.0-1016-azure" } }
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:58.740+0000 E -        [main] Error loading history file: FileOpenFailed: Unable to fopen() file /home/mongodb/.dbshell: No such file or directory
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:58.741+0000 E -        [main] Error loading history file: FileOpenFailed: Unable to fopen() file /home/mongodb/.dbshell: No such file or directory
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:04:59.333+0000 I COMMAND  [conn2] command admin.$cmd appName: "MongoDB Shell" command: replSetGetStatus { replSetGetStatus: 1.0, forShell: 1.0, $db: "admin" } numYields:0 reslen:106 locks:{ Global: { acquireCount: { r: 4 } }, Database: { acquireCount: { r: 2 } }, Collection: { acquireCount: { r: 2 } } } protocol:op_msg 244ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:04:59.334+0000 I COMMAND  [conn2] command admin.$cmd appName: "MongoDB Shell" command: replSetGetStatus { replSetGetStatus: 1.0, forShell: 1.0, $db: "admin" } numYields:0 reslen:106 locks:{ Global: { acquireCount: { r: 4 } }, Database: { acquireCount: { r: 2 } }, Collection: { acquireCount: { r: 2 } } } protocol:op_msg 244ms
+[35mengine_1           |[0m [2017-12-09 16:04:59 +0000] [1] [INFO] Goin' Fast @ http://0.0.0.0:8000
+[35mengine_1           |[0m [2017-12-09 16:05:03 +0000] [1] [INFO] Starting worker [1]
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:04.332+0000 I WRITE    [conn2] update admin.system.version appName: "MongoDB Shell" command: { q: { _id: "authSchema" }, u: { $set: { currentVersion: 5 } }, multi: false, upsert: true } planSummary: IDHACK keysExamined:0 docsExamined:0 nMatched:0 nModified:0 upsert:1 keysInserted:1 numYields:2 locks:{ Global: { acquireCount: { r: 7, w: 3 } }, Database: { acquireCount: { r: 2, W: 3 }, acquireWaitCount: { W: 1 }, timeAcquiringMicros: { W: 40 } }, Collection: { acquireCount: { r: 2, w: 3 } } } 3754ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:04.333+0000 I COMMAND  [conn2] command admin.$cmd appName: "MongoDB Shell" command: update { update: "system.version", bypassDocumentValidation: false, ordered: true, $db: "admin" } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 7, w: 3 } }, Database: { acquireCount: { r: 2, W: 3 }, acquireWaitCount: { W: 1 }, timeAcquiringMicros: { W: 40 } }, Collection: { acquireCount: { r: 2, w: 3 } } } protocol:op_msg 4145ms
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:04.334+0000 I WRITE    [conn2] update admin.system.version appName: "MongoDB Shell" command: { q: { _id: "authSchema" }, u: { $set: { currentVersion: 5 } }, multi: false, upsert: true } planSummary: IDHACK keysExamined:0 docsExamined:0 nMatched:0 nModified:0 upsert:1 keysInserted:1 numYields:2 locks:{ Global: { acquireCount: { r: 7, w: 3 } }, Database: { acquireCount: { r: 2, W: 3 }, acquireWaitCount: { W: 1 }, timeAcquiringMicros: { W: 29 } }, Collection: { acquireCount: { r: 2, w: 3 } } } 3755ms
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:04.335+0000 I COMMAND  [conn2] command admin.$cmd appName: "MongoDB Shell" command: update { update: "system.version", bypassDocumentValidation: false, ordered: true, $db: "admin" } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 7, w: 3 } }, Database: { acquireCount: { r: 2, W: 3 }, acquireWaitCount: { W: 1 }, timeAcquiringMicros: { W: 29 } }, Collection: { acquireCount: { r: 2, w: 3 } } } protocol:op_msg 4147ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:04.783+0000 I STORAGE  [conn2] createCollection: admin.system.users with generated UUID: 367628fb-2422-4b5e-8dbe-e6e88280b4cd
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:04.784+0000 I STORAGE  [conn2] createCollection: admin.system.users with generated UUID: 2f2a52a2-b018-450c-bced-c47f18573db8
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:09.282+0000 I COMMAND  [conn2] command admin.system.users appName: "MongoDB Shell" command: insert { insert: "system.users", bypassDocumentValidation: false, ordered: true, $db: "admin" } ninserted:1 keysInserted:2 numYields:0 reslen:29 locks:{ Global: { acquireCount: { r: 10, w: 6 } }, Database: { acquireCount: { r: 2, W: 6 }, acquireWaitCount: { W: 1 }, timeAcquiringMicros: { W: 29 } }, Collection: { acquireCount: { r: 2, w: 5 } } } protocol:op_msg 4498ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:09.283+0000 I COMMAND  [conn2] command admin.system.users appName: "MongoDB Shell" command: insert { insert: "system.users", bypassDocumentValidation: false, ordered: true, $db: "admin" } ninserted:1 keysInserted:2 numYields:0 reslen:29 locks:{ Global: { acquireCount: { r: 10, w: 6 } }, Database: { acquireCount: { r: 2, W: 6 }, acquireWaitCount: { W: 1 }, timeAcquiringMicros: { W: 40 } }, Collection: { acquireCount: { r: 2, w: 5 } } } protocol:op_msg 4500ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:09.532+0000 I COMMAND  [conn2] command admin.$cmd appName: "MongoDB Shell" command: createUser { createUser: "admin", pwd: "xxx", roles: [ { role: "root", db: "admin" } ], digestPassword: false, writeConcern: { w: "majority", wtimeout: 600000.0 }, $db: "admin" } numYields:0 reslen:22 locks:{ Global: { acquireCount: { r: 10, w: 6 } }, Database: { acquireCount: { r: 2, W: 6 }, acquireWaitCount: { W: 1 }, timeAcquiringMicros: { W: 40 } }, Collection: { acquireCount: { r: 2, w: 5 } } } protocol:op_msg 10142ms
+[34mmongodb-user_1     |[0m Successfully added user: {
+[34mmongodb-user_1     |[0m 	"user" : "admin",
+[34mmongodb-user_1     |[0m 	"roles" : [
+[34mmongodb-user_1     |[0m 		{
+[34mmongodb-user_1     |[0m 			"role" : "root",
+[34mmongodb-user_1     |[0m 			"db" : "admin"
+[34mmongodb-user_1     |[0m 		}
+[34mmongodb-user_1     |[0m 	]
+[34mmongodb-user_1     |[0m }
+[36mcontent_1          |[0m  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:09.532+0000 I COMMAND  [conn2] command admin.$cmd appName: "MongoDB Shell" command: createUser { createUser: "admin", pwd: "xxx", roles: [ { role: "root", db: "admin" } ], digestPassword: false, writeConcern: { w: "majority", wtimeout: 600000.0 }, $db: "admin" } numYields:0 reslen:22 locks:{ Global: { acquireCount: { r: 10, w: 6 } }, Database: { acquireCount: { r: 2, W: 6 }, acquireWaitCount: { W: 1 }, timeAcquiringMicros: { W: 29 } }, Collection: { acquireCount: { r: 2, w: 5 } } } protocol:op_msg 10142ms
+[33;1mmongodb-content_1  |[0m Successfully added user: {
+[33;1mmongodb-content_1  |[0m 	"user" : "admin",
+[33;1mmongodb-content_1  |[0m 	"roles" : [
+[33;1mmongodb-content_1  |[0m 		{
+[33;1mmongodb-content_1  |[0m 			"role" : "root",
+[33;1mmongodb-content_1  |[0m 			"db" : "admin"
+[33;1mmongodb-content_1  |[0m 		}
+[33;1mmongodb-content_1  |[0m 	]
+[33;1mmongodb-content_1  |[0m }
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:10.233+0000 I COMMAND  [conn2] command admin.$cmd appName: "MongoDB Shell" command: isMaster { isMaster: 1.0, forShell: 1.0, $db: "admin" } numYields:0 reslen:208 locks:{ Global: { acquireCount: { r: 2 } }, Database: { acquireCount: { r: 1 } }, Collection: { acquireCount: { r: 1 } } } protocol:op_msg 299ms
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:10.233+0000 E -        [main] Error saving history file: FileOpenFailed: Unable to open() file /home/mongodb/.dbshell: No such file or directory
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:10.232+0000 I COMMAND  [conn2] command admin.$cmd appName: "MongoDB Shell" command: isMaster { isMaster: 1.0, forShell: 1.0, $db: "admin" } numYields:0 reslen:208 locks:{ Global: { acquireCount: { r: 2 } }, Database: { acquireCount: { r: 1 } }, Collection: { acquireCount: { r: 1 } } } protocol:op_msg 298ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:10.233+0000 E -        [main] Error saving history file: FileOpenFailed: Unable to open() file /home/mongodb/.dbshell: No such file or directory
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:10.289+0000 I NETWORK  [conn2] end connection 127.0.0.1:50576 (0 connections now open)
+[33;1mmongodb-content_1  |[0m 
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:10.290+0000 I NETWORK  [conn2] end connection 127.0.0.1:50578 (0 connections now open)
+[34mmongodb-user_1     |[0m 
+[34mmongodb-user_1     |[0m /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+[34mmongodb-user_1     |[0m 
+[33;1mmongodb-content_1  |[0m /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+[33;1mmongodb-content_1  |[0m 
+[33;1mmongodb-content_1  |[0m killing process with pid: 18
+[34mmongodb-user_1     |[0m killing process with pid: 18
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:21.634+0000 I CONTROL  [signalProcessingThread] got signal 15 (Terminated), will terminate after current cmd ends
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:21.634+0000 I NETWORK  [signalProcessingThread] shutdown: going to close listening sockets...
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:21.633+0000 I CONTROL  [signalProcessingThread] got signal 15 (Terminated), will terminate after current cmd ends
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:21.633+0000 I NETWORK  [signalProcessingThread] shutdown: going to close listening sockets...
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:21.683+0000 I FTDC     [signalProcessingThread] Shutting down full-time diagnostic data capture
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:21.684+0000 I FTDC     [signalProcessingThread] Shutting down full-time diagnostic data capture
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:21.686+0000 I STORAGE  [signalProcessingThread] WiredTigerKVEngine shutting down
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:21.687+0000 I STORAGE  [signalProcessingThread] WiredTigerKVEngine shutting down
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:23.739+0000 I STORAGE  [signalProcessingThread] shutdown: removing fs lock...
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:23.783+0000 I CONTROL  [signalProcessingThread] now exiting
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:23.783+0000 I CONTROL  [signalProcessingThread] shutting down with code:0
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:23.938+0000 I STORAGE  [signalProcessingThread] shutdown: removing fs lock...
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:23.939+0000 I CONTROL  [signalProcessingThread] now exiting
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:23.939+0000 I CONTROL  [signalProcessingThread] shutting down with code:0
+[32muser_1             |[0m WSGI app 0 (mountpoint='') ready in 34 seconds on interpreter 0xf7a6f2bb80 pid: 8 (default app)
+[32muser_1             |[0m *** uWSGI is running in multiple interpreter mode ***
+[32muser_1             |[0m spawned uWSGI master process (pid: 8)
+[32muser_1             |[0m spawned uWSGI worker 1 (pid: 13, cores: 1)
+[32muser_1             |[0m spawned uWSGI worker 2 (pid: 14, cores: 1)
+[34mmongodb-user_1     |[0m 
+[34mmongodb-user_1     |[0m MongoDB init process complete; ready for start up.
+[34mmongodb-user_1     |[0m 
+[33;1mmongodb-content_1  |[0m 
+[33;1mmongodb-content_1  |[0m MongoDB init process complete; ready for start up.
+[33;1mmongodb-content_1  |[0m 
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten] MongoDB starting : pid=1 port=27017 dbpath=/data/db 64-bit host=e6f8df589859
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten] db version v3.6.0
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten] git version: a57d8e71e6998a2d0afde7edc11bd23e5661c915
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1t  3 May 2016
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten] allocator: tcmalloc
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten] modules: none
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten] build environment:
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten]     distmod: debian81
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten]     distarch: x86_64
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten]     target_arch: x86_64
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.783+0000 I CONTROL  [initandlisten] options: { net: { bindIpAll: true }, security: { authorization: "enabled" } }
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten] MongoDB starting : pid=1 port=27017 dbpath=/data/db 64-bit host=bfb3634adbb4
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten] db version v3.6.0
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten] git version: a57d8e71e6998a2d0afde7edc11bd23e5661c915
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1t  3 May 2016
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten] allocator: tcmalloc
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten] modules: none
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten] build environment:
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten]     distmod: debian81
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten]     distarch: x86_64
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten]     target_arch: x86_64
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.785+0000 I CONTROL  [initandlisten] options: { net: { bindIpAll: true }, security: { authorization: "enabled" } }
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.832+0000 I -        [initandlisten] Detected data files in /data/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.832+0000 I -        [initandlisten] Detected data files in /data/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.832+0000 I STORAGE  [initandlisten] 
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.832+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.833+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.834+0000 I STORAGE  [initandlisten] 
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.834+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.834+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:24.834+0000 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=256M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:24.833+0000 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=256M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:30.382+0000 I STORAGE  [initandlisten] WiredTiger message [1512835529:833091][1:0x7fe9c7026a00], txn-recover: Main recovery loop: starting at 1/19456
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:39.782+0000 I STORAGE  [initandlisten] WiredTiger message [1512835538:132680][1:0x7fe9c7026a00], txn-recover: Recovering log 1 through 2
+[34mmongodb-user_1     |[0m 2017-12-09T16:05:44.091+0000 I STORAGE  [initandlisten] WiredTiger message [1512835544:91114][1:0x7fe9c7026a00], txn-recover: Recovering log 2 through 2
+[33mentry_1            |[0m [2017-12-09 16:05:46 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 546, in handle_request
+[33mentry_1            |[0m     handler, args, kwargs, uri = self.router.get(request)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/router.py", line 344, in get
+[33mentry_1            |[0m     return self._get(request.path, request.method, '')
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/router.py", line 393, in _get
+[33mentry_1            |[0m     raise NotFound('Requested URL {} not found'.format(url))
+[33mentry_1            |[0m sanic.exceptions.NotFound: Requested URL /recommendations/user not found
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:05:48 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendations/user  404 52
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:30.382+0000 I STORAGE  [initandlisten] WiredTiger message [1512835529:832874][1:0x7fc659ddaa00], txn-recover: Main recovery loop: starting at 1/19584
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:39.782+0000 I STORAGE  [initandlisten] WiredTiger message [1512835538:132651][1:0x7fc659ddaa00], txn-recover: Recovering log 1 through 2
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:05:44.288+0000 I STORAGE  [initandlisten] WiredTiger message [1512835544:288365][1:0x7fc659ddaa00], txn-recover: Recovering log 2 through 2
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:06:01.032+0000 I CONTROL  [initandlisten] 
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:06:01.032+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:06:01.032+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+[34mmongodb-user_1     |[0m 2017-12-09T16:06:01.032+0000 I CONTROL  [initandlisten] 
+[34mmongodb-user_1     |[0m 2017-12-09T16:06:01.032+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+[34mmongodb-user_1     |[0m 2017-12-09T16:06:01.032+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+[34mmongodb-user_1     |[0m 2017-12-09T16:06:01.133+0000 I CONTROL  [initandlisten] 
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:06:01.133+0000 I CONTROL  [initandlisten] 
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:06:05.832+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+[34mmongodb-user_1     |[0m 2017-12-09T16:06:05.832+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+[34mmongodb-user_1     |[0m 2017-12-09T16:06:05.982+0000 I NETWORK  [initandlisten] waiting for connections on port 27017
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:06:05.982+0000 I NETWORK  [initandlisten] waiting for connections on port 27017
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:06:10.443+0000 I NETWORK  [listener] connection accepted from 172.21.0.2:35718 #1 (1 connection now open)
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:06:10.482+0000 I NETWORK  [conn1] received client metadata from 172.21.0.2:35718 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:16.943564Z 1 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:16.943722Z 1 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:16.943752Z 1 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:16.943793Z 1 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:16.943810Z 1 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:16.943827Z 1 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:16.943879Z 1 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:16.943898Z 1 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m Database initialized
+[36;1mmysqldb_1          |[0m Initializing certificates
+[36;1mmysqldb_1          |[0m Generating a 2048 bit RSA private key
+[36;1mmysqldb_1          |[0m .....................................................+++
+[36;1mmysqldb_1          |[0m .......................................................................+++
+[36;1mmysqldb_1          |[0m unable to write 'random state'
+[36;1mmysqldb_1          |[0m writing new private key to 'ca-key.pem'
+[36;1mmysqldb_1          |[0m -----
+[36;1mmysqldb_1          |[0m Generating a 2048 bit RSA private key
+[36;1mmysqldb_1          |[0m .........................................................................+++
+[36;1mmysqldb_1          |[0m .......+++
+[36;1mmysqldb_1          |[0m unable to write 'random state'
+[36;1mmysqldb_1          |[0m writing new private key to 'server-key.pem'
+[36;1mmysqldb_1          |[0m -----
+[36;1mmysqldb_1          |[0m Generating a 2048 bit RSA private key
+[36;1mmysqldb_1          |[0m .........+++
+[36;1mmysqldb_1          |[0m ......................................................+++
+[36;1mmysqldb_1          |[0m unable to write 'random state'
+[36;1mmysqldb_1          |[0m writing new private key to 'client-key.pem'
+[36;1mmysqldb_1          |[0m -----
+[36;1mmysqldb_1          |[0m Certificates initialized
+[36;1mmysqldb_1          |[0m MySQL init process in progress...
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.033467Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.083539Z 0 [Note] mysqld (mysqld 5.7.20) starting as process 88 ...
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.734102Z 0 [Note] InnoDB: PUNCH HOLE support available
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.734182Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.734196Z 0 [Note] InnoDB: Uses event mutexes
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.734208Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.734217Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.3
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.734226Z 0 [Note] InnoDB: Using Linux native AIO
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.735360Z 0 [Note] InnoDB: Number of pools: 1
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.735728Z 0 [Note] InnoDB: Using CPU crc32 instructions
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.738465Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.755157Z 0 [Note] InnoDB: Completed initialization of buffer pool
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:29.761042Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:30.732738Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+[36;1mmysqldb_1          |[0m MySQL init process in progress...
+[36;1mmysqldb_1          |[0m MySQL init process in progress...
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:33.033025Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:33.033143Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+[36;1mmysqldb_1          |[0m MySQL init process in progress...
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:38.597080Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:38.632670Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:38.632693Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:38.633151Z 0 [Note] InnoDB: Waiting for purge to start
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:38.732064Z 0 [Note] InnoDB: page_cleaner: 1000ms intended loop took 8971ms. The settings might not be optimal. (flushed=0 and evicted=0, during the time.)
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:38.732801Z 0 [Note] InnoDB: 5.7.20 started; log sequence number 2566927
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:38.733354Z 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:38.782191Z 0 [Note] Plugin 'FEDERATED' is disabled.
+[36;1mmysqldb_1          |[0m MySQL init process in progress...
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:40.382151Z 0 [Note] InnoDB: Buffer pool(s) load completed at 171209 16:06:40
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:40.832427Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:40.882996Z 0 [Warning] CA certificate ca.pem is self signed.
+[36;1mmysqldb_1          |[0m MySQL init process in progress...
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:41.283207Z 0 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:41.283866Z 0 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:41.283914Z 0 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:41.284411Z 0 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:41.284448Z 0 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:41.284581Z 0 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:41.532729Z 0 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:41.532825Z 0 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:42.135512Z 0 [Note] Event Scheduler: Loaded 0 events
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:42.136196Z 0 [Note] mysqld: ready for connections.
+[36;1mmysqldb_1          |[0m Version: '5.7.20'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server (GPL)
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:42.136229Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check. 
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:42.136240Z 0 [Note] Beginning of list of non-natively partitioned tables
+[36;1mmysqldb_1          |[0m 2017-12-09T16:06:44.136204Z 0 [Note] End of list of non-natively partitioned tables
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:07:04.182+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54368 #1 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:07:04.282+0000 I NETWORK  [conn1] received client metadata from 172.20.0.2:54368 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:07:04.334+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54376 #2 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:07:04.335+0000 I NETWORK  [conn2] received client metadata from 172.20.0.2:54376 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[36;1mmysqldb_1          |[0m Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+[36;1mmysqldb_1          |[0m Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+[34mmongodb-user_1     |[0m 2017-12-09T16:07:05.683+0000 I COMMAND  [conn2] command admin.system.users command: saslStart { saslStart: 1, mechanism: "SCRAM-SHA-1", payload: "xxx", autoAuthorize: 1, $db: "admin" } numYields:0 reslen:167 locks:{ Global: { acquireCount: { r: 2 } }, Database: { acquireCount: { r: 1 } }, Collection: { acquireCount: { r: 1 } } } protocol:op_query 1250ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:07:06.782+0000 I COMMAND  [conn2] command admin.$cmd command: saslContinue { saslContinue: 1, conversationId: 1, payload: BinData(0, 633D626977732C723D4F5441774D5467314D7A6B794E546B324D7A4979366F493135516350357A42764B4F324D573349456B487436746268324E3177712C703D4A4658514A68...), $db: "admin" } numYields:0 reslen:108 locks:{} protocol:op_query 622ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:07:06.784+0000 I ACCESS   [conn2] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:07:07.131+0000 I COMMAND  [conn2] command kiwi_users.users command: find { find: "users", filter: { username: "user" }, limit: 1, singleBatch: true, lsid: { id: UUID("7cd9b913-6360-4dbd-bae0-8c740f725cb4") }, $readPreference: { mode: "secondaryPreferred" }, $db: "kiwi_users" } planSummary: EOF keysExamined:0 docsExamined:0 cursorExhausted:1 numYields:0 nreturned:0 reslen:104 locks:{ Global: { acquireCount: { r: 2 } }, Database: { acquireCount: { r: 1 } }, Collection: { acquireCount: { r: 1 } } } protocol:op_query 149ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:07:07.134+0000 I NETWORK  [conn1] end connection 172.20.0.2:54368 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:07:07.135+0000 I NETWORK  [conn2] end connection 172.20.0.2:54376 (0 connections now open)
+[32muser_1             |[0m [pid: 14|app: 0|req: 1/1] 172.20.0.3 () {34 vars in 408 bytes} [Sat Dec  9 16:06:57 2017] GET /authenticate/user => generated 21 bytes in 9600 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:07:07 +0000] "GET /authenticate/user HTTP/1.1" 200 21 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[33mentry_1            |[0m [2017-12-09 16:07:07 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/user  401 34
+[36;1mmysqldb_1          |[0m 2017-12-09T16:07:46.281599Z 0 [Note] InnoDB: page_cleaner: 1000ms intended loop took 32547ms. The settings might not be optimal. (flushed=3 and evicted=0, during the time.)
+[36;1mmysqldb_1          |[0m Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:03.981688Z 5 [Warning] 'user' entry 'root@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:03.985028Z 5 [Warning] 'user' entry 'mysql.session@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:03.985057Z 5 [Warning] 'user' entry 'mysql.sys@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:03.985094Z 5 [Warning] 'db' entry 'performance_schema mysql.session@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:03.985098Z 5 [Warning] 'db' entry 'sys mysql.sys@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:03.985105Z 5 [Warning] 'proxies_priv' entry '@ root@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:03.985201Z 5 [Warning] 'tables_priv' entry 'user mysql.session@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:03.985209Z 5 [Warning] 'tables_priv' entry 'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+[36;1mmysqldb_1          |[0m 
+[36;1mmysqldb_1          |[0m /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/script.sql
+[36;1mmysqldb_1          |[0m mysql: [Warning] Using a password on the command line interface can be insecure.
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:08:06.731+0000 I COMMAND  [PeriodicTaskRunner] task: DBConnectionPool-cleaner took: 150ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:06.731+0000 I COMMAND  [PeriodicTaskRunner] task: DBConnectionPool-cleaner took: 149ms
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:15.582+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54434 #3 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:16.531+0000 I NETWORK  [conn3] received client metadata from 172.20.0.2:54434 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:16.735+0000 I COMMAND  [conn3] command admin.$cmd command: isMaster { ismaster: 1, client: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }, $db: "admin" } numYields:0 reslen:223 locks:{} protocol:op_query 450ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:16.892+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54436 #4 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:16.893+0000 I NETWORK  [conn4] received client metadata from 172.20.0.2:54436 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:22.389+0000 I COMMAND  [conn4] command admin.system.users command: saslStart { saslStart: 1, mechanism: "SCRAM-SHA-1", payload: "xxx", autoAuthorize: 1, $db: "admin" } numYields:0 reslen:171 locks:{ Global: { acquireCount: { r: 2 } }, Database: { acquireCount: { r: 1 } }, Collection: { acquireCount: { r: 1 } } } protocol:op_query 5399ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:22.933+0000 I ACCESS   [conn4] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:23.382+0000 I COMMAND  [conn4] command kiwi_users.users command: find { find: "users", filter: { username: "user" }, limit: 1, singleBatch: true, lsid: { id: UUID("12b800d2-f14c-48d1-a37f-5a90ab80f79a") }, $readPreference: { mode: "secondaryPreferred" }, $db: "kiwi_users" } planSummary: EOF keysExamined:0 docsExamined:0 cursorExhausted:1 numYields:0 nreturned:0 reslen:104 locks:{ Global: { acquireCount: { r: 2 } }, Database: { acquireCount: { r: 1 } }, Collection: { acquireCount: { r: 1 } } } protocol:op_query 350ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:23.782+0000 I NETWORK  [conn3] end connection 172.20.0.2:54434 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:08:23.784+0000 I NETWORK  [conn4] end connection 172.20.0.2:54436 (0 connections now open)
+[33mentry_1            |[0m [2017-12-09 16:08:26 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/user  401 34
+[36;1mmysqldb_1          |[0m 
+[36;1mmysqldb_1          |[0m 
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.133531Z 0 [Note] Giving 0 client threads a chance to die gracefully
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.133615Z 0 [Note] Shutting down slave threads
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.133632Z 0 [Note] Forcefully disconnecting 0 remaining clients
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.232871Z 0 [Note] Event Scheduler: Purging the queue. 0 events
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.583102Z 0 [Note] Binlog end
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.632299Z 0 [Note] Shutting down plugin 'ngram'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.632337Z 0 [Note] Shutting down plugin 'BLACKHOLE'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.681247Z 0 [Note] Shutting down plugin 'partition'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.681271Z 0 [Note] Shutting down plugin 'ARCHIVE'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.681274Z 0 [Note] Shutting down plugin 'INNODB_SYS_VIRTUAL'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682373Z 0 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682398Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682400Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682402Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682420Z 0 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682421Z 0 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682423Z 0 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682424Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682425Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682427Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682428Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682429Z 0 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682430Z 0 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682431Z 0 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682433Z 0 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682434Z 0 [Note] Shutting down plugin 'INNODB_METRICS'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682435Z 0 [Note] Shutting down plugin 'INNODB_TEMP_TABLE_INFO'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682436Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682437Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682438Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682440Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682441Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682442Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682443Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682445Z 0 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682446Z 0 [Note] Shutting down plugin 'INNODB_CMP'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682447Z 0 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682449Z 0 [Note] Shutting down plugin 'INNODB_LOCKS'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682450Z 0 [Note] Shutting down plugin 'INNODB_TRX'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:30.682451Z 0 [Note] Shutting down plugin 'InnoDB'
+[32muser_1             |[0m [pid: 13|app: 0|req: 1/2] 172.20.0.3 () {34 vars in 408 bytes} [Sat Dec  9 16:08:07 2017] GET /authenticate/user => generated 21 bytes in 16750 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:08:24 +0000] "GET /authenticate/user HTTP/1.1" 200 21 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:31.281983Z 0 [Note] InnoDB: FTS optimize thread exiting.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:31.283064Z 0 [Note] InnoDB: Starting shutdown...
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:31.432153Z 0 [Note] InnoDB: Dumping buffer pool(s) to /var/lib/mysql/ib_buffer_pool
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:31.531296Z 0 [Note] InnoDB: Buffer pool(s) dump completed at 171209 16:08:31
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.706444Z 0 [Note] InnoDB: Shutdown completed; log sequence number 12188625
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.707220Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.707266Z 0 [Note] Shutting down plugin 'MRG_MYISAM'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.707286Z 0 [Note] Shutting down plugin 'MyISAM'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.707307Z 0 [Note] Shutting down plugin 'CSV'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.707318Z 0 [Note] Shutting down plugin 'MEMORY'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.731492Z 0 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.731557Z 0 [Note] Shutting down plugin 'sha256_password'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.731570Z 0 [Note] Shutting down plugin 'mysql_native_password'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.731778Z 0 [Note] Shutting down plugin 'binlog'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:32.831425Z 0 [Note] mysqld: Shutdown complete
+[36;1mmysqldb_1          |[0m 
+[36;1mmysqldb_1          |[0m 
+[36;1mmysqldb_1          |[0m MySQL init process done. Ready for start up.
+[36;1mmysqldb_1          |[0m 
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.326227Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.332768Z 0 [Note] mysqld (mysqld 5.7.20) starting as process 1 ...
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.882785Z 0 [Note] InnoDB: PUNCH HOLE support available
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.882805Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.882807Z 0 [Note] InnoDB: Uses event mutexes
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.882809Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.882811Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.3
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.882813Z 0 [Note] InnoDB: Using Linux native AIO
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.883058Z 0 [Note] InnoDB: Number of pools: 1
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.883501Z 0 [Note] InnoDB: Using CPU crc32 instructions
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935048Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935149Z 0 [ERROR] InnoDB: mmap(137428992 bytes) failed; errno 12
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935255Z 0 [ERROR] InnoDB: Cannot allocate memory for the buffer pool
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935271Z 0 [ERROR] InnoDB: Plugin initialization aborted with error Generic error
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935284Z 0 [ERROR] Plugin 'InnoDB' init function returned error.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935310Z 0 [ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935322Z 0 [ERROR] Failed to initialize plugins.
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935331Z 0 [ERROR] Aborting
+[36;1mmysqldb_1          |[0m 
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935341Z 0 [Note] Binlog end
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935400Z 0 [Note] Shutting down plugin 'MyISAM'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.935421Z 0 [Note] Shutting down plugin 'CSV'
+[36;1mmysqldb_1          |[0m 2017-12-09T16:08:35.936995Z 0 [Note] mysqld: Shutdown complete
+[36;1mmysqldb_1          |[0m 
+[36;1mkiwi_mysqldb_1 exited with code 1
+[0m[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:21.431+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54558 #5 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:21.581+0000 I NETWORK  [conn5] received client metadata from 172.20.0.2:54558 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:21.583+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54560 #6 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:21.583+0000 I NETWORK  [conn6] received client metadata from 172.20.0.2:54560 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:21.594+0000 I ACCESS   [conn6] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:21.596+0000 I NETWORK  [conn6] end connection 172.20.0.2:54560 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:21.597+0000 I NETWORK  [conn5] end connection 172.20.0.2:54558 (0 connections now open)
+[33mentry_1            |[0m [2017-12-09 16:09:21 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/users/bubblegumsoldier  401 27
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:09:21 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 21 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 2/3] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:09:21 2017] GET /authenticate/bubblegumsoldier => generated 21 bytes in 565 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[33mentry_1            |[0m [2017-12-09 16:09:26 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:27.693+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54574 #7 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:27.693+0000 I NETWORK  [conn7] received client metadata from 172.20.0.2:54574 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:27.697+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54576 #8 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:27.697+0000 I NETWORK  [conn8] received client metadata from 172.20.0.2:54576 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:27.709+0000 I ACCESS   [conn8] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:27.934+0000 I STORAGE  [conn8] createCollection: kiwi_users.users with generated UUID: b6f6a6ad-4a8b-47b0-a89e-6e612d5f22be
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.431+0000 I COMMAND  [conn8] command kiwi_users.users command: insert { insert: "users", ordered: true, lsid: { id: UUID("cc2d0a92-c616-464e-be68-4ee5eb5a61e7") }, $db: "kiwi_users" } ninserted:1 keysInserted:1 numYields:0 reslen:44 locks:{ Global: { acquireCount: { r: 5, w: 3 } }, Database: { acquireCount: { r: 1, w: 2, W: 1 } }, Collection: { acquireCount: { r: 1, w: 2 } } } protocol:op_query 550ms
+[33mentry_1            |[0m [2017-12-09 16:09:28 +0000] - (sanic.access)[INFO][1:9]: POST http://recommsys.northeurope.cloudapp.azure.com:8080/users/bubblegumsoldier  201 27
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:09:28 +0000] "GET /register/bubblegumsoldier HTTP/1.1" 200 22 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 3/4] 172.20.0.3 () {34 vars in 424 bytes} [Sat Dec  9 16:09:27 2017] GET /register/bubblegumsoldier => generated 22 bytes in 742 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.435+0000 I NETWORK  [conn7] end connection 172.20.0.2:54574 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.436+0000 I NETWORK  [conn8] end connection 172.20.0.2:54576 (0 connections now open)
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.596+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54578 #9 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.597+0000 I NETWORK  [conn9] received client metadata from 172.20.0.2:54578 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.599+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54580 #10 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.600+0000 I NETWORK  [conn10] received client metadata from 172.20.0.2:54580 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.612+0000 I ACCESS   [conn10] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.631+0000 I NETWORK  [conn10] end connection 172.20.0.2:54580 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.632+0000 I NETWORK  [conn9] end connection 172.20.0.2:54578 (0 connections now open)
+[33mentry_1            |[0m [2017-12-09 16:09:28 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/users/bubblegumsoldier  200 27
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:09:28 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 20 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 14|app: 0|req: 2/5] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:09:28 2017] GET /authenticate/bubblegumsoldier => generated 20 bytes in 39 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.714+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54582 #11 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.714+0000 I NETWORK  [conn11] received client metadata from 172.20.0.2:54582 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.717+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54584 #12 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.717+0000 I NETWORK  [conn12] received client metadata from 172.20.0.2:54584 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.728+0000 I ACCESS   [conn12] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.730+0000 I NETWORK  [conn12] end connection 172.20.0.2:54584 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:09:28.730+0000 I NETWORK  [conn11] end connection 172.20.0.2:54582 (0 connections now open)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:09:28 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 20 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 4/6] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:09:28 2017] GET /authenticate/bubblegumsoldier => generated 20 bytes in 20 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[31mrandom_1           |[0m [2017-12-09 16:09:31 +0000] [8] [ERROR] OperationalError(2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 465, in _connect
+[31mrandom_1           |[0m     loop=self._loop)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/asyncio/streams.py", line 75, in open_connection
+[31mrandom_1           |[0m     lambda: protocol, host, port, **kwds)
+[31mrandom_1           |[0m   File "uvloop/loop.pyx", line 1675, in create_connection
+[31mrandom_1           |[0m socket.gaierror: [Errno -2] Name or service not known
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m The above exception was the direct cause of the following exception:
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/var/www/kiwi/Logging.py", line 8, in helper
+[31mrandom_1           |[0m     return await func(*args, **kwargs)
+[31mrandom_1           |[0m   File "kiwi/app.py", line 23, in recommend
+[31mrandom_1           |[0m     pictures = await recommend_for(args['user'], int(args.get('count', 10)))
+[31mrandom_1           |[0m   File "/var/www/kiwi/recommender/recommend.py", line 7, in recommend_for
+[31mrandom_1           |[0m     async with DataAccessor(pool_count=3) as accessor:
+[31mrandom_1           |[0m   File "/var/www/kiwi/database/DataAccessor.py", line 33, in __aenter__
+[31mrandom_1           |[0m     self.pool = await create_pool(**CONNECTION, maxsize=self.pool_count)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 75, in __await__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 30, in _create_pool
+[31mrandom_1           |[0m     yield from pool._fill_free_pool(False)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 173, in _fill_free_pool
+[31mrandom_1           |[0m     **self._conn_kwargs)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 70, in __iter__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 78, in _connect
+[31mrandom_1           |[0m     yield from conn._connect()
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 496, in _connect
+[31mrandom_1           |[0m     self._host) from e
+[31mrandom_1           |[0m pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m [2017-12-09 16:09:31 +0000] - (sanic.access)[INFO][1:7]: GET http://random:8000/recommendation?user=bubblegumsoldier&count=10  500 61
+[35mengine_1           |[0m [2017-12-09 16:09:31 +0000] [1] [ERROR] Traceback (most recent call last):
+[35mengine_1           |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[35mengine_1           |[0m     response = await response
+[35mengine_1           |[0m   File "kiwi/app.py", line 22, in images
+[35mengine_1           |[0m     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
+[35mengine_1           |[0m KeyError: 'unvoted'
+[35mengine_1           |[0m 
+[35mengine_1           |[0m [2017-12-09 16:09:31 +0000] - (sanic.access)[INFO][1:7]: POST http://engine:8000/recommendation  500 144
+[33mentry_1            |[0m [2017-12-09 16:09:31 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[33mentry_1            |[0m     response = await response
+[33mentry_1            |[0m   File "kiwi/app.py", line 37, in recommendation
+[33mentry_1            |[0m     response = await recommender_router.recommend(app.http_session, user, count)
+[33mentry_1            |[0m   File "/var/www/kiwi/RecommenderRouter.py", line 16, in recommend
+[33mentry_1            |[0m     abort(response.status)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/exceptions.py", line 282, in abort
+[33mentry_1            |[0m     raise sanic_exception(message=message, status_code=status_code)
+[33mentry_1            |[0m sanic.exceptions.ServerError: Internal Server Error
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:09:31 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/bubblegumsoldier/10  500 28
+[31mrandom_1           |[0m [2017-12-09 16:09:36 +0000] [8] [INFO] KeepAlive Timeout. Closing connection.
+[35mengine_1           |[0m [2017-12-09 16:09:36 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[33mentry_1            |[0m [2017-12-09 16:09:36 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:10:08.875+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54664 #13 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:10:08.876+0000 I NETWORK  [conn13] received client metadata from 172.20.0.2:54664 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:10:08.878+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54666 #14 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:10:08.879+0000 I NETWORK  [conn14] received client metadata from 172.20.0.2:54666 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:10:08.891+0000 I ACCESS   [conn14] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:10:08.892+0000 I NETWORK  [conn14] end connection 172.20.0.2:54666 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:10:08.892+0000 I NETWORK  [conn13] end connection 172.20.0.2:54664 (0 connections now open)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:10:08 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 20 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 5/7] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:10:08 2017] GET /authenticate/bubblegumsoldier => generated 20 bytes in 20 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[31mrandom_1           |[0m [2017-12-09 16:10:08 +0000] [6] [ERROR] OperationalError(2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 465, in _connect
+[31mrandom_1           |[0m     loop=self._loop)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/asyncio/streams.py", line 75, in open_connection
+[31mrandom_1           |[0m     lambda: protocol, host, port, **kwds)
+[31mrandom_1           |[0m   File "uvloop/loop.pyx", line 1675, in create_connection
+[31mrandom_1           |[0m socket.gaierror: [Errno -2] Name or service not known
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m The above exception was the direct cause of the following exception:
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/var/www/kiwi/Logging.py", line 8, in helper
+[31mrandom_1           |[0m     return await func(*args, **kwargs)
+[31mrandom_1           |[0m   File "kiwi/app.py", line 23, in recommend
+[31mrandom_1           |[0m     pictures = await recommend_for(args['user'], int(args.get('count', 10)))
+[31mrandom_1           |[0m   File "/var/www/kiwi/recommender/recommend.py", line 7, in recommend_for
+[31mrandom_1           |[0m     async with DataAccessor(pool_count=3) as accessor:
+[31mrandom_1           |[0m   File "/var/www/kiwi/database/DataAccessor.py", line 33, in __aenter__
+[31mrandom_1           |[0m     self.pool = await create_pool(**CONNECTION, maxsize=self.pool_count)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 75, in __await__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 30, in _create_pool
+[31mrandom_1           |[0m     yield from pool._fill_free_pool(False)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 173, in _fill_free_pool
+[31mrandom_1           |[0m     **self._conn_kwargs)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 70, in __iter__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 78, in _connect
+[31mrandom_1           |[0m     yield from conn._connect()
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 496, in _connect
+[31mrandom_1           |[0m     self._host) from e
+[31mrandom_1           |[0m pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m [2017-12-09 16:10:08 +0000] - (sanic.access)[INFO][1:7]: GET http://random:8000/recommendation?user=bubblegumsoldier&count=10  500 61
+[35mengine_1           |[0m [2017-12-09 16:10:08 +0000] [1] [ERROR] Traceback (most recent call last):
+[35mengine_1           |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[35mengine_1           |[0m     response = await response
+[35mengine_1           |[0m   File "kiwi/app.py", line 22, in images
+[35mengine_1           |[0m     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
+[35mengine_1           |[0m KeyError: 'unvoted'
+[35mengine_1           |[0m 
+[35mengine_1           |[0m [2017-12-09 16:10:08 +0000] - (sanic.access)[INFO][1:7]: POST http://engine:8000/recommendation  500 144
+[33mentry_1            |[0m [2017-12-09 16:10:08 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[33mentry_1            |[0m     response = await response
+[33mentry_1            |[0m   File "kiwi/app.py", line 37, in recommendation
+[33mentry_1            |[0m     response = await recommender_router.recommend(app.http_session, user, count)
+[33mentry_1            |[0m   File "/var/www/kiwi/RecommenderRouter.py", line 16, in recommend
+[33mentry_1            |[0m     abort(response.status)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/exceptions.py", line 282, in abort
+[33mentry_1            |[0m     raise sanic_exception(message=message, status_code=status_code)
+[33mentry_1            |[0m sanic.exceptions.ServerError: Internal Server Error
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:10:08 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/bubblegumsoldier/10  500 28
+[31mrandom_1           |[0m [2017-12-09 16:10:13 +0000] [6] [INFO] KeepAlive Timeout. Closing connection.
+[35mengine_1           |[0m [2017-12-09 16:10:13 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[33mentry_1            |[0m [2017-12-09 16:10:13 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:11:05.934+0000 I STORAGE  [thread2] createCollection: config.system.sessions with generated UUID: 995cc3bc-847b-4e8b-ad7f-4ec00fac9fdc
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:05.932+0000 I STORAGE  [thread15] createCollection: config.system.sessions with generated UUID: 08df5669-04f4-4690-a9cb-813cfaf68709
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:06.186+0000 I INDEX    [thread15] build index on: config.system.sessions properties: { v: 2, key: { lastUse: 1 }, name: "lsidTTLIndex", ns: "config.system.sessions", expireAfterSeconds: 1800 }
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:06.187+0000 I INDEX    [thread15] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:11:06.191+0000 I INDEX    [thread2] build index on: config.system.sessions properties: { v: 2, key: { lastUse: 1 }, name: "lsidTTLIndex", ns: "config.system.sessions", expireAfterSeconds: 1800 }
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:11:06.191+0000 I INDEX    [thread2] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:06.232+0000 I INDEX    [thread15] build index done.  scanned 0 total records. 0 secs
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:06.233+0000 I COMMAND  [thread15] command config.$cmd command: createIndexes { createIndexes: "system.sessions", indexes: [ { key: { lastUse: 1 }, name: "lsidTTLIndex", expireAfterSeconds: 1800 } ], $db: "config" } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 1, w: 1 } }, Database: { acquireCount: { W: 1 } }, Collection: { acquireCount: { w: 1 } } } protocol:op_msg 300ms
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:11:06.233+0000 I INDEX    [thread2] build index done.  scanned 0 total records. 0 secs
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:11:06.234+0000 I COMMAND  [thread2] command config.$cmd command: createIndexes { createIndexes: "system.sessions", indexes: [ { key: { lastUse: 1 }, name: "lsidTTLIndex", expireAfterSeconds: 1800 } ], $db: "config" } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 1, w: 1 } }, Database: { acquireCount: { W: 1 } }, Collection: { acquireCount: { w: 1 } } } protocol:op_msg 299ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:06.481+0000 I WRITE    [thread15] update config.system.sessions command: { q: { _id: { id: UUID("cc2d0a92-c616-464e-be68-4ee5eb5a61e7"), uid: BinData(0, 3B408CB48548B5037822C10EB0976B3CBF2CEE3BF9C708796BF03941FBECD80F) } }, u: { $currentDate: { lastUse: true }, $setOnInsert: { user: { name: "admin@admin" } } }, multi: false, upsert: true } planSummary: IDHACK keysExamined:0 docsExamined:0 nMatched:0 nModified:0 upsert:1 keysInserted:2 numYields:0 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 1, W: 1 } }, Collection: { acquireCount: { w: 2 } } } 200ms
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:06.483+0000 I COMMAND  [thread15] command config.$cmd command: update { update: "system.sessions", ordered: false, allowImplicitCollectionCreation: false, $db: "config" } numYields:0 reslen:731 locks:{ Global: { acquireCount: { r: 8, w: 8 } }, Database: { acquireCount: { w: 7, W: 1 } }, Collection: { acquireCount: { w: 8 } } } protocol:op_msg 201ms
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:17.981+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54800 #15 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:17.982+0000 I NETWORK  [conn15] received client metadata from 172.20.0.2:54800 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:17.984+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:54802 #16 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:17.985+0000 I NETWORK  [conn16] received client metadata from 172.20.0.2:54802 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:17.997+0000 I ACCESS   [conn16] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:17.998+0000 I NETWORK  [conn16] end connection 172.20.0.2:54802 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:11:17.999+0000 I NETWORK  [conn15] end connection 172.20.0.2:54800 (0 connections now open)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:11:18 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 20 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 6/8] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:11:17 2017] GET /authenticate/bubblegumsoldier => generated 20 bytes in 21 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[31mrandom_1           |[0m [2017-12-09 16:11:18 +0000] [7] [ERROR] OperationalError(2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 465, in _connect
+[31mrandom_1           |[0m     loop=self._loop)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/asyncio/streams.py", line 75, in open_connection
+[31mrandom_1           |[0m     lambda: protocol, host, port, **kwds)
+[31mrandom_1           |[0m   File "uvloop/loop.pyx", line 1675, in create_connection
+[31mrandom_1           |[0m socket.gaierror: [Errno -2] Name or service not known
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m The above exception was the direct cause of the following exception:
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/var/www/kiwi/Logging.py", line 8, in helper
+[31mrandom_1           |[0m     return await func(*args, **kwargs)
+[31mrandom_1           |[0m   File "kiwi/app.py", line 23, in recommend
+[31mrandom_1           |[0m     pictures = await recommend_for(args['user'], int(args.get('count', 10)))
+[31mrandom_1           |[0m   File "/var/www/kiwi/recommender/recommend.py", line 7, in recommend_for
+[31mrandom_1           |[0m     async with DataAccessor(pool_count=3) as accessor:
+[31mrandom_1           |[0m   File "/var/www/kiwi/database/DataAccessor.py", line 33, in __aenter__
+[31mrandom_1           |[0m     self.pool = await create_pool(**CONNECTION, maxsize=self.pool_count)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 75, in __await__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 30, in _create_pool
+[31mrandom_1           |[0m     yield from pool._fill_free_pool(False)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 173, in _fill_free_pool
+[31mrandom_1           |[0m     **self._conn_kwargs)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 70, in __iter__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 78, in _connect
+[31mrandom_1           |[0m     yield from conn._connect()
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 496, in _connect
+[31mrandom_1           |[0m     self._host) from e
+[31mrandom_1           |[0m pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m [2017-12-09 16:11:18 +0000] - (sanic.access)[INFO][1:7]: GET http://random:8000/recommendation?user=bubblegumsoldier&count=10  500 61
+[35mengine_1           |[0m [2017-12-09 16:11:18 +0000] [1] [ERROR] Traceback (most recent call last):
+[35mengine_1           |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[35mengine_1           |[0m     response = await response
+[35mengine_1           |[0m   File "kiwi/app.py", line 22, in images
+[35mengine_1           |[0m     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
+[35mengine_1           |[0m KeyError: 'unvoted'
+[35mengine_1           |[0m 
+[35mengine_1           |[0m [2017-12-09 16:11:18 +0000] - (sanic.access)[INFO][1:7]: POST http://engine:8000/recommendation  500 144
+[33mentry_1            |[0m [2017-12-09 16:11:18 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[33mentry_1            |[0m     response = await response
+[33mentry_1            |[0m   File "kiwi/app.py", line 37, in recommendation
+[33mentry_1            |[0m     response = await recommender_router.recommend(app.http_session, user, count)
+[33mentry_1            |[0m   File "/var/www/kiwi/RecommenderRouter.py", line 16, in recommend
+[33mentry_1            |[0m     abort(response.status)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/exceptions.py", line 282, in abort
+[33mentry_1            |[0m     raise sanic_exception(message=message, status_code=status_code)
+[33mentry_1            |[0m sanic.exceptions.ServerError: Internal Server Error
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:11:18 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/bubblegumsoldier/10  500 28
+[33mentry_1            |[0m [2017-12-09 16:11:19 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 546, in handle_request
+[33mentry_1            |[0m     handler, args, kwargs, uri = self.router.get(request)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/router.py", line 344, in get
+[33mentry_1            |[0m     return self._get(request.path, request.method, '')
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/router.py", line 393, in _get
+[33mentry_1            |[0m     raise NotFound('Requested URL {} not found'.format(url))
+[33mentry_1            |[0m sanic.exceptions.NotFound: Requested URL /favicon.ico not found
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:11:19 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/favicon.ico  404 43
+[31mrandom_1           |[0m [2017-12-09 16:11:23 +0000] [7] [INFO] KeepAlive Timeout. Closing connection.
+[35mengine_1           |[0m [2017-12-09 16:11:23 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[33mentry_1            |[0m [2017-12-09 16:11:24 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[33mentry_1            |[0m [2017-12-09 16:12:18 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/server.py", line 162, in request_timeout_callback
+[33mentry_1            |[0m     raise RequestTimeout('Request Timeout')
+[33mentry_1            |[0m sanic.exceptions.RequestTimeout: Request Timeout
+[33mentry_1            |[0m 
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:35.978+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56436 #17 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:35.979+0000 I NETWORK  [conn17] received client metadata from 172.20.0.2:56436 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:35.981+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56438 #18 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:35.982+0000 I NETWORK  [conn18] received client metadata from 172.20.0.2:56438 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:35.996+0000 I ACCESS   [conn18] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:35.997+0000 I NETWORK  [conn18] end connection 172.20.0.2:56438 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:35.998+0000 I NETWORK  [conn17] end connection 172.20.0.2:56436 (0 connections now open)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:26:35 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 20 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 7/9] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:26:35 2017] GET /authenticate/bubblegumsoldier => generated 20 bytes in 23 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[31mrandom_1           |[0m [2017-12-09 16:26:36 +0000] [6] [ERROR] OperationalError(2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 465, in _connect
+[31mrandom_1           |[0m     loop=self._loop)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/asyncio/streams.py", line 75, in open_connection
+[31mrandom_1           |[0m     lambda: protocol, host, port, **kwds)
+[31mrandom_1           |[0m   File "uvloop/loop.pyx", line 1675, in create_connection
+[31mrandom_1           |[0m socket.gaierror: [Errno -2] Name or service not known
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m The above exception was the direct cause of the following exception:
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/var/www/kiwi/Logging.py", line 8, in helper
+[31mrandom_1           |[0m     return await func(*args, **kwargs)
+[31mrandom_1           |[0m   File "kiwi/app.py", line 23, in recommend
+[31mrandom_1           |[0m     pictures = await recommend_for(args['user'], int(args.get('count', 10)))
+[31mrandom_1           |[0m   File "/var/www/kiwi/recommender/recommend.py", line 7, in recommend_for
+[31mrandom_1           |[0m     async with DataAccessor(pool_count=3) as accessor:
+[31mrandom_1           |[0m   File "/var/www/kiwi/database/DataAccessor.py", line 33, in __aenter__
+[31mrandom_1           |[0m     self.pool = await create_pool(**CONNECTION, maxsize=self.pool_count)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 75, in __await__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 30, in _create_pool
+[31mrandom_1           |[0m     yield from pool._fill_free_pool(False)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 173, in _fill_free_pool
+[31mrandom_1           |[0m     **self._conn_kwargs)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 70, in __iter__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 78, in _connect
+[31mrandom_1           |[0m     yield from conn._connect()
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 496, in _connect
+[31mrandom_1           |[0m     self._host) from e
+[31mrandom_1           |[0m pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m [2017-12-09 16:26:36 +0000] - (sanic.access)[INFO][1:7]: GET http://random:8000/recommendation?user=bubblegumsoldier&count=10  500 61
+[35mengine_1           |[0m [2017-12-09 16:26:36 +0000] [1] [ERROR] Traceback (most recent call last):
+[35mengine_1           |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[35mengine_1           |[0m     response = await response
+[35mengine_1           |[0m   File "kiwi/app.py", line 22, in images
+[35mengine_1           |[0m     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
+[35mengine_1           |[0m KeyError: 'unvoted'
+[35mengine_1           |[0m 
+[35mengine_1           |[0m [2017-12-09 16:26:36 +0000] - (sanic.access)[INFO][1:7]: POST http://engine:8000/recommendation  500 144
+[33mentry_1            |[0m [2017-12-09 16:26:36 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[33mentry_1            |[0m     response = await response
+[33mentry_1            |[0m   File "kiwi/app.py", line 37, in recommendation
+[33mentry_1            |[0m     response = await recommender_router.recommend(app.http_session, user, count)
+[33mentry_1            |[0m   File "/var/www/kiwi/RecommenderRouter.py", line 16, in recommend
+[33mentry_1            |[0m     abort(response.status)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/exceptions.py", line 282, in abort
+[33mentry_1            |[0m     raise sanic_exception(message=message, status_code=status_code)
+[33mentry_1            |[0m sanic.exceptions.ServerError: Internal Server Error
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:26:36 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/bubblegumsoldier/10  500 28
+[31mrandom_1           |[0m [2017-12-09 16:26:41 +0000] [6] [INFO] KeepAlive Timeout. Closing connection.
+[35mengine_1           |[0m [2017-12-09 16:26:41 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[33mentry_1            |[0m [2017-12-09 16:26:41 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:46.692+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56462 #19 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:46.692+0000 I NETWORK  [conn19] received client metadata from 172.20.0.2:56462 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:46.695+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56464 #20 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:46.695+0000 I NETWORK  [conn20] received client metadata from 172.20.0.2:56464 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:46.707+0000 I ACCESS   [conn20] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:46.708+0000 I NETWORK  [conn20] end connection 172.20.0.2:56464 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:46.710+0000 I NETWORK  [conn19] end connection 172.20.0.2:56462 (0 connections now open)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:26:46 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 20 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 8/10] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:26:46 2017] GET /authenticate/bubblegumsoldier => generated 20 bytes in 21 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[31mrandom_1           |[0m [2017-12-09 16:26:46 +0000] [8] [ERROR] OperationalError(2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 465, in _connect
+[31mrandom_1           |[0m     loop=self._loop)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/asyncio/streams.py", line 75, in open_connection
+[31mrandom_1           |[0m     lambda: protocol, host, port, **kwds)
+[31mrandom_1           |[0m   File "uvloop/loop.pyx", line 1675, in create_connection
+[31mrandom_1           |[0m socket.gaierror: [Errno -2] Name or service not known
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m The above exception was the direct cause of the following exception:
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/var/www/kiwi/Logging.py", line 8, in helper
+[31mrandom_1           |[0m     return await func(*args, **kwargs)
+[31mrandom_1           |[0m   File "kiwi/app.py", line 23, in recommend
+[31mrandom_1           |[0m     pictures = await recommend_for(args['user'], int(args.get('count', 10)))
+[31mrandom_1           |[0m   File "/var/www/kiwi/recommender/recommend.py", line 7, in recommend_for
+[31mrandom_1           |[0m     async with DataAccessor(pool_count=3) as accessor:
+[31mrandom_1           |[0m   File "/var/www/kiwi/database/DataAccessor.py", line 33, in __aenter__
+[31mrandom_1           |[0m     self.pool = await create_pool(**CONNECTION, maxsize=self.pool_count)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 75, in __await__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 30, in _create_pool
+[31mrandom_1           |[0m     yield from pool._fill_free_pool(False)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 173, in _fill_free_pool
+[31mrandom_1           |[0m     **self._conn_kwargs)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 70, in __iter__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 78, in _connect
+[31mrandom_1           |[0m     yield from conn._connect()
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 496, in _connect
+[31mrandom_1           |[0m     self._host) from e
+[31mrandom_1           |[0m pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'mysqldb'")
+[35mengine_1           |[0m [2017-12-09 16:26:46 +0000] [1] [ERROR] Traceback (most recent call last):
+[35mengine_1           |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[35mengine_1           |[0m     response = await response
+[35mengine_1           |[0m   File "kiwi/app.py", line 22, in images
+[35mengine_1           |[0m     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
+[35mengine_1           |[0m KeyError: 'unvoted'
+[35mengine_1           |[0m 
+[35mengine_1           |[0m [2017-12-09 16:26:46 +0000] - (sanic.access)[INFO][1:7]: POST http://engine:8000/recommendation  500 144
+[33mentry_1            |[0m [2017-12-09 16:26:46 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[33mentry_1            |[0m     response = await response
+[33mentry_1            |[0m   File "kiwi/app.py", line 37, in recommendation
+[33mentry_1            |[0m     response = await recommender_router.recommend(app.http_session, user, count)
+[33mentry_1            |[0m   File "/var/www/kiwi/RecommenderRouter.py", line 16, in recommend
+[33mentry_1            |[0m     abort(response.status)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/exceptions.py", line 282, in abort
+[33mentry_1            |[0m     raise sanic_exception(message=message, status_code=status_code)
+[33mentry_1            |[0m sanic.exceptions.ServerError: Internal Server Error
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:26:46 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/bubblegumsoldier/10  500 28
+[31mrandom_1           |[0m [2017-12-09 16:26:46 +0000] - (sanic.access)[INFO][1:7]: GET http://random:8000/recommendation?user=bubblegumsoldier&count=10  500 61
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:50.349+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56476 #21 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:50.349+0000 I NETWORK  [conn21] received client metadata from 172.20.0.2:56476 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:50.352+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56478 #22 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:50.352+0000 I NETWORK  [conn22] received client metadata from 172.20.0.2:56478 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:50.363+0000 I ACCESS   [conn22] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:50.365+0000 I NETWORK  [conn22] end connection 172.20.0.2:56478 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:26:50.365+0000 I NETWORK  [conn21] end connection 172.20.0.2:56476 (0 connections now open)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:26:50 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 20 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 14|app: 0|req: 3/11] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:26:50 2017] GET /authenticate/bubblegumsoldier => generated 20 bytes in 21 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[31mrandom_1           |[0m [2017-12-09 16:26:50 +0000] [8] [ERROR] OperationalError(2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 465, in _connect
+[31mrandom_1           |[0m     loop=self._loop)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/asyncio/streams.py", line 75, in open_connection
+[31mrandom_1           |[0m     lambda: protocol, host, port, **kwds)
+[31mrandom_1           |[0m   File "uvloop/loop.pyx", line 1675, in create_connection
+[31mrandom_1           |[0m socket.gaierror: [Errno -2] Name or service not known
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m The above exception was the direct cause of the following exception:
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/var/www/kiwi/Logging.py", line 8, in helper
+[31mrandom_1           |[0m     return await func(*args, **kwargs)
+[31mrandom_1           |[0m   File "kiwi/app.py", line 23, in recommend
+[31mrandom_1           |[0m     pictures = await recommend_for(args['user'], int(args.get('count', 10)))
+[31mrandom_1           |[0m   File "/var/www/kiwi/recommender/recommend.py", line 7, in recommend_for
+[31mrandom_1           |[0m     async with DataAccessor(pool_count=3) as accessor:
+[31mrandom_1           |[0m   File "/var/www/kiwi/database/DataAccessor.py", line 33, in __aenter__
+[31mrandom_1           |[0m     self.pool = await create_pool(**CONNECTION, maxsize=self.pool_count)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 75, in __await__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 30, in _create_pool
+[31mrandom_1           |[0m     yield from pool._fill_free_pool(False)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 173, in _fill_free_pool
+[31mrandom_1           |[0m     **self._conn_kwargs)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 70, in __iter__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 78, in _connect
+[31mrandom_1           |[0m     yield from conn._connect()
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 496, in _connect
+[31mrandom_1           |[0m     self._host) from e
+[31mrandom_1           |[0m pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m [2017-12-09 16:26:50 +0000] - (sanic.access)[INFO][1:7]: GET http://random:8000/recommendation?user=bubblegumsoldier&count=10  500 61
+[35mengine_1           |[0m [2017-12-09 16:26:50 +0000] [1] [ERROR] Traceback (most recent call last):
+[35mengine_1           |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[35mengine_1           |[0m     response = await response
+[35mengine_1           |[0m   File "kiwi/app.py", line 22, in images
+[35mengine_1           |[0m     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
+[35mengine_1           |[0m KeyError: 'unvoted'
+[35mengine_1           |[0m 
+[35mengine_1           |[0m [2017-12-09 16:26:50 +0000] - (sanic.access)[INFO][1:7]: POST http://engine:8000/recommendation  500 144
+[33mentry_1            |[0m [2017-12-09 16:26:50 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[33mentry_1            |[0m     response = await response
+[33mentry_1            |[0m   File "kiwi/app.py", line 37, in recommendation
+[33mentry_1            |[0m     response = await recommender_router.recommend(app.http_session, user, count)
+[33mentry_1            |[0m   File "/var/www/kiwi/RecommenderRouter.py", line 16, in recommend
+[33mentry_1            |[0m     abort(response.status)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/exceptions.py", line 282, in abort
+[33mentry_1            |[0m     raise sanic_exception(message=message, status_code=status_code)
+[33mentry_1            |[0m sanic.exceptions.ServerError: Internal Server Error
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:26:50 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/bubblegumsoldier/10  500 28
+[31mrandom_1           |[0m [2017-12-09 16:26:55 +0000] [8] [INFO] KeepAlive Timeout. Closing connection.
+[33mentry_1            |[0m [2017-12-09 16:26:55 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[35mengine_1           |[0m [2017-12-09 16:26:56 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:29.194+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56764 #23 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:29.195+0000 I NETWORK  [conn23] received client metadata from 172.20.0.2:56764 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:29.197+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56766 #24 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:29.198+0000 I NETWORK  [conn24] received client metadata from 172.20.0.2:56766 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:29.208+0000 I ACCESS   [conn24] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:29.209+0000 I NETWORK  [conn24] end connection 172.20.0.2:56766 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:29.209+0000 I NETWORK  [conn23] end connection 172.20.0.2:56764 (0 connections now open)
+[33mentry_1            |[0m [2017-12-09 16:29:29 +0000] - (sanic.access)[INFO][1:9]: POST http://recommsys.northeurope.cloudapp.azure.com:8080/users/bubblegumsoldier  409 27
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:29:29 +0000] "GET /register/bubblegumsoldier HTTP/1.1" 200 23 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 9/12] 172.20.0.3 () {34 vars in 424 bytes} [Sat Dec  9 16:29:29 2017] GET /register/bubblegumsoldier => generated 23 bytes in 18 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:34.124+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56780 #25 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:34.125+0000 I NETWORK  [conn25] received client metadata from 172.20.0.2:56780 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:34.127+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56782 #26 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:34.128+0000 I NETWORK  [conn26] received client metadata from 172.20.0.2:56782 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:34.138+0000 I ACCESS   [conn26] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:34.140+0000 I NETWORK  [conn26] end connection 172.20.0.2:56782 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:34.140+0000 I NETWORK  [conn25] end connection 172.20.0.2:56780 (0 connections now open)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:29:34 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 20 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 10/13] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:29:34 2017] GET /authenticate/bubblegumsoldier => generated 20 bytes in 19 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[31mrandom_1           |[0m [2017-12-09 16:29:34 +0000] [6] [ERROR] OperationalError(2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 465, in _connect
+[31mrandom_1           |[0m     loop=self._loop)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/asyncio/streams.py", line 75, in open_connection
+[31mrandom_1           |[0m     lambda: protocol, host, port, **kwds)
+[31mrandom_1           |[0m   File "uvloop/loop.pyx", line 1675, in create_connection
+[31mrandom_1           |[0m socket.gaierror: [Errno -2] Name or service not known
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m The above exception was the direct cause of the following exception:
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/var/www/kiwi/Logging.py", line 8, in helper
+[31mrandom_1           |[0m     return await func(*args, **kwargs)
+[31mrandom_1           |[0m   File "kiwi/app.py", line 23, in recommend
+[31mrandom_1           |[0m     pictures = await recommend_for(args['user'], int(args.get('count', 10)))
+[31mrandom_1           |[0m   File "/var/www/kiwi/recommender/recommend.py", line 7, in recommend_for
+[31mrandom_1           |[0m     async with DataAccessor(pool_count=3) as accessor:
+[31mrandom_1           |[0m   File "/var/www/kiwi/database/DataAccessor.py", line 33, in __aenter__
+[31mrandom_1           |[0m     self.pool = await create_pool(**CONNECTION, maxsize=self.pool_count)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 75, in __await__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 30, in _create_pool
+[31mrandom_1           |[0m     yield from pool._fill_free_pool(False)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 173, in _fill_free_pool
+[31mrandom_1           |[0m     **self._conn_kwargs)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 70, in __iter__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 78, in _connect
+[31mrandom_1           |[0m     yield from conn._connect()
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 496, in _connect
+[31mrandom_1           |[0m     self._host) from e
+[31mrandom_1           |[0m pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'mysqldb'")
+[35mengine_1           |[0m [2017-12-09 16:29:34 +0000] [1] [ERROR] Traceback (most recent call last):
+[35mengine_1           |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[35mengine_1           |[0m     response = await response
+[35mengine_1           |[0m   File "kiwi/app.py", line 22, in images
+[35mengine_1           |[0m     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
+[35mengine_1           |[0m KeyError: 'unvoted'
+[35mengine_1           |[0m 
+[31mrandom_1           |[0m [2017-12-09 16:29:34 +0000] - (sanic.access)[INFO][1:7]: GET http://random:8000/recommendation?user=bubblegumsoldier&count=10  500 61
+[35mengine_1           |[0m [2017-12-09 16:29:34 +0000] - (sanic.access)[INFO][1:7]: POST http://engine:8000/recommendation  500 144
+[33mentry_1            |[0m [2017-12-09 16:29:34 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[33mentry_1            |[0m     response = await response
+[33mentry_1            |[0m   File "kiwi/app.py", line 37, in recommendation
+[33mentry_1            |[0m     response = await recommender_router.recommend(app.http_session, user, count)
+[33mentry_1            |[0m   File "/var/www/kiwi/RecommenderRouter.py", line 16, in recommend
+[33mentry_1            |[0m     abort(response.status)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/exceptions.py", line 282, in abort
+[33mentry_1            |[0m     raise sanic_exception(message=message, status_code=status_code)
+[33mentry_1            |[0m sanic.exceptions.ServerError: Internal Server Error
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:29:34 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/bubblegumsoldier/10  500 28
+[31mrandom_1           |[0m [2017-12-09 16:29:39 +0000] [6] [INFO] KeepAlive Timeout. Closing connection.
+[35mengine_1           |[0m [2017-12-09 16:29:39 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:56.279+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56826 #27 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:56.280+0000 I NETWORK  [conn27] received client metadata from 172.20.0.2:56826 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:56.282+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:56828 #28 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:56.282+0000 I NETWORK  [conn28] received client metadata from 172.20.0.2:56828 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:56.292+0000 I ACCESS   [conn28] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:56.294+0000 I NETWORK  [conn28] end connection 172.20.0.2:56828 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:29:56.294+0000 I NETWORK  [conn27] end connection 172.20.0.2:56826 (0 connections now open)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:29:56 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 20 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 11/14] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:29:56 2017] GET /authenticate/bubblegumsoldier => generated 20 bytes in 18 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[31mrandom_1           |[0m [2017-12-09 16:29:56 +0000] [5] [ERROR] OperationalError(2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 465, in _connect
+[31mrandom_1           |[0m     loop=self._loop)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/asyncio/streams.py", line 75, in open_connection
+[31mrandom_1           |[0m     lambda: protocol, host, port, **kwds)
+[31mrandom_1           |[0m   File "uvloop/loop.pyx", line 1675, in create_connection
+[31mrandom_1           |[0m socket.gaierror: [Errno -2] Name or service not known
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m The above exception was the direct cause of the following exception:
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/var/www/kiwi/Logging.py", line 8, in helper
+[31mrandom_1           |[0m     return await func(*args, **kwargs)
+[31mrandom_1           |[0m   File "kiwi/app.py", line 23, in recommend
+[31mrandom_1           |[0m     pictures = await recommend_for(args['user'], int(args.get('count', 10)))
+[31mrandom_1           |[0m   File "/var/www/kiwi/recommender/recommend.py", line 7, in recommend_for
+[31mrandom_1           |[0m     async with DataAccessor(pool_count=3) as accessor:
+[31mrandom_1           |[0m   File "/var/www/kiwi/database/DataAccessor.py", line 33, in __aenter__
+[31mrandom_1           |[0m     self.pool = await create_pool(**CONNECTION, maxsize=self.pool_count)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 75, in __await__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 30, in _create_pool
+[31mrandom_1           |[0m     yield from pool._fill_free_pool(False)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 173, in _fill_free_pool
+[31mrandom_1           |[0m     **self._conn_kwargs)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 70, in __iter__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 78, in _connect
+[31mrandom_1           |[0m     yield from conn._connect()
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 496, in _connect
+[31mrandom_1           |[0m     self._host) from e
+[31mrandom_1           |[0m pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m [2017-12-09 16:29:56 +0000] - (sanic.access)[INFO][1:7]: GET http://random:8000/recommendation?user=bubblegumsoldier&count=10  500 61
+[35mengine_1           |[0m [2017-12-09 16:29:56 +0000] [1] [ERROR] Traceback (most recent call last):
+[35mengine_1           |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[35mengine_1           |[0m     response = await response
+[35mengine_1           |[0m   File "kiwi/app.py", line 22, in images
+[35mengine_1           |[0m     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
+[35mengine_1           |[0m KeyError: 'unvoted'
+[35mengine_1           |[0m 
+[35mengine_1           |[0m [2017-12-09 16:29:56 +0000] - (sanic.access)[INFO][1:7]: POST http://engine:8000/recommendation  500 144
+[33mentry_1            |[0m [2017-12-09 16:29:56 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[33mentry_1            |[0m     response = await response
+[33mentry_1            |[0m   File "kiwi/app.py", line 37, in recommendation
+[33mentry_1            |[0m     response = await recommender_router.recommend(app.http_session, user, count)
+[33mentry_1            |[0m   File "/var/www/kiwi/RecommenderRouter.py", line 16, in recommend
+[33mentry_1            |[0m     abort(response.status)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/exceptions.py", line 282, in abort
+[33mentry_1            |[0m     raise sanic_exception(message=message, status_code=status_code)
+[33mentry_1            |[0m sanic.exceptions.ServerError: Internal Server Error
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:29:56 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/bubblegumsoldier/10  500 28
+[31mrandom_1           |[0m [2017-12-09 16:30:01 +0000] [5] [INFO] KeepAlive Timeout. Closing connection.
+[35mengine_1           |[0m [2017-12-09 16:30:01 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[32muser_1             |[0m {'host': 'mongodb-user', 'user': 'admin', 'password': '12345', 'database': 'kiwi_users'}
+[32muser_1             |[0m establishing
+[34mmongodb-user_1     |[0m 2017-12-09T16:41:33.901+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:58080 #29 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:41:33.902+0000 I NETWORK  [conn29] received client metadata from 172.20.0.2:58080 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[32muser_1             |[0m ssss
+[32muser_1             |[0m established connection
+[34mmongodb-user_1     |[0m 2017-12-09T16:41:33.903+0000 I NETWORK  [listener] connection accepted from 172.20.0.2:58082 #30 (2 connections now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:41:33.904+0000 I NETWORK  [conn30] received client metadata from 172.20.0.2:58082 conn: { driver: { name: "PyMongo", version: "3.6.0" }, os: { type: "Linux", name: "Linux", architecture: "x86_64", version: "4.11.0-1016-azure" }, platform: "CPython 3.6.3.final.0" }
+[34mmongodb-user_1     |[0m 2017-12-09T16:41:33.914+0000 I ACCESS   [conn30] Successfully authenticated as principal admin on admin
+[34mmongodb-user_1     |[0m 2017-12-09T16:41:33.915+0000 I NETWORK  [conn30] end connection 172.20.0.2:58082 (1 connection now open)
+[34mmongodb-user_1     |[0m 2017-12-09T16:41:33.916+0000 I NETWORK  [conn29] end connection 172.20.0.2:58080 (0 connections now open)
+[32muser_1             |[0m 172.20.0.3 - - [09/Dec/2017:16:41:33 +0000] "GET /authenticate/bubblegumsoldier HTTP/1.1" 200 20 "-" "Python/3.6 aiohttp/2.3.6" "-"
+[32muser_1             |[0m [pid: 13|app: 0|req: 12/15] 172.20.0.3 () {34 vars in 432 bytes} [Sat Dec  9 16:41:33 2017] GET /authenticate/bubblegumsoldier => generated 20 bytes in 18 msecs (HTTP/1.1 200) 3 headers in 103 bytes (2 switches on core 0)
+[31mrandom_1           |[0m [2017-12-09 16:41:33 +0000] [6] [ERROR] OperationalError(2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 465, in _connect
+[31mrandom_1           |[0m     loop=self._loop)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/asyncio/streams.py", line 75, in open_connection
+[31mrandom_1           |[0m     lambda: protocol, host, port, **kwds)
+[31mrandom_1           |[0m   File "uvloop/loop.pyx", line 1675, in create_connection
+[31mrandom_1           |[0m socket.gaierror: [Errno -2] Name or service not known
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m The above exception was the direct cause of the following exception:
+[31mrandom_1           |[0m 
+[31mrandom_1           |[0m Traceback (most recent call last):
+[31mrandom_1           |[0m   File "/var/www/kiwi/Logging.py", line 8, in helper
+[31mrandom_1           |[0m     return await func(*args, **kwargs)
+[31mrandom_1           |[0m   File "kiwi/app.py", line 23, in recommend
+[31mrandom_1           |[0m     pictures = await recommend_for(args['user'], int(args.get('count', 10)))
+[31mrandom_1           |[0m   File "/var/www/kiwi/recommender/recommend.py", line 7, in recommend_for
+[31mrandom_1           |[0m     async with DataAccessor(pool_count=3) as accessor:
+[31mrandom_1           |[0m   File "/var/www/kiwi/database/DataAccessor.py", line 33, in __aenter__
+[31mrandom_1           |[0m     self.pool = await create_pool(**CONNECTION, maxsize=self.pool_count)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 75, in __await__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 30, in _create_pool
+[31mrandom_1           |[0m     yield from pool._fill_free_pool(False)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/pool.py", line 173, in _fill_free_pool
+[31mrandom_1           |[0m     **self._conn_kwargs)
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/utils.py", line 70, in __iter__
+[31mrandom_1           |[0m     resp = yield from self._coro
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 78, in _connect
+[31mrandom_1           |[0m     yield from conn._connect()
+[31mrandom_1           |[0m   File "/usr/local/lib/python3.6/site-packages/aiomysql/connection.py", line 496, in _connect
+[31mrandom_1           |[0m     self._host) from e
+[31mrandom_1           |[0m pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'mysqldb'")
+[31mrandom_1           |[0m [2017-12-09 16:41:33 +0000] - (sanic.access)[INFO][1:7]: GET http://random:8000/recommendation?user=bubblegumsoldier&count=10  500 61
+[35mengine_1           |[0m [2017-12-09 16:41:33 +0000] [1] [ERROR] Traceback (most recent call last):
+[35mengine_1           |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[35mengine_1           |[0m     response = await response
+[35mengine_1           |[0m   File "kiwi/app.py", line 22, in images
+[35mengine_1           |[0m     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
+[35mengine_1           |[0m KeyError: 'unvoted'
+[35mengine_1           |[0m 
+[35mengine_1           |[0m [2017-12-09 16:41:33 +0000] - (sanic.access)[INFO][1:7]: POST http://engine:8000/recommendation  500 144
+[33mentry_1            |[0m [2017-12-09 16:41:33 +0000] [1] [ERROR] Traceback (most recent call last):
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/app.py", line 556, in handle_request
+[33mentry_1            |[0m     response = await response
+[33mentry_1            |[0m   File "kiwi/app.py", line 37, in recommendation
+[33mentry_1            |[0m     response = await recommender_router.recommend(app.http_session, user, count)
+[33mentry_1            |[0m   File "/var/www/kiwi/RecommenderRouter.py", line 16, in recommend
+[33mentry_1            |[0m     abort(response.status)
+[33mentry_1            |[0m   File "/usr/local/lib/python3.6/site-packages/sanic/exceptions.py", line 282, in abort
+[33mentry_1            |[0m     raise sanic_exception(message=message, status_code=status_code)
+[33mentry_1            |[0m sanic.exceptions.ServerError: Internal Server Error
+[33mentry_1            |[0m 
+[33mentry_1            |[0m [2017-12-09 16:41:33 +0000] - (sanic.access)[INFO][1:9]: GET http://recommsys.northeurope.cloudapp.azure.com:8080/recommendation/bubblegumsoldier/10  500 28
+[31mrandom_1           |[0m [2017-12-09 16:41:38 +0000] [6] [INFO] KeepAlive Timeout. Closing connection.
+[35mengine_1           |[0m [2017-12-09 16:41:38 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[33mentry_1            |[0m [2017-12-09 16:41:38 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.

@@ -1183,3 +1183,44 @@ Attaching to kiwi_content_1, kiwi_entry_1, kiwi_user_1, kiwi_engine_1, kiwi_rand
 [31mrandom_1           |[0m [2017-12-09 16:41:38 +0000] [6] [INFO] KeepAlive Timeout. Closing connection.
 [35mengine_1           |[0m [2017-12-09 16:41:38 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
 [33mentry_1            |[0m [2017-12-09 16:41:38 +0000] [1] [INFO] KeepAlive Timeout. Closing connection.
+[34mmongodb-user_1     |[0m 2017-12-09T16:55:53.636+0000 I CONTROL  [signalProcessingThread] got signal 15 (Terminated), will terminate after current cmd ends
+[34mmongodb-user_1     |[0m 2017-12-09T16:55:53.636+0000 I NETWORK  [signalProcessingThread] shutdown: going to close listening sockets...
+[31mrandom_1           |[0m [2017-12-09 16:55:53 +0000] [1] [INFO] Received signal SIGTERM. Shutting down.
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:55:53.675+0000 I CONTROL  [signalProcessingThread] got signal 15 (Terminated), will terminate after current cmd ends
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:55:53.675+0000 I NETWORK  [signalProcessingThread] shutdown: going to close listening sockets...
+[33mentry_1            |[0m [2017-12-09 16:55:53 +0000] [1] [INFO] Stopping worker [1]
+[33mentry_1            |[0m [2017-12-09 16:55:53 +0000] [1] [INFO] Server Stopped
+[35mengine_1           |[0m [2017-12-09 16:55:53 +0000] [1] [INFO] Stopping worker [1]
+[34mmongodb-user_1     |[0m 2017-12-09T16:55:53.770+0000 I FTDC     [signalProcessingThread] Shutting down full-time diagnostic data capture
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:55:53.770+0000 I FTDC     [signalProcessingThread] Shutting down full-time diagnostic data capture
+[35mengine_1           |[0m [2017-12-09 16:55:53 +0000] [1] [INFO] Server Stopped
+[31mrandom_1           |[0m [2017-12-09 16:55:53 +0000] [6] [INFO] Stopping worker [6]
+[31mrandom_1           |[0m [2017-12-09 16:55:53 +0000] [5] [INFO] Stopping worker [5]
+[31mrandom_1           |[0m [2017-12-09 16:55:53 +0000] [7] [INFO] Stopping worker [7]
+[31mrandom_1           |[0m [2017-12-09 16:55:53 +0000] [8] [INFO] Stopping worker [8]
+[31mrandom_1           |[0m [2017-12-09 16:55:53 +0000] [1] [INFO] Server Stopped
+[34mmongodb-user_1     |[0m 2017-12-09T16:55:53.872+0000 I STORAGE  [signalProcessingThread] WiredTigerKVEngine shutting down
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:55:53.875+0000 I STORAGE  [signalProcessingThread] WiredTigerKVEngine shutting down
+[32muser_1             |[0m 2017-12-09 16:55:54,319 WARN received SIGTERM indicating exit request
+[32muser_1             |[0m 2017-12-09 16:55:54,969 INFO waiting for nginx, uwsgi to die
+[32muser_1             |[0m SIGINT/SIGQUIT received...killing workers...
+[34mmongodb-user_1     |[0m 2017-12-09T16:55:57.322+0000 I STORAGE  [signalProcessingThread] shutdown: removing fs lock...
+[34mmongodb-user_1     |[0m 2017-12-09T16:55:57.519+0000 I CONTROL  [signalProcessingThread] now exiting
+[34mmongodb-user_1     |[0m 2017-12-09T16:55:57.519+0000 I CONTROL  [signalProcessingThread] shutting down with code:0
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:55:57.979+0000 I STORAGE  [signalProcessingThread] shutdown: removing fs lock...
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:55:57.979+0000 I CONTROL  [signalProcessingThread] now exiting
+[33;1mmongodb-content_1  |[0m 2017-12-09T16:55:57.979+0000 I CONTROL  [signalProcessingThread] shutting down with code:0
+[32muser_1             |[0m 2017-12-09 16:55:58,023 INFO waiting for nginx, uwsgi to die
+[34mkiwi_mongodb-user_1 exited with code 0
+[0m[33;1mkiwi_mongodb-content_1 exited with code 0
+[0m[33mkiwi_entry_1 exited with code 0
+[0m[32muser_1             |[0m worker 1 buried after 4 seconds
+[32muser_1             |[0m worker 2 buried after 4 seconds
+[32muser_1             |[0m goodbye to uWSGI.
+[32muser_1             |[0m 2017-12-09 16:55:59,119 INFO stopped: uwsgi (exit status 0)
+[32muser_1             |[0m 2017-12-09 16:55:59,374 INFO stopped: nginx (exit status 0)
+[31mkiwi_random_1 exited with code 0
+[0m[32mkiwi_user_1 exited with code 0
+[0m[35mkiwi_engine_1 exited with code 0
+[0m[36mkiwi_content_1 exited with code 137
+[0m

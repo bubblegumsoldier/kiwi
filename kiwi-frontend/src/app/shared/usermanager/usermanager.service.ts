@@ -12,6 +12,8 @@ export class UsermanagerService {
   private static API_SUFFIX :string = "users";
   private currentUser :LoggedInUser = null;
 
+  private static LOCAL_STORAGE_USERNAME_KEY :string = "kiwi_username";
+
   private loginListeners :((user :LoggedInUser)=>void)[] = [];
 
   constructor(private http :Http)
@@ -32,8 +34,23 @@ export class UsermanagerService {
   private getStoredUser() :Promise<LoggedInUser>
   {
     let promise :Promise<LoggedInUser> = new Promise<LoggedInUser>((resolve, reject) => {
-      //TODO
-      reject();
+      let storedUsername :string = localStorage.getItem(UsermanagerService.LOCAL_STORAGE_USERNAME_KEY);
+      if(typeof storedUsername === typeof undefined || storedUsername.length <= 0)
+      {
+        reject();  
+        return;
+      }
+      let loggedInUser :LoggedInUser = new LoggedInUser(storedUsername);
+      resolve(loggedInUser);
+    });
+    return promise;
+  }
+
+  private storeUser(theUser :LoggedInUser) :Promise<void>
+  {
+    let promise :Promise<void> = new Promise<void>((resolve, reject) => {
+      localStorage.setItem(UsermanagerService.LOCAL_STORAGE_USERNAME_KEY, theUser.name);
+      resolve();
     });
     return promise;
   }
@@ -75,13 +92,7 @@ export class UsermanagerService {
     return promise;
   }
 
-  private storeUser(LoggedInUser :LoggedInUser) :Promise<void>
-  {
-    let promise :Promise<void> = new Promise<void>((resolve, reject) => {
-      resolve(); //TODO: storage
-    });
-    return promise;
-  }
+  
 
   private login(userInformation :UserInformation) :Promise<LoggedInUser>
   {

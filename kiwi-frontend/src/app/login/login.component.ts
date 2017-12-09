@@ -75,7 +75,6 @@ export class LoginComponent implements OnInit {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(event);
     if(event.keyCode == 13)
     {
         //ENTER

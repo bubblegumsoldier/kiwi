@@ -6,7 +6,7 @@ services:
       context: ./kiwi-entry
       dockerfile: entry.dockerfile
     ports:
-      - "9000:8000"
+      - "8080:8000"
     networks:
       - user-network
       - service-network

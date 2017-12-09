@@ -22,7 +22,7 @@ class MongoConnection:
             {'id': doc_id},
             projection={'_id': False, 'title': True, 'link': True, 'id': True, 'type': True, 'mp4': True})
         if enriched:
-            if enriched['type'] == "image/gif":
+            if enriched['type'] == "image/gif" and 'mp4' in enriched and enriched.get('mp4'):
                 enriched['src'] = enriched.pop('mp4')
             else:
                 enriched['src'] = enriched.pop('link')

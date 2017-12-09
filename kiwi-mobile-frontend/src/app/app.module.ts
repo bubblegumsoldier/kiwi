@@ -38,7 +38,7 @@ import { HomePage } from '../pages/home/home';
     SplashScreen,
     UsermanagerService,
     ImageloaderService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ],
   entryComponents: [
     MyApp,

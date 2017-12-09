@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 
 import { environment } from '../../../../environments/environment';
 
@@ -93,10 +93,12 @@ export class ImageloaderService {
   private sendFeedbackRequest(request) :Promise<void>
   {
     return new Promise<void>((resolve, reject) => {
-      this.http.post(ImageloaderService.FEEDBACK_ENDPOINT, JSON.stringify(request)).subscribe((value :Response) => {
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      let options = new RequestOptions({ headers: headers });
+      this.http.post(ImageloaderService.FEEDBACK_ENDPOINT, JSON.stringify(request), options).subscribe((value :Response) => {
         console.log(JSON.stringify(value));
         resolve();
-      });
+      }, reject);
     });
   }
 }

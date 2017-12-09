@@ -45,7 +45,17 @@ export class ImagebrowserComponent implements OnInit {
 
   imageLoaded(image :Image)
   {
+    if(this.findImageInStackById(image.id) != undefined)
+    {
+      alert("duplicate!");
+        return; //duplicate entry will not be added
+    }
     this.images.push(image);
+  }
+
+  findImageInStackById(id :string)
+  {
+    this.images.find((img :Image) => (img.id == id));
   }
 
   onDislike()
@@ -98,7 +108,14 @@ export class ImagebrowserComponent implements OnInit {
       console.log("All feedbacks were sent (" + allRequests.length + ")");
     }).catch(error => {
       console.error(error);
+      console.log("we need to append what has not been sent so it can be sent again...");
+      console.log("liked safety copy: ");
+      console.log(likedImagesSafetyCopy);
       this.likedImages = this.likedImages.concat(likedImagesSafetyCopy);
+
+      console.log("disliked safety copy: ");
+      console.log(dislikedImagesSafetyCopy);
+      
       this.dislikedImages = this.dislikedImages.concat(dislikedImagesSafetyCopy);
     });
 

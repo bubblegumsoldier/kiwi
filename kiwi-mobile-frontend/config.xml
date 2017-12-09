@@ -89,4 +89,5 @@
         <variable name="XWALK_MODE" value="embedded" />
         <variable name="XWALK_MULTIPLEAPK" value="true" />
     </plugin>
+    <plugin name="cordova-plugin-uniquedeviceid" spec="^1.3.2" />
 </widget>

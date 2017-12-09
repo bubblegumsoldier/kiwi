@@ -4,6 +4,7 @@ import { UsermanagerService } from '../shared/usermanager/usermanager.service';
 import { LoggedInUser } from '../shared/model/LoggedInUser';
 import { UserInformation } from '../shared/model/UserInformation';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html'
@@ -41,7 +42,7 @@ export class LoginComponent implements OnInit {
   {
     let userinformation :UserInformation = new UserInformation(this.username);
     this.startLoading();
-    this.usermanager.tryLogin(userinformation, false).then(this.doLogin.bind(this)).catch(this.printErrorMessage.bind(this));
+    this.usermanager.tryLogin(userinformation, true).then(this.doLogin.bind(this)).catch(this.printErrorMessage.bind(this));
   }
 
   private isLoading()

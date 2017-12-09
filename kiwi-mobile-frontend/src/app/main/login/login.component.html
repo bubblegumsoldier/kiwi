@@ -9,8 +9,7 @@
                 <input [disabled]="this.isLoading()" type="text" class="username-input" name="username" id="username" [(ngModel)]="username" />
             </div>
             <div class="login-buttons">
-                <button [disabled]="this.isLoading() || this.username.length < 5" class="login-button register" (click)="onRegister()">Register</button>
-                <button [disabled]="this.isLoading() || this.username.length < 5" class="login-button login" (click)="onLogin()">Login</button>
+                <button [disabled]="this.isLoading() || this.username.length < 5" class="login-button register" (click)="onLogin()">Start</button>
             </div>
         </div>
     </div>

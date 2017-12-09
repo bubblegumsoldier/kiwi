@@ -7,8 +7,10 @@ from aiohttp import ClientSession
 from kiwi.config import load_config
 from kiwi.UserManager import UserManager
 from kiwi.RecommenderRouter import RecommenderRouter
+from sanic_cors import CORS, cross_origin
 
 app = Sanic(__name__)
+CORS(app, automatic_options=True)
 
 config = load_config()
 
@@ -39,7 +41,7 @@ async def recommendation(request, user: str, count: int=10):
     return json({'error': 'User is not registered'}, HTTPStatus.UNAUTHORIZED)
 
 
-@app.post('/feedback')
+@app.route('/feedback', methods=["POST"])
 async def feedback(request: Request):
     if not request.json:
         abort(HTTPStatus.BAD_REQUEST)

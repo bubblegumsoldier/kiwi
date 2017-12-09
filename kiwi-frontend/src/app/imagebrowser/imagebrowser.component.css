@@ -46,7 +46,8 @@
     min-height: 70%;
 }
 
-.imagewrapper img {
+.imagewrapper img,
+.imagewrapper video {
     width: 100%;
 }
 

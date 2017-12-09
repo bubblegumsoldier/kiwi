@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 
 import { UsermanagerService } from '../shared/usermanager/usermanager.service';
 import { LoggedInUser } from '../shared/model/LoggedInUser';
@@ -71,5 +71,15 @@ export class LoginComponent implements OnInit {
   {
     this.stopLoading();
     this.errorMsg = msg;
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    console.log(event);
+    if(event.keyCode == 13)
+    {
+        //ENTER
+        this.onLogin();
+    }
   }
 }

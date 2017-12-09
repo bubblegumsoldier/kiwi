@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener  } from '@angular/core';
 
 import { Image } from '../shared/model/Image';
 
 import { ImageloaderService } from '../shared/imageloader/imageloader.service';
+
+export enum KEY_CODE {
+  UP_ARROW = 38,
+  DOWN_ARROW = 40
+}
 
 @Component({
   selector: 'app-imagebrowser',
@@ -108,6 +113,19 @@ export class ImagebrowserComponent implements OnInit {
     {
       console.log("update");
       this.loadNextNImages(ImagebrowserComponent.DEFAULT_NEW_IMAGE_LOADING_NUMBER);
+    }
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    console.log(event);
+    
+    if (event.keyCode === KEY_CODE.UP_ARROW) {
+      this.onLike();
+    }
+
+    if (event.keyCode === KEY_CODE.DOWN_ARROW) {
+      this.onDislike();
     }
   }
 

@@ -69,6 +69,7 @@ export class ImageloaderService {
     i.id = recommendedPost.id;
     i.src = recommendedPost.src;
     i.title = recommendedPost.title;
+    i.type = recommendedPost.type;
     return i;
   }
 

@@ -20,9 +20,12 @@ class MongoConnection:
     async def find_document(self, doc_id):
         enriched = await self._collection.find_one(
             {'id': doc_id},
-            projection={'_id': False, 'title': True, 'link': True, 'id': True})
+            projection={'_id': False, 'title': True, 'link': True, 'id': True, 'type': True, 'mp4': True})
         if enriched:
-            enriched['src'] = enriched.pop('link')
+            if enriched['type'] == "image/gif":
+                enriched['src'] = enriched.pop('mp4')
+            else:
+                enriched['src'] = enriched.pop('link')
         return enriched
 
     async def find_many(self, doc_ids):

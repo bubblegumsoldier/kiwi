@@ -89,7 +89,9 @@ services:
     networks:
       - webapp-network
     ports:
-      - 80
+      - "80"
+    expose:
+      - "80"
   
 networks:
   random-network:

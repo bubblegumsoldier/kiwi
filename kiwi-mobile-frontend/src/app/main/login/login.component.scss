@@ -9,6 +9,8 @@
 .logo {
     flex: 1;
     text-align: center;
+    overflow: hidden;
+    min-height: 200px;
 }
 
 .logo img {

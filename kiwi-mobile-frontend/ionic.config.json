@@ -1,0 +1,8 @@
+{
+  "name": "kiwi-mobile-frontend",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

@@ -41,26 +41,6 @@ services:
       - service-network
       - content-network
     restart: always
-  
-  mongodb-content:
-    image: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=12345
-    ports:
-      - "27017"
-    networks:
-      - content-network
-
-  mongodb-user:
-    image: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=12345
-    ports:
-      - "27017"
-    networks:
-      - user-network
 
   random:
     build:

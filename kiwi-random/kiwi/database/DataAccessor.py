@@ -1,11 +1,10 @@
-from os import environ
 from aiomysql import create_pool
 from kiwi.config import read_mysql_config
 
 CONNECTION = read_mysql_config()._asdict()
 
 RANDOM_SELECT = '''
-            SELECT p.post_id
+            SELECT DISTINCT p.post_id
             FROM products p
             WHERE p.post_id NOT IN (
                 SELECT votes.product

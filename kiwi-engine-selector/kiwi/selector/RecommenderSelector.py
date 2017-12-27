@@ -13,9 +13,9 @@ class RecommenderSelector:
             recommenders[label] = Recommender.from_config(config)
         return cls(recommenders)
 
-    async def get_recommendations(self, session, user):
-        recommender = await self.choose_recommenders(user)
-        pics = await recommender.get_pics_for_user(session, user)
+    async def get_recommendations(self, session, request):
+        recommender = await self.choose_recommenders(request)
+        pics = await recommender.get_content_for_user(session, request)
         return pics
 
     async def choose_recommenders(self, user):

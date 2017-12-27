@@ -9,7 +9,7 @@ class RecommenderRouter:
     async def recommend(self, session, user, count):
         url = '{}/{}'.format(self.base_url,
                              'recommendation')
-        json = {'user': {'name': user}, 'count': count}
+        json = {'user': user, 'count': count}
         async with session.post(url, json=json) as response:
             if response.status == HTTPStatus.OK:
                 return await response.json()

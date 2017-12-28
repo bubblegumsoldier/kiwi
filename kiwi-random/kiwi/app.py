@@ -3,7 +3,6 @@ from sanic.request import Request
 from sanic.response import json
 from kiwi.recommender.recommend import (recommend_for, store_feedback,
                                         add_content)
-from kiwi.Logging import log_exception
 from kiwi.exception_handling import return_exception_as_json
 from kiwi.config import read_app_config
 
@@ -12,7 +11,6 @@ app = Sanic(__name__)
 
 @app.get('/recommendation')
 @return_exception_as_json()
-@log_exception()
 async def recommend(request):
     '''
     Gets recommendations for user
@@ -26,7 +24,6 @@ async def recommend(request):
 
 @app.post('/feedback')
 @return_exception_as_json()
-@log_exception()
 async def feedback(request: Request):
     '''
     Stores feedback in form {vote: {user, post, vote}}
@@ -38,7 +35,6 @@ async def feedback(request: Request):
 
 @app.post('/content')
 @return_exception_as_json()
-@log_exception()
 async def add_posts(request: Request):
     '''
     Stores new content in form {posts: post[]}
@@ -46,7 +42,6 @@ async def add_posts(request: Request):
     '''
     inserted_info = await add_content(request.json['posts'])
     return json(inserted_info)
-
 
 
 app.run(**read_app_config()._asdict(), workers=4)

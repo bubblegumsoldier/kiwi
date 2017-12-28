@@ -32,8 +32,8 @@ async def teardown(app, loop):
 
 
 @app.get('/recommendation/<user>')
-@app.get('/recommendation/<user>/<count>')
-async def recommendation(request, user: str, count: int=10):
+@app.get('/recommendation/<user>/<count:int>')
+async def recommendation(request, user: str, count=10):
     is_valid_user = await user_manager.authenticate_user(user, app.http_session)
     if is_valid_user:
         response = await recommender_router.recommend(app.http_session, user, count)
@@ -71,7 +71,6 @@ async def handle_users_get(user):
 async def handle_users_post(user):
     registration = await user_manager.register_user(user, app.http_session)
     return HTTPStatus.CREATED if registration else HTTPStatus.CONFLICT
-    
 
 
 if __name__ == '__main__':

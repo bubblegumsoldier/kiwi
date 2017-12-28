@@ -22,8 +22,9 @@ class MongoConnection:
             {'id': doc_id},
             projection={'_id': False, 'title': True, 'link': True, 'id': True, 'type': True, 'mp4': True})
         if enriched:
-            if enriched['type'] == "image/gif" and 'mp4' in enriched and enriched.get('mp4'):
+            if enriched['type'] == "image/gif" and enriched.get('mp4'):
                 enriched['src'] = enriched.pop('mp4')
+                enriched.pop('link')
             else:
                 enriched['src'] = enriched.pop('link')
         return enriched
@@ -31,6 +32,7 @@ class MongoConnection:
     async def find_many(self, doc_ids):
         posts = [await self.find_document(doc_id) for doc_id in doc_ids]
         return [post for post in posts if post]
+
 
     def close(self):
         self._db.client.close()

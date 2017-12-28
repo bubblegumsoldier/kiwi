@@ -1,5 +1,5 @@
 from aiohttp.client import ClientSession
-from kiwi.selector.Types import Voting, Endpoints, Response
+from kiwi.selector.Types import Voting, Endpoints, Response, RecommendationRequest
 
 TEMPLATE = '{base}/{endpoint}'
 
@@ -15,9 +15,10 @@ class Recommender:
         self = Recommender(**config_dict['address'], endpoints=endpoints)
         return self
 
-    async def get_pics_for_user(self, session: ClientSession, user):
+    async def get_content_for_user(self, session: ClientSession,
+                                   request: RecommendationRequest):
         url = self._format_template(self.endpoints.recommendation)
-        session = session.get(url, params={'user': user.name, 'count': 10})
+        session = session.get(url, params=request._asdict())
         return await self._get_response(session)
 
     async def send_feedback(self, session: ClientSession, voting: Voting):

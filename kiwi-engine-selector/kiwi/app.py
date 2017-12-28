@@ -1,11 +1,10 @@
-from os import environ
 from sanic import Sanic
 from sanic.response import json
 from sanic.request import Request
 from aiohttp import ClientSession
 
 from kiwi.config import APP_CONFIG, CONTENT_CONFIG, RECOMMENDERS
-from kiwi.selector.Types import User, Voting
+from kiwi.selector.Types import RecommendationRequest, Voting
 from kiwi.selector.RecommenderSelector import RecommenderSelector
 from kiwi.enricher.Enricher import Enricher
 from kiwi.database.MongoConnection import get_connection
@@ -17,8 +16,9 @@ selector = RecommenderSelector.from_config(RECOMMENDERS)
 @app.post('/recommendation')
 async def images(request: Request):
     post_json = request.json
-    user = User(**post_json['user'])
-    response = await selector.get_recommendations(app.client_session, user)
+    recommendation_request = RecommendationRequest(**post_json)
+    response = await selector.get_recommendations(app.client_session,
+                                                  recommendation_request)
     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
         await request_content()
     return json({'recommendations': {
@@ -66,5 +66,5 @@ async def teardown(app, loop):
     app.mongo_connection.close()
     await app.client_session.close()
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=APP_CONFIG['port'])

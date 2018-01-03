@@ -1,34 +1,28 @@
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from extract_posts import filter_duplicates
-from PostCache import PostCache
-from ThreadSafeCounter import ThreadSafeCounter
-from Requester import Requester
+from asyncio import as_completed
 
 
 class Collector:
-    def __init__(self, count, callback, requester_config):
+    def __init__(self, count, requesters, callback):
         self.callback = callback
+        self.count = count
+        self.post_cache = []
+        self.requesters = requesters
 
-        self.post_cache = PostCache(
-            ThreadSafeCounter(count, self.post_results))
+    async def run_requests(self):
+        print("Starting requests")
+        while not await self._post_count_reached():
+            futures = [
+                r.request()
+                for r
+                in self.requesters]
+            for future in as_completed(futures):
+                posts = await future
+                print("collected {n} posts".format(n=len(posts)))
+                self.post_cache.extend(posts)
 
-        self.requesters = [Requester(url=requester_config.url, params=topic, forbidden_types=requester_config.forbidden_types)
-                           for topic in requester_config.topics]
-
-    def run_requests(self):
-        print('starting requests')
-        with ThreadPoolExecutor(len(self.requesters)) as executor:
-            while True:
-                futures = [
-                    executor.submit(r.request, filter_duplicates)
-                    for r
-                    in self.requesters]
-                for future in as_completed(futures):
-                    posts = list(future.result())
-                    print("collected {n} posts".format(n=len(posts)))
-                    self.post_cache.append(posts)
-                    if self.post_cache.is_empty() and posts:
-                        return
-
-    def post_results(self):
-        self.callback(self.post_cache.empty())
+    async def _post_count_reached(self):
+        if len(self.post_cache) >= self.count:
+            await self.callback(self.post_cache)
+            self.post_cache = []
+            return True
+        return False

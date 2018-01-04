@@ -13,29 +13,22 @@ class PostExtractor:
         Extract all posts that are no albums from the API Response.
         '''
         return await self.filter_unsupported_formats(
-            await self.filter_albums(gallery_response['items']),
-            self._forbidden_mimetypes)
+            await self.filter_albums(gallery_response['items']))
 
     async def filter_albums(self, items):
-        def predicate(x):
-            return x['is_album'] is False
-        return filter(predicate, items)
+        return filter(lambda x: x['is_album'] is False, items)
 
-    async def filter_unsupported_formats(self, posts, formats):
-        async def predicate(x):
-            return not await self.matches_forbidden_mimetypes(x, formats)
-        return [post for post in posts if await predicate(post)]
+    async def filter_unsupported_formats(self, posts):
+        return [post
+                for post in posts
+                if not await self.matches_forbidden_mimetypes(post)]
 
-    async def matches_forbidden_mimetypes(self, post, types):
+    async def matches_forbidden_mimetypes(self, post):
         if 'type' in post:
-            return post['type'].startswith(tuple(types))
+            return post['type'].startswith(tuple(self._forbidden_mimetypes))
         return True  # No type is also forbidden.
 
-    async def filter_duplicates(self, posts, predicate=None):
-        '''
-        Filters all duplicate posts. 
-        :param predicate:   Predicate to check for duplication. If 'None', the                      default predicate of the object will be used.
-        '''
-        if not predicate:
-            predicate = self._duplication_predicate
-        return [post for post in posts if not await predicate(post['id'])]
+    async def filter_duplicates(self, posts):
+        return [post
+                for post in posts
+                if not await self._duplication_predicate(post['id'])]

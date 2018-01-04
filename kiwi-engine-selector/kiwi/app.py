@@ -20,6 +20,11 @@ async def images(request: Request):
     response = await selector.get_recommendations(app.client_session,
                                                   recommendation_request)
     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
+        print(
+            '{user} has {count} unvoted posts remaining. Requesting content'.format(
+                user=response.json['user'],
+                count=response.json['unvoted']))
+
         await request_content()
     return json({'recommendations': {
         'user': response.json['user'],

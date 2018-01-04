@@ -9,7 +9,6 @@ class Collector:
         self.requesters = requesters
 
     async def run_requests(self):
-        print("Starting requests")
         while not await self._post_count_reached():
             futures = [
                 r.request()
@@ -22,7 +21,8 @@ class Collector:
 
     async def _post_count_reached(self):
         if len(self.post_cache) >= self.count:
-            await self.callback(self.post_cache)
+            if self.post_cache:
+                await self.callback(self.post_cache)
             self.post_cache = []
             return True
         return False

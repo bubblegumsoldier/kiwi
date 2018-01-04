@@ -4,12 +4,12 @@ from sanic import Sanic
 from sanic.response import text
 from aiohttp import ClientSession
 from motor.motor_asyncio import AsyncIOMotorClient
-from Collector import Collector
-from DatabaseConnection import CollectionManipulator
-from PostExtractor import PostExtractor
-from config import read_config, read_mongo_config
-from Sender import Sender
-from Requester import Requester
+from app.Collector import Collector
+from app.DatabaseConnection import CollectionManipulator
+from app.PostExtractor import PostExtractor
+from app.config import read_config, read_mongo_config
+from app.Sender import Sender
+from app.Requester import Requester
 
 app = Sanic(__name__)
 requester_config = read_config()
@@ -41,7 +41,7 @@ async def new_items(request):
     new content has been requested.
     '''
     post_data = request.json
-    if post_data:
+    if validate_post_data():
         print('received request {!r}'.format(post_data))
         sender = Sender(app.http_session,
                         post_data['return_url'],
@@ -64,6 +64,9 @@ def build_requesters():
                             extract_and_filter_duplicates)
                   for topic in requester_config.topics]
     return requesters
+
+def validate_post_data(post_data):
+    return post_data.get('return_url') and post_data.get('count') >= 0
 
 
 if __name__ == '__main__':

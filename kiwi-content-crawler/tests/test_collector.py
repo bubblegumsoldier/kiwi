@@ -31,13 +31,24 @@ class TestCollector(TestCase):
         self.requester1.request.assert_has_calls([call(), call()])
 
     async def test_collector_two_requesters(self):
-        collector = Collector(20, [self.requester1, self.requester2], self.callback)
+        collector = Collector(
+            20, [self.requester1, self.requester2], self.callback)
         await collector.run_requests()
         expected = await create_posts() + \
-                   await create_posts() + \
-                   await create_posts() + \
-                   await create_posts()
+            await create_posts() + \
+            await create_posts() + \
+            await create_posts()
 
         self.callback.assert_called_once_with(expected)
         self.requester1.request.assert_called()
         self.requester2.request.assert_called()
+
+    async def test_collector_performs_no_requests_if_not_required(self):
+        collector = Collector(-2,
+                              [self.requester1, self.requester2],
+                              self.callback)
+        await collector.run_requests()
+
+        self.callback.assert_not_called()
+        self.requester1.request.assert_not_called()
+        self.requester2.request.assert_not_called()

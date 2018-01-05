@@ -1,6 +1,7 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 from os import environ
 
+
 def get_connection():
     connection_string = 'mongodb://{user}:{pwd}@{host}:{port}'.format(
         user=environ['MONGO_USER'],
@@ -20,7 +21,12 @@ class MongoConnection:
     async def find_document(self, doc_id):
         enriched = await self._collection.find_one(
             {'id': doc_id},
-            projection={'_id': False, 'title': True, 'link': True, 'id': True, 'type': True, 'mp4': True})
+            projection={'_id': False,
+                        'title': True,
+                        'link': True,
+                        'id': True,
+                        'type': True,
+                        'mp4': True})
         if enriched:
             if enriched['type'] == "image/gif" and enriched.get('mp4'):
                 enriched['src'] = enriched.pop('mp4')
@@ -32,7 +38,6 @@ class MongoConnection:
     async def find_many(self, doc_ids):
         posts = [await self.find_document(doc_id) for doc_id in doc_ids]
         return [post for post in posts if post]
-
 
     def close(self):
         self._db.client.close()

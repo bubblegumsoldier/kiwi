@@ -1,3 +1,4 @@
+from logging import getLogger
 from sanic import Sanic
 from sanic.response import json
 from sanic.request import Request
@@ -20,10 +21,10 @@ async def images(request: Request):
     response = await selector.get_recommendations(app.client_session,
                                                   recommendation_request)
     if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
-        print(
-            '{user} has {count} unvoted posts remaining. Requesting content'.format(
-                user=response.json['user'],
-                count=response.json['unvoted']))
+        getLogger("root").warn(
+            '%s has %d unvoted posts remaining. Requesting content',
+            response.json['user'],
+            response.json['unvoted'])
 
         await request_content()
     return json({'recommendations': {
@@ -64,15 +65,15 @@ def build_url(**kwargs):
 
 
 @app.listener('before_server_start')
-def init(app, loop):
-    app.mongo_connection = get_connection()
-    app.client_session = ClientSession(loop=loop)
+def init(sanic, loop):
+    sanic.mongo_connection = get_connection()
+    sanic.client_session = ClientSession(loop=loop)
 
 
 @app.listener('after_server_stop')
-async def teardown(app, loop):
-    app.mongo_connection.close()
-    await app.client_session.close()
+async def teardown(sanic, loop):
+    sanic.mongo_connection.close()
+    await sanic.client_session.close()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=APP_CONFIG['port'])

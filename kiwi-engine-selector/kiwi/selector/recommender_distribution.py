@@ -1,5 +1,5 @@
 from logging import getLogger
-from Types import Response
+from kiwi.selector.Types import Response
 
 
 class ContentException(Exception):

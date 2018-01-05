@@ -24,7 +24,7 @@ class Requester:
                               page=self._page)
         async with self._session.get(url, headers=AUTH_HEADER) as response:
             self._page += 1
-            if RATELIMIT_HEADER in response.headers and response.headers[RATELIMIT_HEADER] < 1000:
+            if RATELIMIT_HEADER in response.headers and int(response.headers[RATELIMIT_HEADER]) < 1000:
                 getLogger("root").warn("Remainging Rate Limit %d",
                                        response.headers[RATELIMIT_HEADER])
             json = await response.json()

@@ -1,3 +1,4 @@
+from logging import getLogger
 
 class PostExtractor:
     def __init__(self, forbidden_types, duplication_predicate):
@@ -12,8 +13,12 @@ class PostExtractor:
         '''
         Extract all posts that are no albums from the API Response.
         '''
-        return await self.filter_unsupported_formats(
-            await self.filter_albums(gallery_response['items']))
+        try:
+            return await self.filter_unsupported_formats(
+                await self.filter_albums(gallery_response['items']))
+        except KeyError:
+            getLogger('error').error(gallery_response)
+
 
     async def filter_albums(self, items):
         return filter(lambda x: x['is_album'] is False, items)

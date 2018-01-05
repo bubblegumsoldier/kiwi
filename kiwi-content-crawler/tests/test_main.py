@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from app.main import validate_post_data
+from kiwi.main import validate_post_data
 
 
 class TestValidate(TestCase):

@@ -1,36 +1,37 @@
 from http import HTTPStatus
+from logging import getLogger
 from asyncio import ensure_future
 from sanic import Sanic
 from sanic.response import text
 from aiohttp import ClientSession
 from motor.motor_asyncio import AsyncIOMotorClient
-from app.Collector import Collector
-from app.DatabaseConnection import CollectionManipulator
-from app.PostExtractor import PostExtractor
-from app.config import read_config, read_mongo_config
-from app.Sender import Sender
-from app.Requester import Requester
+from kiwi.Collector import Collector
+from kiwi.DatabaseConnection import CollectionManipulator
+from kiwi.PostExtractor import PostExtractor
+from kiwi.config import read_config, read_mongo_config
+from kiwi.Sender import Sender
+from kiwi.Requester import Requester
 
 app = Sanic(__name__)
 requester_config = read_config()
 
 
 @app.listener('before_server_start')
-async def setup(app, loop):
+async def setup(sanic, loop):
     config = read_mongo_config()
     client = AsyncIOMotorClient(host=config.host, port=config.port,
                                 username=config.username, password=config.password)
     collection = client[config.db][config.collection]
 
-    app.collection_manipulator = CollectionManipulator(collection)
-    app.db_client = client
-    app.http_session = ClientSession(loop=loop)
+    sanic.collection_manipulator = CollectionManipulator(collection)
+    sanic.db_client = client
+    sanic.http_session = ClientSession(loop=loop)
 
 
 @app.listener('after_server_stop')
-async def teardown(app, loop):
-    await app.http_session.close()
-    app.db_client.close()
+async def teardown(sanic, loop):
+    await sanic.http_session.close()
+    sanic.  db_client.close()
 
 
 @app.route('/items', methods=['POST'])
@@ -41,8 +42,8 @@ async def new_items(request):
     new content has been requested.
     '''
     post_data = request.json
-    if validate_post_data():
-        print('received request {!r}'.format(post_data))
+    if validate_post_data(post_data):
+        getLogger("root").info('received request {!r}'.format(post_data))
         sender = Sender(app.http_session,
                         post_data['return_url'],
                         app.collection_manipulator)

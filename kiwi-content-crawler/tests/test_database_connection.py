@@ -1,6 +1,6 @@
 from asynctest import TestCase, MagicMock
 
-from app.DatabaseConnection import CollectionManipulator
+from kiwi.DatabaseConnection import CollectionManipulator
 from motor.motor_asyncio import AsyncIOMotorCollection
 
 

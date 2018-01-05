@@ -1,6 +1,7 @@
 from asynctest import TestCase, MagicMock, CoroutineMock, call
-from app.Collector import Collector
-from app.Requester import Requester
+from unittest.mock import PropertyMock
+from kiwi.Collector import Collector
+from kiwi.Requester import Requester
 
 
 async def create_posts(count=5):

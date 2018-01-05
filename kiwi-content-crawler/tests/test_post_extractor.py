@@ -1,5 +1,5 @@
 import asynctest
-from app.PostExtractor import PostExtractor
+from kiwi.PostExtractor import PostExtractor
 
 
 async def duplicate_filter(post_id):

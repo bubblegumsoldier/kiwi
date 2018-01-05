@@ -1,8 +1,8 @@
 from asynctest import TestCase, MagicMock, CoroutineMock, call
 from aiohttp import ClientSession, ClientResponse
 
-from app.Requester import Requester, AUTH_HEADER
-from app.PostExtractor import PostExtractor
+from kiwi.Requester import Requester, AUTH_HEADER
+from kiwi.PostExtractor import PostExtractor
 
 
 posts = [

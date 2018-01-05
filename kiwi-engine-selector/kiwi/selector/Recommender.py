@@ -33,6 +33,8 @@ class Recommender:
 
     async def _get_response(self, session):
         async with session as response:
+            if response.status != 200:
+                return Response(status=response.status, json={})
             return Response(status=response.status,
                             json=await response.json())
 

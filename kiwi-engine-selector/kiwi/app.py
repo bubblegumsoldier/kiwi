@@ -34,7 +34,10 @@ async def images(request: Request):
 
 @app.post('/content')
 async def content(request: Request):
-    await selector.distribute_posts(app.client_session, request.json['posts'])
+    response = await selector.distribute_posts(app.client_session,
+                                               request.json['posts'])
+    if response.status == 500:
+        return json({}, status=500)
     return json({'accepted': True})
 
 

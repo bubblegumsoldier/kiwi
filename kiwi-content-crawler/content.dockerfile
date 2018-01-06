@@ -9,6 +9,9 @@ ENV MONGO_COLLECTION=posts
 ENV MONGO_USER=lange
 ENV MONGO_PWD=***REMOVED***
 ENV IMGUR_CLIENT_ID=***REMOVED***
+# One week in seconds
+ENV RESET_PAGE_TIME=604800
+
 
 COPY ./kiwi /kiwi
 COPY ./requirements.txt /

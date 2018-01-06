@@ -1,21 +1,22 @@
 from os import path, environ
-from collections import namedtuple
 from json import load
 
-Topic = namedtuple('Topic', 'tag order window')
-MongoConfig = namedtuple(
-    'MongoConfig', 'host port db collection username password')
-Config = namedtuple('Config', 'url topics forbidden_types')
+from kiwi.Types import RequestTemplate, Config, MongoConfig
 
 
 def read_config():
     with open(path.join(path.dirname(__file__), 'config.json')) as file:
         config = load(file)
-        topics = [Topic(**topic) for topic in config['topics']]
-        
-        return Config(url=config['url'],
-                      topics=topics,
-                      forbidden_types=config['forbidden_types'])
+        request_templates = [
+            RequestTemplate(
+                **topic,
+                url=config['url'],
+                secret=environ.get('IMGUR_CLIENT_ID'))
+            for topic in config['topics']]
+
+        return Config(request_templates=request_templates,
+                      forbidden_types=config['forbidden_types'],
+                      reset_page_time=int(environ.get('RESET_PAGE_TIME')))
 
 
 def read_mongo_config():

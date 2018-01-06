@@ -1,10 +1,10 @@
 from asyncio import as_completed
 from logging import getLogger
+from copy import deepcopy
 
 
 class Collector:
-    def __init__(self, count, requesters, callback):
-        self.callback = callback
+    def __init__(self, count, requesters):
         self.count = count
         self.post_cache = []
         self.requesters = requesters
@@ -18,17 +18,18 @@ class Collector:
             for future in as_completed(futures):
                 posts = await future
                 self.post_cache.extend(posts)
+        result = self.post_cache.copy()
+        self.post_cache = []
+        return (result, max(self._get_pages()))
 
     async def _post_count_reached(self):
         if len(self.post_cache) >= self.count:
             if self.post_cache:
-                getLogger("root").info("collected %d posts with %d requests.",
-                                       len(self.post_cache),
-                                       self._get_request_count())
-                await self.callback(self.post_cache)
-            self.post_cache = []
+                pages = self._get_pages()
+                getLogger("root").info("collected %d posts",
+                                       len(self.post_cache))
             return True
         return False
 
-    def _get_request_count(self):
-        return sum([requester.page - 1 for requester in self.requesters])
+    def _get_pages(self):
+        return [requester.page for requester in self.requesters]

@@ -1,9 +1,9 @@
-import { Component, OnInit, HostListener  } from '@angular/core';
+import { Component, OnInit, HostListener } from "@angular/core";
 
 import { Image } from "../shared/model/Image";
 import { ImageWithFeedback } from "../shared/model/ImageFeedback";
 
-import { ImageloaderService } from '../shared/imageloader/imageloader.service';
+import { ImageloaderService } from "../shared/imageloader/imageloader.service";
 
 export enum KEY_CODE {
   UP_ARROW = 38,
@@ -11,8 +11,8 @@ export enum KEY_CODE {
 }
 
 @Component({
-  selector: 'app-imagebrowser',
-  templateUrl: './imagebrowser.component.html'
+  selector: "app-imagebrowser",
+  templateUrl: "./imagebrowser.component.html"
 })
 export class ImagebrowserComponent implements OnInit {
   private images: Image[] = [];
@@ -23,25 +23,22 @@ export class ImagebrowserComponent implements OnInit {
   private static DEFAULT_NEW_IMAGE_LOADING_THRESHOLD = 5;
   private static DEFAULT_NEW_IMAGE_LOADING_NUMBER = 5;
 
-  constructor(private imageloader :ImageloaderService)
-  {
+  constructor(private imageloader: ImageloaderService) {}
 
-  }
-
-  ngOnInit()
-  {
+  ngOnInit() {
     this.loadNextNImages(ImagebrowserComponent.DEFAULT_STARTUP_IMAGE_NUMBER);
   }
 
-  loadNextNImages(n :number)
-  {
-    this.imageloader.getNextNImages(n).then(this.imagesLoaded.bind(this)).catch(console.error);
+  loadNextNImages(n: number) {
+    this.imageloader
+      .getNextNImages(n)
+      .then(this.imagesLoaded)
+      .catch(console.error);
   }
 
-  imagesLoaded(images :Image[])
-  {
-    images.forEach(this.imageLoaded.bind(this));
-  }
+  public imagesLoaded = (images: Image[]) => {
+    images.forEach(this.imageLoaded);
+  };
 
   public imageLoaded = (image: Image) => {
     if (this.hasImageInCache(image.id)) {
@@ -74,7 +71,7 @@ export class ImagebrowserComponent implements OnInit {
 
   addFirstImageWithFeedback(feedback: boolean) {
     const image = this.images.shift();
-    this.votedImages.push({id: image.id, feedback: feedback});
+    this.votedImages.push({ id: image.id, feedback: feedback });
     this.setupFeedback();
   }
 
@@ -85,7 +82,7 @@ export class ImagebrowserComponent implements OnInit {
     let votedImagesSafetyCopy = this.votedImages.slice();
 
     this.votedImages = [];
-    this.updateFeedback(feedbackRequests, votedImagesSafetyCopy)
+    this.updateFeedback(feedbackRequests, votedImagesSafetyCopy);
   }
 
   updateFeedback(
@@ -109,19 +106,21 @@ export class ImagebrowserComponent implements OnInit {
     this.updateIfNecessary();
   }
 
-  updateIfNecessary()
-  {
+  updateIfNecessary() {
     console.log(this.images.length);
-    if(this.images.length <= ImagebrowserComponent.DEFAULT_NEW_IMAGE_LOADING_THRESHOLD)
-    {
+    if (
+      this.images.length <=
+      ImagebrowserComponent.DEFAULT_NEW_IMAGE_LOADING_THRESHOLD
+    ) {
       console.log("update");
-      this.loadNextNImages(ImagebrowserComponent.DEFAULT_NEW_IMAGE_LOADING_NUMBER);
+      this.loadNextNImages(
+        ImagebrowserComponent.DEFAULT_NEW_IMAGE_LOADING_NUMBER
+      );
     }
   }
 
-  @HostListener('window:keyup', ['$event'])
+  @HostListener("window:keyup", ["$event"])
   keyEvent(event: KeyboardEvent) {
-    
     if (event.keyCode === KEY_CODE.UP_ARROW) {
       this.onLike();
     }
@@ -130,5 +129,4 @@ export class ImagebrowserComponent implements OnInit {
       this.onDislike();
     }
   }
-
 }

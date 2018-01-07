@@ -1,66 +1,72 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from "@angular/http";
 
-import { environment } from '../../../../environments/environment';
+import { environment } from "../../../../environments/environment";
 
-import { UsermanagerService } from '../usermanager/usermanager.service';
+import { UsermanagerService } from "../usermanager/usermanager.service";
 
-import { Image } from '../model/Image';
+import { Image } from "../model/Image";
 
-import { LoggedInUser } from '../model/LoggedInUser';
+import { LoggedInUser } from "../model/LoggedInUser";
 
 import "rxjs/add/operator/map";
 import { ImageWithFeedback } from "../model/ImageFeedback";
 
+const FEEDBACK_URL = new URL("feedback", environment.kiwiAPIUrl);
+
+const RECOMMENDATION_ENDPOINT = "recommendation";
+
 @Injectable()
 export class ImageloaderService {
+  constructor(private http: Http, private usermanager: UsermanagerService) {}
 
-  public static RECOMMENDATION_ENDPOINT = environment.kiwiAPIUrl + "recommendation/";
-
-  public static FEEDBACK_ENDPOINT = environment.kiwiAPIUrl + "feedback";
-
-  constructor(private http :Http, private usermanager :UsermanagerService)
-  {
-
-  }
-
-  public getNextNImages(n :number) :Promise<Image[]>
-  {
+  public getNextNImages(n: number): Promise<Image[]> {
     let p = new Promise<Image[]>((resolve, reject) => {
-      if(n <= 0)
-      {
+      if (n <= 0) {
         reject("n has to be larger than 0");
       }
-      this.usermanager.getCurrentUser().then((user) => {
-        this.getNextNImagesForUser(n, user).then(resolve).catch(reject);
-      }).catch(reject);
+      this.usermanager
+        .getCurrentUser()
+        .then(user => {
+          this.getNextNImagesForUser(n, user)
+            .then(resolve)
+            .catch(reject);
+        })
+        .catch(reject);
     });
     return p;
   }
 
-  private getNextNImagesForUser(n :number, user :LoggedInUser) :Promise<Image[]>
-  {
+  private getNextNImagesForUser(
+    n: number,
+    user: LoggedInUser
+  ): Promise<Image[]> {
     return new Promise<Image[]>((resolve, reject) => {
-      let fullUrl = ImageloaderService.RECOMMENDATION_ENDPOINT + user.name + "/" + n;
-      this.http.get(fullUrl).subscribe((result) => {
+      let fullUrl = new URL(
+        `${RECOMMENDATION_ENDPOINT}/${user.name}/${n}`,
+        environment.kiwiAPIUrl
+      );
+      this.http.get(fullUrl.href).subscribe(result => {
         let recommendation = result.json();
-        this.onRecommendationResponse(recommendation).then(resolve).catch(reject);
+        this.onRecommendationResponse(recommendation)
+          .then(resolve)
+          .catch(reject);
       }, error => reject);
     });
   }
 
-  private onRecommendationResponse(recommendation :any) :Promise<Image[]>
-  {
+  private onRecommendationResponse(recommendation: any): Promise<Image[]> {
     return new Promise<Image[]>((resolve, reject) => {
-      let returnValue :Image[] = ImageloaderService.convertResultToImages(recommendation);
+      let returnValue: Image[] = ImageloaderService.convertResultToImages(
+        recommendation
+      );
       console.log(returnValue);
       resolve(returnValue);
     });
   }
 
-  private static convertResultToImages(result :any) :Image[]
-  {
+  private static convertResultToImages(result: any): Image[] {
     return result.recommendations.posts.map(this.convertRecommendationToImage);
   }
 
@@ -91,15 +97,16 @@ export class ImageloaderService {
     });
   }
 
-  private sendFeedbackRequest(request) :Promise<void>
-  {
+  private sendFeedbackRequest(request): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      let headers = new Headers({ 'Content-Type': 'application/json' });
+      let headers = new Headers({ "Content-Type": "application/json" });
       let options = new RequestOptions({ headers: headers });
-      this.http.post(ImageloaderService.FEEDBACK_ENDPOINT, JSON.stringify(request), options).subscribe((value :Response) => {
-        console.log(JSON.stringify(value));
-        resolve();
-      }, reject);
+      this.http
+        .post(FEEDBACK_URL.href, JSON.stringify(request), options)
+        .subscribe((value: Response) => {
+          console.log(JSON.stringify(value));
+          resolve();
+        }, reject);
     });
   }
 }

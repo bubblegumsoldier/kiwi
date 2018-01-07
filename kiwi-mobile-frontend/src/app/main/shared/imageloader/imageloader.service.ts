@@ -10,7 +10,8 @@ import { Image } from '../model/Image';
 
 import { LoggedInUser } from '../model/LoggedInUser';
 
-import 'rxjs/add/operator/map';
+import "rxjs/add/operator/map";
+import { ImageWithFeedback } from "../model/ImageFeedback";
 
 @Injectable()
 export class ImageloaderService {
@@ -63,30 +64,30 @@ export class ImageloaderService {
     return result.recommendations.posts.map(this.convertRecommendationToImage);
   }
 
-  private static convertRecommendationToImage(recommendedPost :any) :Image
-  {
-    let i = new Image();
-    i.id = recommendedPost.id;
-    i.src = recommendedPost.src;
-    i.title = recommendedPost.title;
-    i.type = recommendedPost.type;
-    return i;
+  private static convertRecommendationToImage(recommendedPost: any): Image {
+    return new Image(recommendedPost);
   }
 
-  public sendFeedback(imageId :string, like :boolean) :Promise<void>
-  {
-    return new Promise<void>((resolve, reject) => {
-      this.usermanager.getCurrentUser().then(user => {
-        let feedback = {
-          user: user.name,
-          post: imageId,
-          vote: like
-        };
-        let request = {
-          feedback: feedback
-        };
-        this.sendFeedbackRequest(request).then(resolve).catch(reject);
-      }).catch(reject);
+  public sendFeedback(
+    votedImage: ImageWithFeedback
+  ): Promise<ImageWithFeedback> {
+    return new Promise<ImageWithFeedback>((resolve, reject) => {
+      this.usermanager
+        .getCurrentUser()
+        .then(user => {
+          const request = {
+            feedback: {
+              user: user.name,
+              post: votedImage.id,
+              vote: votedImage.feedback
+            }
+          };
+
+          this.sendFeedbackRequest(request)
+            .then(() => resolve(votedImage))
+            .catch(reject);
+        })
+        .catch(reject);
     });
   }
 

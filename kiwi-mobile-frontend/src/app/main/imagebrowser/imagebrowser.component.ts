@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener  } from '@angular/core';
 
-import { Image } from '../shared/model/Image';
+import { Image } from "../shared/model/Image";
+import { ImageWithFeedback } from "../shared/model/ImageFeedback";
 
 import { ImageloaderService } from '../shared/imageloader/imageloader.service';
 
@@ -14,12 +15,11 @@ export enum KEY_CODE {
   templateUrl: './imagebrowser.component.html'
 })
 export class ImagebrowserComponent implements OnInit {
+  private images: Image[] = [];
+  private imageCache: Image[] = [];
+  private votedImages: ImageWithFeedback[] = [];
 
-  private images :Image[] = [];
-  private likedImages :Image[] = [];
-  private dislikedImages :Image[] = [];
-
-  private static DEFAULT_STARTUP_IMAGE_NUMBER = 10;
+  private static DEFAULT_STARTUP_IMAGE_NUMBER = 5;
   private static DEFAULT_NEW_IMAGE_LOADING_THRESHOLD = 5;
   private static DEFAULT_NEW_IMAGE_LOADING_NUMBER = 5;
 
@@ -43,81 +43,68 @@ export class ImagebrowserComponent implements OnInit {
     images.forEach(this.imageLoaded.bind(this));
   }
 
-  imageLoaded(image :Image)
-  {
-    if(this.findImageInStackById(image.id) != undefined)
-    {
-      alert("duplicate!");
-        return; //duplicate entry will not be added
+  public imageLoaded = (image: Image) => {
+    if (this.hasImageInCache(image.id)) {
+      console.log(`duplicate! ${image.id}`);
+      return; //duplicate entry will not be added
     }
     this.images.push(image);
+    this.imageCache.push(image);
+  };
+
+  hasImageInCache(id: string) {
+    return this.imageCache.find((img: Image) => img.id === id) !== undefined;
   }
 
-  findImageInStackById(id :string)
-  {
-    this.images.find((img :Image) => (img.id == id));
+  onDislike() {
+    this.onFeedback("animateDown", false);
   }
 
-  onDislike()
-  {
-    this.images[0].animateDown = true;
-    setTimeout(_ => {
-      this.addFirstImageToList(this.dislikedImages);
-    }, 300);
+  onLike() {
+    this.onFeedback("animateUp", true);
   }
 
-  onLike()
-  {
-    this.images[0].animateUp = true;
+  onFeedback(animationDirection, feedback: boolean) {
+    this.images[0][animationDirection] = true;
     console.log(this.images[0]);
     setTimeout(_ => {
-      this.addFirstImageToList(this.likedImages);
+      this.addFirstImageWithFeedback(feedback);
     }, 300);
   }
 
-  addFirstImageToList(list :any[])
-  {
-    if(this.images.length <= 0)
-    {
-      return;
-    }
-    let cImg = this.images[0];
-    list.push(cImg);
-    console.log(list);
-    this.images = this.images.filter((v, i) => {return i != 0});
-    this.updateFeedback();
+  addFirstImageWithFeedback(feedback: boolean) {
+    const image = this.images.shift();
+    this.votedImages.push({id: image.id, feedback: feedback});
+    this.setupFeedback();
   }
 
-  //TODO: This method is too long
-  updateFeedback()
-  {
-    let likeFeedbackRequests :Promise<void>[] = this.likedImages.map(image => {
-      return this.imageloader.sendFeedback(image.id, true);
-    });
-    let dislikeFeedbackRequests :Promise<void>[] = this.dislikedImages.map(image => {
-      return this.imageloader.sendFeedback(image.id, false);
-    });
-    let likedImagesSafetyCopy = this.likedImages.slice();
-    let dislikedImagesSafetyCopy = this.dislikedImages.slice();
+  setupFeedback() {
+    const feedbackRequests = this.votedImages.map(imageFeedback =>
+      this.imageloader.sendFeedback(imageFeedback)
+    );
+    let votedImagesSafetyCopy = this.votedImages.slice();
 
-    this.likedImages = [];
-    this.dislikedImages = [];
-    
-    let allRequests = likeFeedbackRequests.concat(dislikeFeedbackRequests);
-    Promise.all(allRequests).then(_ => {
-      console.log("All feedbacks were sent (" + allRequests.length + ")");
-    }).catch(error => {
-      console.error(error);
-      console.log("we need to append what has not been sent so it can be sent again...");
-      console.log("liked safety copy: ");
-      console.log(likedImagesSafetyCopy);
-      this.likedImages = this.likedImages.concat(likedImagesSafetyCopy);
+    this.votedImages = [];
+    this.updateFeedback(feedbackRequests, votedImagesSafetyCopy)
+  }
 
-      console.log("disliked safety copy: ");
-      console.log(dislikedImagesSafetyCopy);
-      
-      this.dislikedImages = this.dislikedImages.concat(dislikedImagesSafetyCopy);
-    });
+  updateFeedback(
+    feedbackRequests: Promise<ImageWithFeedback>[],
+    votedImagesSafetyCopy: ImageWithFeedback[]
+  ) {
+    Promise.all(feedbackRequests)
+      .then(successfullRequests => {
+        console.log(
+          "All feedbacks were sent (" + successfullRequests.length + ")"
+        );
+        this.imageCache = this.imageCache.filter(
+          img => !successfullRequests.some(feed => feed.id == img.id)
+        );
+      })
+      .catch(error => {
+        console.error(error);
+        this.votedImages = this.votedImages.concat(votedImagesSafetyCopy);
+      });
 
     this.updateIfNecessary();
   }

@@ -4,6 +4,7 @@
     position: relative;
     height: 100%;
     overflow-y: auto;
+    background-color: white;
 }
 
 .imagewrapper {
@@ -110,4 +111,14 @@
 
 .animatedown {
     top: 100%;
+}
+
+.no_images.error {
+    flex-direction: column;
+}
+
+button.retry {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5%;
 }

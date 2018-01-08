@@ -9,8 +9,12 @@
         </div>
         <div class="placeholder"></div>
     </div>
-    <div class="no_images" *ngIf="images.length <= 0">
+    <div class="no_images" *ngIf="images.length <= 0 && !loadingError">
         <img src="assets/animations/loading_80.svg" />
+    </div>
+    <div class="no_images error" *ngIf="images.length <= 0 && loadingError">
+        <p>Laden fehlgeschlagen...</p>
+        <button class="retry" (click)="onRetry()">Erneut versuchen</button>
     </div>
     <div class="buttonwrapper" [class.inactive]="images.length <= 0">
         <div class="buttonwrapper_inner">

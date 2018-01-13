@@ -71,7 +71,7 @@ class DataAccessor:
                                          post)
                     inserted += 1
                 except IntegrityError as exp:
-                    getLogger('root').error('Feedback Error:%r', exp)
+                    getLogger('root').error('Content Error:%r', exp)
             return inserted
 
     async def _is_user_known(self, username, conn):

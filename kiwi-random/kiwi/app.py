@@ -15,7 +15,8 @@ app = Sanic(__name__)
 async def setup(sanic, loop):
     pool = await create_pool(**read_mysql_config()._asdict(),
                              autocommit=True,
-                             loop=loop)
+                             loop=loop,
+                             pool_recycle=600)
     sanic.pool = pool
 
 

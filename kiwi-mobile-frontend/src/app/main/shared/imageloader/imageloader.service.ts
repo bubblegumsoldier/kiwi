@@ -52,7 +52,7 @@ export class ImageloaderService {
         this.onRecommendationResponse(recommendation)
           .then(resolve)
           .catch(reject);
-      }, error => reject);
+      }, error => reject());
     });
   }
 

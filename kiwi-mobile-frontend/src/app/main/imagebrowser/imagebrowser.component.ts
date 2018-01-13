@@ -23,6 +23,8 @@ export class ImagebrowserComponent implements OnInit {
   private static DEFAULT_NEW_IMAGE_LOADING_THRESHOLD = 5;
   private static DEFAULT_NEW_IMAGE_LOADING_NUMBER = 5;
 
+  private loadingError :boolean = false;
+
   constructor(private imageloader: ImageloaderService) {}
 
   ngOnInit() {
@@ -33,7 +35,19 @@ export class ImagebrowserComponent implements OnInit {
     this.imageloader
       .getNextNImages(n)
       .then(this.imagesLoaded)
-      .catch(console.error);
+      .catch(this.onLoadingError.bind(this));
+  }
+
+  onLoadingError()
+  {
+    console.log("error...");
+    this.loadingError = true;
+  }
+
+  onRetry()
+  {
+    this.loadingError = false;
+    this.loadNextNImages(ImagebrowserComponent.DEFAULT_STARTUP_IMAGE_NUMBER);
   }
 
   public imagesLoaded = (images: Image[]) => {

@@ -1,13 +1,13 @@
 from logging import getLogger
-from surprise import Dataset
+from surprise import Dataset, Reader
 import pandas as pd
 
 
 class DataAccessor:
     def __init__(self, trainset=None):
         self.trainset = Dataset.load_builtin('ml-100k').build_full_trainset() \
-                        if trainset is None \
-                        else trainset
+            if trainset is None \
+            else trainset
         self.df = pd.DataFrame.from_records(
             self.trainset.all_ratings(), columns=["user", "item", "vote"])
         self.new_users = set()
@@ -45,7 +45,29 @@ class DataAccessor:
     async def add_content(self, posts):
         self.new_items.update(posts)
 
-    async def with_updated_trainset(self):
-        new = pd.DataFrame.from_records(self.new_voted)
-        combined = self.df.concat(new).drop_duplicates(keep=False).tolist()
-        return DataAccessor(trainset=combined)
+    @staticmethod
+    def with_updated_trainset(old_set, new_set, scale):
+        """
+        This prepares an accessor with a new trainset. This will likely need a different signature, once we go to database stored datasets.
+        However, the idea of this function should still be the same.
+
+        We combine the old training data (i.e. all ratings that have already been used for training the algorithm) with the new votes we received after the last training step.
+
+        This will add training information about new users and new items, but only if they have rated or have been rated.
+        Users and items without interactions will remain unkown.
+        Depending on the size of the dataset, it is also likely that there will be no neighbor for a given user. 
+        In the movielens-100k set, for example user 40 has no neighbors, because he has no vote overlap to other users (or no correlation).
+        """
+        new = pd.DataFrame.from_records(
+            list(new_set),
+            columns=["user", "item", "vote"])
+
+        combined = pd \
+            .concat([old_set, new]) \
+            .drop_duplicates(keep=False)
+
+        dataset = Dataset.load_from_df(
+            combined,
+            Reader(rating_scale=scale))
+
+        return DataAccessor(trainset=dataset.build_full_trainset())

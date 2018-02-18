@@ -1,93 +1,51 @@
 from logging import getLogger
-from aiomysql import IntegrityError
-
-RANDOM_SELECT = '''
-            SELECT DISTINCT p.post_id
-            FROM products p
-            WHERE p.post_id NOT IN (
-                SELECT votes.product
-                FROM votes
-                WHERE votes.user = %s)
-            ORDER BY Rand()
-            '''
+from surprise import Dataset
+import pandas as pd
 
 
 class DataAccessor:
-    def __init__(self, conn):
-        self.conn = conn
+    def __init__(self, trainset=None):
+        self.trainset = Dataset.load_builtin('ml-100k').build_full_trainset() \
+                        if trainset is None \
+                        else trainset
+        self.df = pd.DataFrame.from_records(
+            self.trainset.all_ratings(), columns=["user", "item", "vote"])
+        self.new_users = set()
+        self.new_items = set()  # not used in unvoted_estimation
+        self.new_voted = set()
+
+    async def user_in_trainset(self, uid):
+        return self.trainset.knows_user(uid)
+
+    async def get_unvoted_items(self, uid):
+        unvoted_trained = await self._get_unvoted_from_trainset(uid)
+        voted_after_train = {vote.post
+                             for vote in self.new_voted
+                             if vote.user is uid}
+        return list(set(unvoted_trained).difference(voted_after_train))
+
+    async def _get_unvoted_from_trainset(self, uid):
+        voted_items = self.df[self.df["user"] == uid]["item"]
+        items_series = pd.Series.from_array(self.trainset.all_items())
+        return pd.concat([items_series, voted_items]) \
+            .drop_duplicates(keep=False) \
+            .tolist()
 
     async def check_and_register_user(self, user):
-        if not await self._is_user_known(user, self.conn):
-            await self._insert_user(user, self.conn)
-
-    async def recommend_for(self, user, count):
-        unvoted_posts = await self._get_random_unvoted(
-            user, count, self.conn)
-        return unvoted_posts
+        if not await self.user_in_trainset(user):
+            self.new_users.add(user)
 
     async def get_unvoted_count(self, user):
-        return await self._get_unvoted_count(user, self.conn)
+        return len(await self.get_unvoted_items(user))
 
     async def store_feedback(self, vote):
-        try:
-            await self._insert_vote(vote, self.conn)
-            return True
-        except IntegrityError as exp:
-            getLogger('root').error('Feedback Error: %r', exp)
-            return False
+        self.new_voted.add(vote)
+        return True
 
     async def add_content(self, posts):
-        return await self._insert_posts(posts, self.conn)
+        self.new_items.update(posts)
 
-    async def _get_random_unvoted(self, username, count, conn):
-        async with conn.cursor() as cursor:
-            await cursor.execute(RANDOM_SELECT, username)
-            products = [row[0] for row in await cursor.fetchmany(count)]
-            return {'posts': products,
-                    'unvoted': cursor.rowcount,
-                    'user': username}
-
-    async def _get_unvoted_count(self, user, conn):
-        post_count = await self._count_posts(conn)
-        voted = await self._vote_count(user, conn)
-        return post_count - voted
-
-    async def _insert_vote(self, vote, conn):
-        async with conn.cursor() as cursor:
-            await cursor.execute(
-                'INSERT INTO votes (user, product, vote) values(%s, %s, %s)',
-                vote)
-
-    async def _insert_user(self, username, conn):
-        async with conn.cursor() as cursor:
-            await cursor.execute('INSERT INTO users values(%s)', username)
-
-    async def _insert_posts(self, posts, conn):
-        inserted = 0
-        async with conn.cursor() as cursor:
-            for post in posts:
-                try:
-                    await cursor.execute('INSERT INTO products VALUES(%s)',
-                                         post)
-                    inserted += 1
-                except IntegrityError as exp:
-                    getLogger('root').error('Content Error:%r', exp)
-            return inserted
-
-    async def _is_user_known(self, username, conn):
-        async with conn.cursor() as cursor:
-            await cursor.execute('SELECT * FROM users WHERE users.uname = %s',
-                                 username)
-            return cursor.rowcount > 0
-
-    async def _vote_count(self, username, conn):
-        async with conn.cursor() as cursor:
-            await cursor.execute('SELECT * FROM votes v WHERE v.user = %s',
-                                 username)
-            return cursor.rowcount
-
-    async def _count_posts(self, conn):
-        async with conn.cursor() as cursor:
-            await cursor.execute('SELECT COUNT(post_id) FROM products')
-            count = await cursor.fetchone()
-            return int(count[0])
+    async def with_updated_trainset(self):
+        new = pd.DataFrame.from_records(self.new_voted)
+        combined = self.df.concat(new).drop_duplicates(keep=False).tolist()
+        return DataAccessor(trainset=combined)

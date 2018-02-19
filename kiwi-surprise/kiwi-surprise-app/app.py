@@ -1,10 +1,11 @@
-from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
+# from aiomysql import create_pool
 from asyncio import sleep
 from logging import getLogger
 from sanic import Sanic
 from sanic.request import Request
 from sanic.response import json
-from database.DataAccessor import BuiltinDataAccessor
+from database.DataAccessor import BuiltinDataAccessor, DataAccessor, BuiltinContext
 from Algorithm import Algorithm
 from Recommender import Recommender
 from config import create_algorithm
@@ -14,36 +15,56 @@ from TransferTypes import create_vote
 app = Sanic(__name__)
 
 
+def create_accessor(context):
+    return BuiltinDataAccessor(context=context)
+
+
+def create_pool(**kwargs):
+    return BuiltinContext()
+
+
 async def periodic_retrain():
     app.run_retrain = True
     await sleep(30)
     while app.run_retrain:
         getLogger('root').info("Retraining...")
         loop = app.loop
-        new_accessor = await loop.run_in_executor(
-            app.executor,
-            app.accessor.with_updated_trainset)
-        new_predictor = Algorithm(loop, app.executor, create_algorithm())
-        await new_predictor.fit(await new_accessor.trainset())
-        app.predictor = new_predictor
-        app.accessor = new_accessor
-        getLogger('root').info('Retraining finished...')
-        await sleep(30)
+        async with app.pool.acquire() as conn:
+            accessor = BuiltinDataAccessor(conn)
+            new_predictor = Algorithm(loop, app.executor, create_algorithm())
+            await new_predictor.fit(await accessor.trainset())
+            app.predictor = new_predictor
+            getLogger('root').info('Retraining finished...')
+            await sleep(30)
 
 
 @app.listener("before_server_start")
-async def setup(app, loop):
-    app.executor = ThreadPoolExecutor()
-    app.predictor = Algorithm(loop, app.executor, create_algorithm())
-    accessor = BuiltinDataAccessor()
-    await app.predictor.fit(await accessor.trainset())
-    app.accessor = accessor
+async def setup(context, loop):
+    context.executor = ThreadPoolExecutor()
+    context.predictor = Algorithm(loop, context.executor, create_algorithm())
+    context.pool = create_pool(pool_recycle=120)
+    async with context.pool.acquire() as conn:
+        accessor = create_accessor(conn)
+        await context.predictor.fit(await accessor.trainset())
+
+
+@app.middleware("request")
+async def generate_accessor(request):
+    app.conn = app.pool.acquire()
+    app.accessor = create_accessor(app.conn)
+
+
+@app.middleware("response")
+async def teardown_accessor(request, response):
+    app.conn.close()
 
 
 @app.listener("before_server_stop")
-async def teardown(app, loop):
-    app.run_retrain = False
-    app.pool.shutdown()
+async def teardown(context, loop):
+    context.run_retrain = False
+    context.executor.shutdown()
+    context.pool.close()
+    await context.pool.wait_closed()
 
 
 @app.get('/recommendation')

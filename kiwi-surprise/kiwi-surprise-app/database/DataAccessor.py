@@ -4,22 +4,48 @@ from surprise import Dataset, Reader
 import pandas as pd
 
 
-class BuiltinDataAccessor:
-    def __init__(self, trainset=None):
-        self._trainset = Dataset.load_builtin('ml-100k').build_full_trainset() \
-            if trainset is None \
-            else trainset
+class BuiltinContext:
+    def __init__(self, trainset=None, df=None, users=None, items=None, votes=None):
+        self.trainset = Dataset.load_builtin(
+            'ml-100k').build_full_trainset() if trainset is None else trainset
         self.df = pd.DataFrame.from_records(
-            self._trainset.all_ratings(), columns=["user", "item", "vote"])
-        self.new_users = set()
-        self.new_items = set()  # not used in unvoted_estimation
-        self.new_voted = set()
+            self.trainset.all_ratings(), columns=["user", "item", "vote"]) if df is None else df
+        self.new_users = set() if not users else users
+        self.new_items = set() if not items else items
+        self.new_voted = set() if not votes else votes
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_t, exc, tb):
+        pass
+
+    async def __await__(self):
+        return self
+
+    def acquire(self):
+        return BuiltinContext(
+            trainset=self.trainset,
+            df=self.df,
+            users=self.new_users,
+            items=self.new_items,
+            votes=self.new_voted)
+
+    def close(self):
+        pass
+
+
+class BuiltinDataAccessor:
+
+    def __init__(self, context):
+        self._trainset = context.trainset
+        self.df = context.df
+        self.new_users = context.new_users
+        self.new_items = context.new_items
+        self.new_voted = context.new_voted
 
     async def trainset(self):
-        return self._trainset
-
-    async def user_in_trainset(self, uid):
-        return self._trainset.knows_user(uid)
+        return self._with_updated_trainset()
 
     async def get_unvoted_items(self, uid):
         unvoted_trained = await self._get_unvoted_from_trainset(uid)
@@ -36,7 +62,7 @@ class BuiltinDataAccessor:
             .tolist()
 
     async def check_and_register_user(self, user):
-        if not await self.user_in_trainset(user):
+        if not self._trainset.knows_user(user):
             self.new_users.add(user)
 
     async def get_unvoted_count(self, user):
@@ -49,7 +75,7 @@ class BuiltinDataAccessor:
     async def add_content(self, posts):
         self.new_items.update(posts)
 
-    def with_updated_trainset(self):
+    def _with_updated_trainset(self):
         """
         This prepares an accessor with a new trainset. This will likely need a different signature, once we go to database stored datasets.
         However, the idea of this function should still be the same.
@@ -73,14 +99,12 @@ class BuiltinDataAccessor:
             combined,
             Reader(rating_scale=self._trainset.rating_scale))
 
-        return BuiltinDataAccessor(trainset=dataset.build_full_trainset())
-
+        return dataset.build_full_trainset()
 
 
 class DataAccessor:
-    def __init__(self, conn):
+    def __init__(self, conn=None):
         self._conn = conn
-
 
     async def trainset(self):
         '''
@@ -170,7 +194,3 @@ class DataAccessor:
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT * from votes')
             return await cursor.fetchall()
-
-    
-    def with_updated_trainset(self):
-        return DataAccessor(self._conn)

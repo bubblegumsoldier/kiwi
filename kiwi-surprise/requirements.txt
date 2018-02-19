@@ -2,5 +2,5 @@ sanic
 numpy
 pandas
 scikit-surprise
-aitertools
+aiomysql
 

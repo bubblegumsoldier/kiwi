@@ -1,9 +1,8 @@
 from Algorithm import Algorithm
-from database import DataAccessor
 
 
 class Recommender:
-    def __init__(self, algorithm: Algorithm, data_accessor: DataAccessor):
+    def __init__(self, algorithm: Algorithm, data_accessor):
         self._algo = algorithm
         self._accessor = data_accessor
 

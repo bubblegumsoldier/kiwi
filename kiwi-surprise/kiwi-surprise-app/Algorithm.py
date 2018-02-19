@@ -18,11 +18,14 @@ class Algorithm:
     async def get_top_n_items(self, uid, iids, n):
         """
         This should use the fitted algorithm to give the closest n items for our user.
-        I imagine, that we get all unvoted item ids for the user from the db, and use this as the algorithms testset.
+        I imagine, that we get all unvoted item ids for the user from the db,
+        and use this as the algorithms testset.
         From there we can just pick the top n items.
-        We could even store all results until the next training step and just use the next highest items from storage (cross-validated with the unvoted items). This would reduce the overhead on each request. 
+        We could even store all results until the next training step and just
+        use the next highest items from storage (cross-validated with the
+        unvoted items). This would reduce the overhead on each request.
         """
-        ratings = await self.get_predictions(uid, iids)        
+        ratings = await self.get_predictions(uid, iids)
         return nlargest(n, ratings, key=lambda r: r[1])
 
     async def get_predictions(self, uid, iids):
@@ -32,10 +35,13 @@ class Algorithm:
     async def get_closest_known_user(self, uid, ratings):
         """
         Surprise does not support users that are not known to the trainset at all.
-        Therefore we need a method that gives us the closest user in the trainset going by the ratings of the current user.
-        Then we can impersonate our closest user for the algorithm, while still using our new users unvoted items.
+        Therefore we need a method that gives us the closest user in the
+        trainset going by the ratings of the current user.
+        Then we can impersonate our closest user for the algorithm, while still
+        using our new users unvoted items.
         No clue how to do this from the surprise api.
-        Would need to modify the similarity calculations of the algorithm to only add one row?        
+        Would need to modify the similarity calculations of the algorithm to
+        only add one row?
         """
 
     async def _estimate(self, uid, items):
@@ -44,4 +50,4 @@ class Algorithm:
 
 
 def _inner_estimate(knn, uid, items):
-    return [(item, knn.estimate(uid, item)[0]) for item in items]
+    return [(item, *knn.estimate(uid, item)) for item in items]

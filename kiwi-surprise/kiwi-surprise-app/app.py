@@ -1,10 +1,10 @@
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from asyncio import sleep
 from logging import getLogger
 from sanic import Sanic
 from sanic.request import Request
 from sanic.response import json
-from database.DataAccessor import DataAccessor
+from database.DataAccessor import BuiltinDataAccessor
 from Algorithm import Algorithm
 from Recommender import Recommender
 from config import create_algorithm
@@ -21,13 +21,10 @@ async def periodic_retrain():
         getLogger('root').info("Retraining...")
         loop = app.loop
         new_accessor = await loop.run_in_executor(
-            app.pool,
-            app.accessor.with_updated_trainset,
-            app.accessor.df,
-            app.accessor.new_voted,
-            app.accessor.trainset.rating_scale)
-        new_predictor = Algorithm(loop, app.pool, create_algorithm())
-        await new_predictor.fit(new_accessor.trainset)
+            app.executor,
+            app.accessor.with_updated_trainset)
+        new_predictor = Algorithm(loop, app.executor, create_algorithm())
+        await new_predictor.fit(await new_accessor.trainset())
         app.predictor = new_predictor
         app.accessor = new_accessor
         getLogger('root').info('Retraining finished...')
@@ -36,10 +33,10 @@ async def periodic_retrain():
 
 @app.listener("before_server_start")
 async def setup(app, loop):
-    app.pool = ProcessPoolExecutor()
-    app.predictor = Algorithm(loop, app.pool, create_algorithm())
-    accessor = DataAccessor()
-    await app.predictor.fit(accessor.trainset)
+    app.executor = ThreadPoolExecutor()
+    app.predictor = Algorithm(loop, app.executor, create_algorithm())
+    accessor = BuiltinDataAccessor()
+    await app.predictor.fit(await accessor.trainset())
     app.accessor = accessor
 
 
@@ -58,7 +55,7 @@ async def recommend(request):
     '''
     args = request.raw_args
     getLogger('root').info(
-        'Received recommendation request for {}'.format(args['user']))
+        'Received recommendation request for %s', args['user'])
     recommender = Recommender(app.predictor, app.accessor)
     posts = await recommender.recommend_for(int(args['user']),
                                             int(args.get('count', 10)))

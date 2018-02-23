@@ -14,7 +14,6 @@ class Algorithm:
         """
         await self._loop.run_in_executor(None, self.knn.fit, trainset)
 
-    # i believe ids need to be ints, convert this using db?
     async def get_top_n_items(self, uid, iids, n):
         """
         This should use the fitted algorithm to give the closest n items for our user.

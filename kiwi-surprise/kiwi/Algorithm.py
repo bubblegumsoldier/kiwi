@@ -49,4 +49,4 @@ class Algorithm:
 
 
 def _inner_estimate(knn, uid, items):
-    return [(item, *knn.estimate(uid, item)) for item in items]
+    return [(item, *knn.predict(uid, item, clip=False, verbose=True)) for item in items]

@@ -1,37 +1,38 @@
-from concurrent.futures import ThreadPoolExecutor
-# from aiomysql import create_pool
+from concurrent.futures import ThreadPoolExecutor, CancelledError
+from aiomysql import create_pool
 from asyncio import sleep
 from logging import getLogger
 from sanic import Sanic
 from sanic.request import Request
 from sanic.response import json
-from database.DataAccessor import BuiltinDataAccessor, DataAccessor, BuiltinContext
-from Algorithm import Algorithm
-from Recommender import Recommender
-from config import create_algorithm
-from TransferTypes import create_vote
+from kiwi.database.DataAccessor import DataAccessor
+from kiwi.Algorithm import Algorithm
+from kiwi.Recommender import Recommender
+from kiwi.config import create_algorithm, read_mysql_config
+from kiwi.TransferTypes import create_vote
 
 
 app = Sanic(__name__)
 
 
 def create_accessor(context):
-    return BuiltinDataAccessor(context=context)
+    return DataAccessor(conn=context)
+    # return BuiltinDataAccessor(context=context)
 
 
-def create_pool(**kwargs):
-    return BuiltinContext()
+# def create_pool(*args, **kwargs):
+#     return BuiltinContext()
 
 
 async def periodic_retrain():
-    app.run_retrain = True
     await sleep(30)
     while app.run_retrain:
         getLogger('root').info("Retraining...")
         loop = app.loop
         async with app.pool.acquire() as conn:
-            accessor = BuiltinDataAccessor(conn)
-            new_predictor = Algorithm(loop, app.executor, create_algorithm())
+            accessor = create_accessor(conn)
+            new_predictor = Algorithm(
+                loop, app.executor, create_algorithm())
             await new_predictor.fit(await accessor.trainset())
             app.predictor = new_predictor
             getLogger('root').info('Retraining finished...')
@@ -42,15 +43,21 @@ async def periodic_retrain():
 async def setup(context, loop):
     context.executor = ThreadPoolExecutor()
     context.predictor = Algorithm(loop, context.executor, create_algorithm())
-    context.pool = create_pool(pool_recycle=120)
+    context.pool = await create_pool(
+        **read_mysql_config()._asdict(),
+        autocommit=True,
+        loop=loop,
+        pool_recycle=600)
+
     async with context.pool.acquire() as conn:
         accessor = create_accessor(conn)
-        await context.predictor.fit(await accessor.trainset())
+        await context.predictor.fit(
+            await accessor.trainset(rating_scale=(0, 1)))
 
 
 @app.middleware("request")
 async def generate_accessor(request):
-    app.conn = app.pool.acquire()
+    app.conn = await app.pool.acquire()
     app.accessor = create_accessor(app.conn)
 
 
@@ -78,7 +85,7 @@ async def recommend(request):
     getLogger('root').info(
         'Received recommendation request for %s', args['user'])
     recommender = Recommender(app.predictor, app.accessor)
-    posts = await recommender.recommend_for(int(args['user']),
+    posts = await recommender.recommend_for(args['user'],
                                             int(args.get('count', 10)))
     return json(posts)
 
@@ -100,4 +107,5 @@ async def content(request: Request):
 
 if __name__ == '__main__':
     app.add_task(periodic_retrain)
+    app.run_retrain = True
     app.run(host='0.0.0.0', port=5001)

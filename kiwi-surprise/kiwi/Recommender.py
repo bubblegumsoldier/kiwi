@@ -1,5 +1,4 @@
-from Algorithm import Algorithm
-
+from kiwi.Algorithm import Algorithm
 
 class Recommender:
     def __init__(self, algorithm: Algorithm, data_accessor):
@@ -8,13 +7,16 @@ class Recommender:
 
     async def recommend_for(self, user, count=10):
         await self._register_user(user)
+        voted, unvoted = await self._accessor.get_voted_and_unvoted_count(user)
         items = await self._accessor.get_unvoted_items(user)
         recommendations = await self._algo.get_top_n_items(user, items, count)
-        unvoted = len(items)
+
         return {
             'posts': [r[0] for r in recommendations],
             'user': user,
-            'unvoted': unvoted
+            'unvoted': unvoted,
+            'voted': voted,
+            'meta': recommendations
         }
 
     async def store_feedback(self, vote):

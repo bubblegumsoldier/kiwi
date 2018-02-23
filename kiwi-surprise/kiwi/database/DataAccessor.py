@@ -15,6 +15,7 @@ class BuiltinContext:
         self.new_voted = set() if not votes else votes
 
     async def __aenter__(self):
+        '''Necessary to use it in the same way as the connection pool'''
         return self
 
     async def __aexit__(self, exc_t, exc, tb):
@@ -24,12 +25,7 @@ class BuiltinContext:
         return self
 
     def acquire(self):
-        return BuiltinContext(
-            trainset=self.trainset,
-            df=self.df,
-            users=self.new_users,
-            items=self.new_items,
-            votes=self.new_voted)
+        return self
 
     def close(self):
         pass
@@ -38,6 +34,7 @@ class BuiltinContext:
 class BuiltinDataAccessor:
 
     def __init__(self, context):
+        self._context = context
         self._trainset = context.trainset
         self.df = context.df
         self.new_users = context.new_users
@@ -65,8 +62,10 @@ class BuiltinDataAccessor:
         if not self._trainset.knows_user(user):
             self.new_users.add(user)
 
-    async def get_unvoted_count(self, user):
-        return len(await self.get_unvoted_items(user))
+    async def get_voted_and_unvoted_count(self, user):
+        unvoted = len(await self.get_unvoted_items(user))
+        voted = len(self.df[self.df["user"] == user]["item"])
+        return (unvoted, voted)
 
     async def store_feedback(self, vote):
         self.new_voted.add(vote)
@@ -89,11 +88,10 @@ class BuiltinDataAccessor:
         """
         new = pd.DataFrame.from_records(
             list(self.new_voted),
-            columns=["user", "item", "vote"])
+            columns=["user", "item", "vote", "timestamp"])
 
         combined = pd \
-            .concat([self.df, new]) \
-            .drop_duplicates(keep=False)
+            .concat([self.df, new])
 
         dataset = Dataset.load_from_df(
             combined,
@@ -106,11 +104,19 @@ class DataAccessor:
     def __init__(self, conn=None):
         self._conn = conn
 
-    async def trainset(self):
+    async def trainset(self, rating_scale=None):
         '''
         Currently will return all votes, i.e. will always be the new trainset
         '''
-        return await self._get_votes(self._conn)
+        votes = list(await self._get_votes(self._conn))
+        frame = pd.DataFrame.from_records(
+            votes, columns=["user", "item", "vote"])
+        scale = rating_scale or await self._get_rating_scale(self._conn)
+
+        return Dataset.load_from_df(
+            frame,
+            Reader(rating_scale=scale)
+        ).build_full_trainset()
 
     async def user_in_trainset(self, user):
         pass
@@ -119,13 +125,13 @@ class DataAccessor:
         return await self._get_unvoted(uid, self._conn)
 
     async def check_and_register_user(self, user):
-        if not self._is_user_known(user, self._conn):
-            self._insert_user(user, self._conn)
+        if not await self._is_user_known(user, self._conn):
+            await self._insert_user(user, self._conn)
 
-    async def get_unvoted_count(self, user):
+    async def get_voted_and_unvoted_count(self, user):
         voted_count = await self._vote_count(user, self._conn)
         post_count = await self._count_posts(self._conn)
-        return post_count - voted_count
+        return (voted_count, post_count - voted_count)
 
     async def store_feedback(self, vote):
         try:
@@ -192,5 +198,10 @@ class DataAccessor:
 
     async def _get_votes(self, conn):
         async with conn.cursor() as cursor:
-            await cursor.execute('SELECT * from votes')
+            await cursor.execute('SELECT user, product, vote from votes')
             return await cursor.fetchall()
+
+    async def _get_rating_scale(self, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute('SELECT min(vote), max(vote) from votes')
+            return await cursor.fetchone()

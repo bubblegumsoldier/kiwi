@@ -47,12 +47,12 @@ async def setup(context, loop):
         **read_mysql_config()._asdict(),
         autocommit=True,
         loop=loop,
-        pool_recycle=600)
+        pool_recycle=120)
 
     async with context.pool.acquire() as conn:
         accessor = create_accessor(conn)
-        await context.predictor.fit(
-            await accessor.trainset(rating_scale=(0, 1)))
+        trainset = await accessor.trainset()
+        await context.predictor.fit(trainset)
 
 
 @app.middleware("request")
@@ -64,6 +64,8 @@ async def generate_accessor(request):
 @app.middleware("response")
 async def teardown_accessor(request, response):
     app.conn.close()
+    await app.conn.ensure_closed()
+    await app.pool.release(app.conn)
 
 
 @app.listener("before_server_stop")
@@ -82,16 +84,17 @@ async def recommend(request):
     Returns json object {posts, unvoted, user}    
     '''
     args = request.raw_args
-    getLogger('root').info(
-        'Received recommendation request for %s', args['user'])
     recommender = Recommender(app.predictor, app.accessor)
     posts = await recommender.recommend_for(args['user'],
                                             int(args.get('count', 10)))
+    getLogger('root').info("%r", posts)
     return json(posts)
 
 
 @app.post('/feedback')
 async def feedback(request: Request):
+    '''Stores the feedback for a recommended post. Will return a information object on success and an empty object on failure. 
+    Think about returning 409-Conflict on failure instead, because the empty object can cause an issue in engine service.'''
     vote = request.json['vote']
     recommender = Recommender(app.predictor, app.accessor)
     vote_result = await recommender.store_feedback(create_vote(vote))
@@ -100,12 +103,17 @@ async def feedback(request: Request):
 
 @app.post('/content')
 async def content(request: Request):
+    '''
+    Inserts posts into the database. The request needs the format 
+    { "posts": [{"id": string}]}.
+    Returns the amout of inserted items and 200-OK.
+        '''
     recommender = Recommender(app.predictor, app.accessor)
-    inserted_items = recommender.add_content(request.json['posts'])
+    inserted_items = await recommender.add_content(request.json['posts'])
     return json(inserted_items)
 
 
 if __name__ == '__main__':
-    app.add_task(periodic_retrain)
     app.run_retrain = True
-    app.run(host='0.0.0.0', port=5001)
+    app.add_task(periodic_retrain)
+    app.run(host='0.0.0.0', port=8000)

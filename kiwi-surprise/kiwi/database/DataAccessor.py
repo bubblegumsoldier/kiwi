@@ -109,9 +109,10 @@ class DataAccessor:
         Currently will return all votes, i.e. will always be the new trainset
         '''
         votes = list(await self._get_votes(self._conn))
+
         frame = pd.DataFrame.from_records(
             votes, columns=["user", "item", "vote"])
-        scale = rating_scale or await self._get_rating_scale(self._conn)
+        scale = rating_scale or await self._get_rating_scale(self._conn)        
 
         return Dataset.load_from_df(
             frame,
@@ -198,10 +199,12 @@ class DataAccessor:
 
     async def _get_votes(self, conn):
         async with conn.cursor() as cursor:
-            await cursor.execute('SELECT user, product, vote from votes')
+            await cursor.execute('SELECT user, product, CAST(vote as DECIMAL(3,2)) vote from votes')
             return await cursor.fetchall()
 
     async def _get_rating_scale(self, conn):
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT min(vote), max(vote) from votes')
-            return await cursor.fetchone()
+            min_vote, max_vote = await cursor.fetchone()
+            getLogger('root').info('%s, %s', min_vote, max_vote)
+            return(float(min_vote), float(max_vote))

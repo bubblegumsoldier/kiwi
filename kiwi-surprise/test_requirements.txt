@@ -1,2 +1,2 @@
-asynctest
+asynctest>=0.12
 pytest

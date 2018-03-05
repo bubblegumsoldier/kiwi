@@ -1,6 +1,6 @@
 from os import environ
 from collections import namedtuple
-from surprise import KNNWithMeans
+import surprise
 
 MySQLConfig = namedtuple('MySQLConfig', 'host port user password db')
 
@@ -8,20 +8,24 @@ MySQLConfig = namedtuple('MySQLConfig', 'host port user password db')
 def create_algorithm():
     """
     See: http://surprise.readthedocs.io/en/stable/prediction_algorithms.html
+    Just change the algorithm and the option set for a different prediction algorithm.
     """
-    # sim_options = {
-    #     'name': 'cosine',
-    #     'user_based': False
-    # }
-    algo = KNNWithMeans(min_k=0, k=40, sim_options={'user_based': False})
+    options = {
+        'name': 'cosine',
+        'user_based': True
+    }
+    algo = surprise.KNNWithMeans(
+        min_k=1,
+        k=40,
+        sim_options=options)
+
     return algo
-
-# _dir_path = path.dirname(os.path.realpath(__file__))
-
-# temp_folder = path.join(_dir_path, ".temp")
 
 
 def read_mysql_config():
+    """
+    Reads the environment variables injected by docker/docker-compose/virtualenv to connect to the mysql database.
+    """
     return MySQLConfig(
         host=environ.get('MSQL_HOST', None),
         port=int(environ.get('MSQL_PORT', 0)),

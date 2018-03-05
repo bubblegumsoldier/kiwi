@@ -1,6 +1,6 @@
 from asynctest import TestCase, MagicMock, ANY, CoroutineMock
 from kiwi.TransferTypes import Vote
-from kiwi.database.DataAccessor import (BuiltinDataAccessor, BuiltinContext)
+from kiwi.database.BuiltinDataAccessor import (BuiltinDataAccessor, BuiltinContext)
 from pandas import DataFrame
 from surprise import Dataset
 

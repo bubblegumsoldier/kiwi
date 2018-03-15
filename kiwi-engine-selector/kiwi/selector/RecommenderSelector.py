@@ -1,6 +1,7 @@
 from kiwi.selector.Recommender import Recommender
 import kiwi.selector.recommender_distribution as distribution
 from kiwi.selector.HeuristicFetcher import HeuristicFetcher
+from logging import getLogger
 
 class RecommenderSelector:
     def __init__(self, recommenders):
@@ -14,7 +15,7 @@ class RecommenderSelector:
         return cls(recommenders)
 
     async def get_recommendations(self, session, request):
-        recommender = await self.choose_recommenders(request)
+        recommender = await self.choose_recommenders(session, request)
         pics = await recommender.get_content_for_user(session, request)
         return pics
 
@@ -25,14 +26,23 @@ class RecommenderSelector:
         all_heuristics = heuristic_fetcher.get_heuristics()
         return all_heuristics
 
-    async def choose_recommenders(self, user):
+    async def choose_recommenders(self, session, user):
         params = {
             'user': user
         }
         heuristics = await self.get_heuristics(params)
-        print(heuristics)
-        
-        return self.recommenders['random']
+
+        highest_recommender = None
+        highest_activation = -1000
+        for recommender in self.recommenders:
+            activation = await self.recommenders[recommender].get_activation(session, heuristics)
+            if activation > highest_activation:
+                highest_activation = activation
+                highest_recommender = recommender
+
+        getLogger("info").info("Highest recommender is {} with an actication value of {}".format(highest_recommender, highest_activation))
+        print("Highest recommender is {} with an actication value of {}".format(highest_recommender, highest_activation))
+        return self.recommenders[highest_recommender]
 
     async def distribute_posts(self, session, posts):
         return await distribution.content(session, self.recommenders, posts)

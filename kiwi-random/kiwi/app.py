@@ -75,6 +75,13 @@ async def add_posts(request: Request):
         inserted_info = await recommender.add_content(request.json['posts'])
         return json(inserted_info)
 
+@app.get('/activation')
+async def activation(request: Request):
+    '''
+    Returns the activation value for the given set of heuristics
+    '''
+    heuristics = request.json['heuristics']
+    return json({"activation": 0, 'received_heuristics': heuristics})
 
 if __name__ == '__main__':
     app.run(**read_app_config()._asdict())

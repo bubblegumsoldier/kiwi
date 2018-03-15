@@ -38,5 +38,12 @@ class Recommender:
             return Response(status=response.status,
                             json=await response.json())
 
+    async def get_activation(self, session: ClientSession, heuristics):
+        url = self._format_template(self.endpoints.activation)
+        param_dict = dict(heuristics=heuristics)
+        session = session.get(url, json=param_dict)
+        response = await self._get_response(session)
+        return response.json["activation"]
+
     def _format_template(self, endpoint):
         return TEMPLATE.format(base=self.base, endpoint=endpoint)

@@ -1,2 +1,2 @@
-def get_heuristic(user):
+def get_heuristic(**kwargs):
     return 0

@@ -17,7 +17,7 @@ class HeuristicFetcher:
         """
         for key in HEURISICS_CONFIG:
             self.update_heuristic(key, params)
-        this._lastUpdated = datetime.datetime.now()
+        self._lastUpdated = datetime.datetime.now()
 
     def update_heuristic(self, heuristic, params):
         module_path = HEURISICS_CONFIG[heuristic]["module"]

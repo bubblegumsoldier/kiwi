@@ -64,8 +64,8 @@ services:
 
   random:
     build:
-      context: ./kiwi-surprise
-      dockerfile: surprise.dockerfile
+      context: ./kiwi-random
+      dockerfile: service.dockerfile
     ports:
       - "8000"
     networks:

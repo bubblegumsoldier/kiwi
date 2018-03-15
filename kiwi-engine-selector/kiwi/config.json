@@ -11,6 +11,29 @@
             "endpoint": "items"
         }
     },
+	"heuristics": {
+		"system_user_number": {
+			"module": "kiwi.heuristics.system_user_number"
+		},
+		"system_post_number": {
+			"module": "kiwi.heuristics.system_post_number"
+		},
+		"daytime": {
+			"module": "kiwi.heuristics.daytime"
+		},
+		"user_vote_number": {
+			"module": "kiwi.heuristics.user_vote_number",
+			"arguments": [
+				"user"
+			]
+		},
+		"overall_user_mood": {
+			"module": "kiwi.heuristics.overall_user_mood",
+			"arguments": [
+				"user"
+			]
+		}
+	},
     "recommenders": {
         "random": {
             "address": {
@@ -20,7 +43,8 @@
             "endpoints": {
                 "recommendation": "recommendation",
                 "feedback": "feedback",
-                "content": "content"
+                "content": "content",
+                "activation": "activation"
             }
         }
     }

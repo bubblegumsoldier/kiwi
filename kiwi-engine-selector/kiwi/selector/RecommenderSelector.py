@@ -1,6 +1,6 @@
 from kiwi.selector.Recommender import Recommender
 import kiwi.selector.recommender_distribution as distribution
-
+import kiwi.selector.HeuristicFetcher
 
 class RecommenderSelector:
     def __init__(self, recommenders):
@@ -18,8 +18,19 @@ class RecommenderSelector:
         pics = await recommender.get_content_for_user(session, request)
         return pics
 
+    async def get_heuristics(self, params):
+        # don't know how to make sure that we avoid collision, that's why I will just reinstatiate the HeuristicFetcher
+        heuristic_fetcher = HeuristicFetcher()
+        heuristic_fetcher.update(params)
+        all_heuristics = heuristic_fetcher.get_heuristics()
+        return all_heuristics
+
     async def choose_recommenders(self, user):
-        # todo
+        params = {
+            'user': user
+        }
+        await self.get_heuristics(params)
+
         return self.recommenders['random']
 
     async def distribute_posts(self, session, posts):

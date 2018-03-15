@@ -1,6 +1,6 @@
 from kiwi.selector.Recommender import Recommender
 import kiwi.selector.recommender_distribution as distribution
-import kiwi.selector.HeuristicFetcher
+from kiwi.selector.HeuristicFetcher import HeuristicFetcher
 
 class RecommenderSelector:
     def __init__(self, recommenders):

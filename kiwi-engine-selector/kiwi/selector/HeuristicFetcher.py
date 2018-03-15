@@ -4,7 +4,7 @@ import importlib
 
 class HeuristicFetcher:
     _heuristics = dict()
-    _lastUpdated = undefined
+    _lastUpdated = None
     def __init__(self):
         pass
     

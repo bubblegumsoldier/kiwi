@@ -29,8 +29,9 @@ class RecommenderSelector:
         params = {
             'user': user
         }
-        await self.get_heuristics(params)
-
+        heuristics = await self.get_heuristics(params)
+        print(heuristics)
+        
         return self.recommenders['random']
 
     async def distribute_posts(self, session, posts):

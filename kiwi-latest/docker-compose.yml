@@ -1,0 +1,26 @@
+version: '2'
+
+services: 
+  latest:
+    build:
+      context: .
+      dockerfile: latest.dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - random-network
+    restart: always
+  
+  mysqldb:
+    build:
+      context: .
+      dockerfile: mysql.dockerfile
+    networks:
+      - random-network
+    ports:
+      - "3306"
+    restart: always
+
+networks:
+  random-network:
+    driver: bridge

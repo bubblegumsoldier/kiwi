@@ -8,7 +8,7 @@ services:
     ports:
       - "8000:8000"
     networks:
-      - random-network
+      - latest-network
     restart: always
   
   mysqldb:
@@ -16,11 +16,11 @@ services:
       context: .
       dockerfile: mysql.dockerfile
     networks:
-      - random-network
+      - latest-network
     ports:
       - "3306"
     restart: always
 
 networks:
-  random-network:
+  latest-network:
     driver: bridge

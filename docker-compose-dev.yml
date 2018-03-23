@@ -78,6 +78,24 @@ services:
       - MSQL_HOST=mysqldb
       - MSQL_PORT=3306
       - MSQL_DATABASE=random_recommender
+
+  latest:
+    build:
+      context: ./kiwi-latest
+      dockerfile: latest.dockerfile
+    ports:
+      - "8000"
+    networks:
+      - latest-network
+      - service-network
+    restart: always
+    environment:
+      - MSQL_USER=latest
+      - MSQL_PWD=12345
+      - MSQL_HOST=mysqldb
+      - MSQL_PORT=3306
+      - MSQL_DATABASE=latest_recommender
+
   webapp:
     build:
       context: ./kiwi-mobile-frontend

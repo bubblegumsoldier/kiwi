@@ -27,14 +27,17 @@ class RecommenderSelector:
         return all_heuristics
 
     async def choose_recommenders(self, session, user):
-        params = {
-            'user': user
-        }
-        heuristics = await self.get_heuristics(params)
-
         highest_recommender = None
         highest_activation = -1000
         for recommender in self.recommenders:
+            # not all recommenders will get the exact same heuristics...
+            # (e.g. time and age may vary during the iteration... - but for now that's okay)
+            params = {
+                'user': user,
+                'algorithm': recommender
+            }
+            heuristics = await self.get_heuristics(params)
+
             activation = await self.recommenders[recommender].get_activation(session, heuristics)
             if activation > highest_activation:
                 highest_activation = activation

@@ -12,11 +12,8 @@
         }
     },
 	"heuristics": {
-		"system_user_number": {
-			"module": "kiwi.heuristics.system_user_number"
-		},
-		"system_post_number": {
-			"module": "kiwi.heuristics.system_post_number"
+		"system_age": {
+			"module": "kiwi.heuristics.system_age"
 		},
 		"daytime": {
 			"module": "kiwi.heuristics.daytime"
@@ -32,7 +29,14 @@
 			"arguments": [
 				"user"
 			]
-		}
+        },
+        "algorithm_user_mood": {
+            "module": "kiwi.heuristics.algorithm_user_mood",
+            "arguments": [
+                "user",
+                "algorithm"
+            ]
+        }
 	},
     "recommenders": {
         "random": {

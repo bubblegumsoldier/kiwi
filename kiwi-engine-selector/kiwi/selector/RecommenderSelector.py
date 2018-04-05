@@ -39,6 +39,7 @@ class RecommenderSelector:
             heuristics = await self.get_heuristics(params)
 
             activation = await self.recommenders[recommender].get_activation(session, heuristics)
+            getLogger("info").info("Recommender {} has an activation of {}".format(recommender, activation))
             if activation > highest_activation:
                 highest_activation = activation
                 highest_recommender = recommender

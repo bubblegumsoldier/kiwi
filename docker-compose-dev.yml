@@ -92,7 +92,7 @@ services:
     environment:
       - MSQL_USER=latest
       - MSQL_PWD=12345
-      - MSQL_HOST=mysqldb
+      - MSQL_HOST=mysqldb-latest
       - MSQL_PORT=3306
       - MSQL_DATABASE=latest_recommender
 
@@ -125,6 +125,15 @@ services:
     networks:
       - user-network
 
+  mysqldb-latest:
+    build:
+      context: ./kiwi-latest
+      dockerfile: mysql.dockerfile
+    networks:
+      - latest-network
+    ports:
+      - "3309:3308"
+
   mysqldb:
     build:
       context: ./kiwi-random
@@ -136,6 +145,8 @@ services:
   
 networks:
   random-network:
+    driver: bridge
+  latest-network:
     driver: bridge
   service-network:
     driver: bridge

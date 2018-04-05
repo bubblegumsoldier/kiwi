@@ -50,6 +50,18 @@
                 "content": "content",
                 "activation": "activation"
             }
+        },
+        "latest": {
+            "address": {
+                "host": "latest",
+                "port": 8000
+            },
+            "endpoints": {
+                "recommendation": "recommendation",
+                "feedback": "feedback",
+                "content": "content",
+                "activation": "activation"
+            }
         }
     }
 }

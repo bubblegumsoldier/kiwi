@@ -81,7 +81,7 @@ async def activation(request: Request):
     Returns the activation value for the given set of heuristics
     '''
     heuristics = request.json['heuristics']
-    return json({"activation": 0, 'received_heuristics': heuristics})
+    return json({"activation": 100, 'received_heuristics': heuristics})
 
 if __name__ == '__main__':
     app.run(**read_app_config()._asdict())

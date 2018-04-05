@@ -2,7 +2,7 @@ from logging import getLogger
 from aiomysql import IntegrityError
 
 RANDOM_SELECT = '''
-            SELECT DISTINCT p.post_id
+            SELECT DISTINCT p.post_id, p.upload_time
             FROM products p
             WHERE p.post_id NOT IN (
                 SELECT votes.product
@@ -67,7 +67,7 @@ class DataAccessor:
         async with conn.cursor() as cursor:
             for post in posts:
                 try:
-                    await cursor.execute('INSERT INTO products VALUES(%s)',
+                    await cursor.execute('INSERT INTO products (post_id) VALUES(%s)',
                                          post)
                     inserted += 1
                 except IntegrityError as exp:

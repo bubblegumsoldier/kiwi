@@ -36,6 +36,12 @@
                 "user",
                 "algorithm"
             ]
+        },
+        "user": {
+            "module": "kiwi.heuristics.user",
+            "arguments": [
+                "user"
+            ]
         }
 	},
     "recommenders": {

@@ -18,8 +18,8 @@ class KiwiTester:
 
     def convert_data(self):
         self.converter = self.config.data_converter
-        self.converted_data = self.converter.convert(self.raw_data)
+        self.training_data, self.testing_data = self.converter.convert(self.raw_data)
 
     def initialize_database_with_converted_data(self):
-        self.database_initializer = DatabaseInitializer(self.config.mysql_config)
-        self.database_initializer.initialize_database_with(self.converted_data)
+        self.database_initializer = DatabaseInitializer(self.config)
+        self.database_initializer.initialize_database_with(self.training_data, self.testing_data)

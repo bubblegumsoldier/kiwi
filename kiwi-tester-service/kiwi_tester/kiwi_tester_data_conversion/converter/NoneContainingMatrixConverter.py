@@ -3,6 +3,10 @@ class NoneContainingMatrixConverter:
         self._decoratee = decoratee
     
     def convert(self, dataset):
+        """
+        Takes a matrix of user x products containing ratings and replaces all
+        None values with the mean value of ratings for the user
+        """
         if self._decoratee is not None:
             dataset = self._decoratee.convert(dataset)
             print("NoneContainingMatrixConverter received dataset looking like: \n")

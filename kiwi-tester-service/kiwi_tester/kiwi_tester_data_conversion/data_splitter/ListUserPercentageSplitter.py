@@ -4,6 +4,17 @@ class ListUserPercentageSplitter:
         self._decoratee = decoratee
     
     def convert(self, dataset):
+        """
+        dataset is array of tuple with content (user, item, vote)...
+
+        [
+            (user, item, vote),
+            ...
+        ]
+
+        and it will return a tuple containing two arrays of the same structure
+        (testing and training)
+        """
         if self._decoratee is not None:
             dataset = self._decoratee.convert(dataset)
             print("ListUserPercentageSplitter received dataset looking like: \n")

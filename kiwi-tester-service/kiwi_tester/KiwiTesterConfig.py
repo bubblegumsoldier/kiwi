@@ -13,7 +13,7 @@ class KiwiTesterConfig:
     def _init_defaults(self):
         self.data_converter = MatrixConverter()
         self.product_converter = DefaultProductConverter()
-        self.testingstyle = 'instantfeedback'
+        self.testing_style = 'instant'
         self.mysql_config = {
             'host': '...',
             'username': '...',

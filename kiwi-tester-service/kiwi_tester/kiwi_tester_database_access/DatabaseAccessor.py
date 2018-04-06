@@ -7,8 +7,6 @@ class DatabaseAccessor:
             self.training_set = training_set
             self.testing_set = testing_set
 
-        
-
         def has_next_training(self):
             if self.last_training_id is None:
                 self.last_training_id = -1
@@ -40,6 +38,6 @@ class DatabaseAccessor:
             DatabaseAccessor.instance = DatabaseAccessor.__DatabaseAccessor(config)
         else:
             DatabaseAccessor.instance.config = config
-            
+
     def __getattr__(self, name):
         return getattr(self.instance, name)

@@ -10,7 +10,16 @@ class KiwiTester:
     
     def start_full_procedure(self):
         self.convert_data_and_initialize_database()
+        self.do_training_and_testing()
+    
+    def do_training_and_testing(self):
+        pass
 
+    def do_training(self):
+        pass
+    
+    def do_testing(self):
+        pass
 
     def convert_data_and_initialize_database(self):
         self.convert_data()

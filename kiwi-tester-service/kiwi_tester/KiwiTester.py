@@ -3,6 +3,7 @@ from kiwi_tester.KiwiTesterConfig import KiwiTesterConfig
 from kiwi_tester.kiwi_tester_data_conversion.DatabaseInitializer import DatabaseInitializer
 
 from kiwi_tester.kiwi_tester_execution.KiwiContentInitializer import KiwiContentInitializer
+from kiwi_tester.kiwi_tester_execution.KiwiTrainingSimulator import KiwiTrainingSimulator
 
 class KiwiTester:
     
@@ -24,7 +25,8 @@ class KiwiTester:
         self.simulate_training()
 
     def simulate_training(self):
-        pass
+        self.training_simulator = KiwiTrainingSimulator(self.config)
+        self.training_simulator.start_training(self.training_data)
 
     def initialize_content(self):
         self.convert_content()

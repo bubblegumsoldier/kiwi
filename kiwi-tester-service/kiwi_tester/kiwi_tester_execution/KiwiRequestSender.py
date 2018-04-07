@@ -7,7 +7,7 @@ class KiwiRequestSender:
     Singleton implementation
     """
     class __KiwiRequestSender:
-        def __init__(self, config):
+        def __init__(self, config = None):
             self._config = config
             self._endpoints = {
                 "content": self._append_endpoint(self._config.service_domain, "content"),
@@ -63,10 +63,12 @@ class KiwiRequestSender:
             return domain
 
     instance = None
-    def __init__(self, config):
+    def __init__(self, config = None):
         if not KiwiRequestSender.instance:
             KiwiRequestSender.instance = KiwiRequestSender.__KiwiRequestSender(config)
         else:
+            if config is None:
+                return
             KiwiRequestSender.instance.config = config
 
     def __getattr__(self, name):

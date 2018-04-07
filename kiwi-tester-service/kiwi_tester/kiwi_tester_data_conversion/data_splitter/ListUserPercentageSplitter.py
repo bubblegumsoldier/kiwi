@@ -35,6 +35,8 @@ class ListUserPercentageSplitter:
             else:
                 training_set.append(l)
 
+        print("Splitted Dataset into {} training and {} testing elements".format(len(training_set), len(testing_set)))
+
         return training_set, testing_set
 
     def _get_number_of_votes_for_user_in_dataset(self, user, dataset):

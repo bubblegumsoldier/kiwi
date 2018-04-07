@@ -20,9 +20,9 @@ class KiwiRequestSender:
             content_request = {
                 "posts": products
             }
-            r = requests.post(self._endpoints["content"], data = content_request)
-            if r.status_code != requests.codes.ok:
-                raise ServerError("Server returned wrong status code...", r.status_code)
+            #r = requests.post(self._endpoints["content"], data = content_request)
+            #if r.status_code != requests.codes.ok:
+            #    raise ServerError("Server returned wrong status code...", r.status_code)
 
         def send_feedback(self, user, product, rating):
             rating_request = {
@@ -32,19 +32,20 @@ class KiwiRequestSender:
                     "vote": rating
                 }
             }
-            r = requests.post(self._endpoints["feedback"], data = rating_request)
-            if r.status_code != requests.codes.ok:
-                raise ServerError("Server returned wrong status code...", r.status_code)
+            #r = requests.post(self._endpoints["feedback"], data = rating_request)
+            #if r.status_code != requests.codes.ok:
+            #    raise ServerError("Server returned wrong status code...", r.status_code)
 
         def get_prediction_for_user_and_product(self, user, product):
-            prediction_request = {
-                "user": user,
-                "post": product
-            }
-            r = requests.get(self._endpoints["prediction"], data = prediction_request)
-            if r.status_code != requests.codes.ok:
-                raise ServerError("Server returned wrong status code...", r.status_code)
-            return r.json().prediction
+            return 0.1
+            #prediction_request = {
+            #    "user": user,
+            #    "post": product
+            #}
+            #r = requests.get(self._endpoints["prediction"], data = prediction_request)
+            #if r.status_code != requests.codes.ok:
+            #    raise ServerError("Server returned wrong status code...", r.status_code)
+            #return r.json().prediction
 
         def get_recommendation_for_user(self, user):
             recommendation_request = {

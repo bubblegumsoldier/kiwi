@@ -4,6 +4,8 @@ from kiwi_tester.kiwi_tester_data_conversion.DatabaseInitializer import Database
 
 from kiwi_tester.kiwi_tester_execution.KiwiContentInitializer import KiwiContentInitializer
 from kiwi_tester.kiwi_tester_execution.KiwiTrainingSimulator import KiwiTrainingSimulator
+from kiwi_tester.kiwi_tester_execution.KiwiTestingSimulator import KiwiTestingSimulator
+from kiwi_tester.kiwi_tester_execution.KiwiEvaluator import KiwiEvaluator
 
 class KiwiTester:
     
@@ -15,7 +17,13 @@ class KiwiTester:
     def start_full_procedure(self):
         self.convert_data_and_initialize_database()
         self.do_training_and_testing()
-    
+        self.do_evaluation()
+        print("SCORE: {}".format(self.evaluation))
+
+    def do_evaluation(self):
+        self.kiwi_evaluator = KiwiEvaluator(self.config)
+        self.evaluation = self.kiwi_evaluator.get_evaluation()
+
     def do_training_and_testing(self):
         self.do_training()
         self.do_testing()
@@ -26,7 +34,7 @@ class KiwiTester:
 
     def simulate_training(self):
         self.training_simulator = KiwiTrainingSimulator(self.config)
-        self.training_simulator.start_training(self.training_data)
+        self.training_simulator.start_training()
 
     def initialize_content(self):
         self.convert_content()
@@ -37,7 +45,8 @@ class KiwiTester:
         self.products = [self.config.product_converter.convert(product) for product in self.raw_products]
     
     def do_testing(self):
-        pass
+        self.testing_simulator = KiwiTestingSimulator(self.config)
+        self.testing_simulator.start_testing()
 
     def convert_data_and_initialize_database(self):
         self.convert_data()

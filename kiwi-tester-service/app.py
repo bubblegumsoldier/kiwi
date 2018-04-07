@@ -6,6 +6,7 @@ from kiwi_tester.KiwiTesterConfig import KiwiTesterConfig
 #from kiwi_tester.kiwi_tester_data_conversion.converter.NoneContainingMatrixConverter import NoneContainingMatrixConverter
 from kiwi_tester.kiwi_tester_data_conversion.data_splitter.ListUserPercentageSplitter import ListUserPercentageSplitter
 from kiwi_tester.kiwi_tester_data_conversion.product_converter.DefaultProductConverter import DefaultProductConverter
+from kiwi_tester.kiwi_tester_execution.evaluators.RMSEEvaluator import RMSEEvaluator
 
 config = KiwiTesterConfig(
     data_converter = ListUserPercentageSplitter(0.8
@@ -22,12 +23,13 @@ config = KiwiTesterConfig(
         'database': '...',
         'table_prefix': '...'
     },
-    service_domain = "http://google.de/"
+    service_domain = "http://google.de/",
+    evaluator = RMSEEvaluator()
 )
 
 data = [
     ("bubblegumsoldier", "product_1", 1),
-    ("bubblegumsoldier", "product_2", 0),
+    ("bubblegumsoldier", "product_2", 1),
     ("bubblegumsoldier", "product_4", 1),
     ("bubblegumsoldier", "product_5", 1),
     ("bubblegumsoldier", "product_8", 1),
@@ -35,10 +37,10 @@ data = [
     ("bubblegumsoldier", "product_10", 1),
     ("bubblegumsoldier", "product_12", 1),
     ("peter", "product_1", 1),
-    ("peter", "product_2", 0),
-    ("peter", "product_3", 0),
-    ("peter", "product_8", 0),
-    ("peter", "product_12", 0)
+    ("peter", "product_2", 1),
+    ("peter", "product_3", 1),
+    ("peter", "product_8", 1),
+    ("peter", "product_12", 1)
 ]
 
 products = [

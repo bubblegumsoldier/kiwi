@@ -1,5 +1,6 @@
 from kiwi_tester.kiwi_tester_data_conversion.converter.MatrixConverter import MatrixConverter
 from kiwi_tester.kiwi_tester_data_conversion.product_converter.DefaultProductConverter import DefaultProductConverter
+from kiwi_tester.kiwi_tester_execution.evaluators.RMSEEvaluator import RMSEEvaluator
 
 class KiwiTesterConfig:
     def __init__(self, **kwargs):
@@ -9,6 +10,7 @@ class KiwiTesterConfig:
         self.testing_style = kwargs.get('testing_style')
         self.mysql_config = kwargs.get('mysql_config')
         self.service_domain = kwargs.get('service_domain')
+        self.evaluator = kwargs.get("evaluator")
 
     def _init_defaults(self):
         self.data_converter = MatrixConverter()
@@ -22,3 +24,4 @@ class KiwiTesterConfig:
             'table_prefix': '...'
         }
         self.service_domain = '...'
+        self.evaluator = RMSEEvaluator()

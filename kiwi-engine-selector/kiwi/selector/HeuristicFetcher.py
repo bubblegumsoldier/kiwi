@@ -24,7 +24,7 @@ class HeuristicFetcher:
         module = importlib.import_module(module_path)
         args = []
         necessary_args = []
-        if hasattr(HEURISICS_CONFIG[heuristic], "arguments"):
+        if "arguments" in HEURISICS_CONFIG[heuristic]:
             necessary_args = HEURISICS_CONFIG[heuristic]["arguments"]
         args = { arg_key: params[arg_key] for arg_key in necessary_args }
         self._heuristics[heuristic] = module.get_heuristic(**args)

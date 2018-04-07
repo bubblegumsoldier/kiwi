@@ -22,7 +22,7 @@ config = KiwiTesterConfig(
         'database': '...',
         'table_prefix': '...'
     },
-    service_domain = "http://.../"
+    service_domain = "http://google.de/"
 )
 
 data = [

@@ -21,4 +21,5 @@ htmlcov
 .coverage
 .coverage.*
 *,cover
-
+Pipfile
+Pipfile.lock

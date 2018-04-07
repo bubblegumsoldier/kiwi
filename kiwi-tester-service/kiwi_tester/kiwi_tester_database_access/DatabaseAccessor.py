@@ -1,4 +1,7 @@
 class DatabaseAccessor:
+    """
+    Singleton implementation
+    """
     class __DatabaseAccessor:
         def __init__(self, config):
             self.config = config

@@ -1,0 +1,6 @@
+sanic
+aiomysql
+scipy
+numpy
+pandas
+sklearn

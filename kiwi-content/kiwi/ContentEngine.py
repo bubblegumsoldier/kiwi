@@ -126,7 +126,6 @@ class ContentEngine:
             user_vector, 
             self.tf_vectors[self.tf_vectors['ItemId'] == item].iloc[:,1:]
             ).flatten()
-        print(sim)
         return pd.DataFrame([(sim[0], item)], columns=['Similarities', 'ItemId'])
         
         

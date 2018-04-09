@@ -81,7 +81,7 @@ async def recommend(request):
     '''
     args = request.raw_args
     recommender = Recommender(
-        app.predictor, app.accessor, read_config()['max_rating'])
+        app.predictor, app.accessor, read_config())
     posts = await recommender.recommend_for(args['user'],
                                             int(args.get('count', 10)))
     return json(posts)
@@ -94,7 +94,7 @@ async def feedback(request: Request):
     vote = request.json['vote']
     config = read_config()
     recommender = Recommender(
-        app.predictor, app.accessor, config['max_rating'])
+        app.predictor, app.accessor, config)
     vote_result = await recommender.store_feedback(
         create_vote(vote, config['positive_cutoff']))
     return json(vote_result)
@@ -108,7 +108,7 @@ async def content(request: Request):
     Returns the amout of inserted items and 200-OK.
         '''
     recommender = Recommender(
-        app.predictor, app.accessor, read_config()['max_rating'])
+        app.predictor, app.accessor, read_config())
     inserted_items = await recommender.add_content(request.json['posts'])
     if inserted_items > 0:
         ensure_future(retrain(app, app.loop))
@@ -117,7 +117,7 @@ async def content(request: Request):
 @app.get('/predict')
 async def predict(request: Request):
     recommender = Recommender(
-        app.predictor, app.accessor, read_config()['max_rating'])
+        app.predictor, app.accessor, read_config())
     user = request.raw_args['user']
     item = request.raw_args['item']
     result = await recommender.predict(user, item)

@@ -1,8 +1,9 @@
 class Recommender:
-    def __init__(self, algorithm, data_accessor, max_vote):
+    def __init__(self, algorithm, data_accessor, config):
         self._algo = algorithm
         self._accessor = data_accessor
-        self._max_vote = max_vote
+        self._max_vote = config['max_rating']
+        self._min_vote = config['min_rating']
 
     async def recommend_for(self, user, count=10):
         await self._register_user(user)
@@ -20,7 +21,7 @@ class Recommender:
             'unvoted': unvoted_count,
             'voted': voted_count,
             'meta': [
-                (rows[0] * self._max_vote, rows[1])
+                (self._scale_rating(rows[0]), rows[1])
                 for i, rows in returns.iterrows()
             ]
         }
@@ -45,9 +46,8 @@ class Recommender:
         voted_count, unvoted_count = await \
             self._accessor.get_voted_and_unvoted_count(user)
         similarity = await self._algo.predict_similarities(user, item)
-        print(similarity)
         return {
-            'prediction': similarity['Similarities'][0]*self._max_vote,
+            'prediction': self._scale_rating(similarity['Similarities'][0]),
             'user': user,
             'post': item,
             'voted': voted_count,
@@ -56,3 +56,9 @@ class Recommender:
 
     async def _register_user(self, user):
         await self._accessor.check_and_register_user(user)
+
+    def _scale_rating(self, similarity):
+        scaled = similarity*self._max_vote
+        if scaled < self._min_vote:
+            return self._min_vote
+        return scaled

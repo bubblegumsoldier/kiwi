@@ -20,5 +20,6 @@ def read_mysql_config():
 def read_config():
     return {
         "max_rating": int(environ.get('MAX_RATING', 1)),
+        "min_rating": int(environ.get('MIN_RATING', 0)),
         "positive_cutoff": float(environ.get('POS_CUTOFF', 0)) # rating > cutoff -> 1, sonst -1
     }

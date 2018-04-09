@@ -24,3 +24,10 @@ class RecommenderRouter:
                 return await response.json()
             abort(response.status)
 
+    async def content(self, session, content_data):
+        url = '{}/{}'.format(self.base_url, 'feedback')
+        async with session.post(url, json=content_data) as response:
+            if response.status == HTTPStatus.OK:
+                return await response.json()
+            abort(response.status)
+

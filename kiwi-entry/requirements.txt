@@ -1,3 +1,4 @@
 sanic==0.7.0
 aiohttp
+motor
 sanic-cors

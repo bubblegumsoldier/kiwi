@@ -3,14 +3,6 @@
         "host": "engine",
         "port": 8000
     },
-    "content": {
-        "unvoted_threshold": 50,
-        "address": {
-            "host": "content",
-            "port": 5000,
-            "endpoint": "items"
-        }
-    },
 	"heuristics": {
 		"system_age": {
 			"module": "kiwi.heuristics.system_age"

@@ -10,6 +10,19 @@ services:
     networks:
       - user-network
       - service-network
+      - content-network
+    environment:
+      - USER_SERVICE=http://user:80
+      - SWITCHER_SERVICE=http://engine:8000
+      - MONGO_HOST=mongodb-content
+      - MONGO_PORT=27017
+      - MONGO_DB=imgur_posts
+      - MONGO_COLLECTION=posts 
+      - MONGO_USER=admin
+      - MONGO_PWD=12345
+      - UNVOTED_THRESHOLD=50
+      - CONTENT_SERVICE=http://content:5000
+      - SELF=http://entry:8080
 
   user: 
     build: 
@@ -34,16 +47,9 @@ services:
       - "8000"
     networks:
       - service-network
-      - content-network
     restart: always
     environment:
-      - MONGO_HOST=mongodb-content
-      - MONGO_PORT=27017
-      - MONGO_DB=imgur_posts
-      - MONGO_COLLECTION=posts 
-      - MONGO_USER=admin
-      - MONGO_PWD=12345
-
+      
   content:
     build:
       context: ./kiwi-content-crawler

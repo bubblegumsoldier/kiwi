@@ -114,6 +114,15 @@ async def content(request: Request):
         ensure_future(retrain(app, app.loop))
     return json({"inserted_count": inserted_items})
 
+@app.get('/predict')
+async def predict(request: Request):
+    recommender = Recommender(
+        app.predictor, app.accessor, read_config()['max_rating'])
+    user = request.raw_args['user']
+    item = request.raw_args['item']
+    result = await recommender.predict(user, item)
+    print(result)
+    return json(result)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)

@@ -40,5 +40,19 @@ class Recommender:
         inserted = await self._accessor.add_content(filtered_posts)
         return inserted
 
+    async def predict(self, user, item):
+        await self._register_user(user)
+        voted_count, unvoted_count = await \
+            self._accessor.get_voted_and_unvoted_count(user)
+        similarity = await self._algo.predict_similarities(user, item)
+        print(similarity)
+        return {
+            'prediction': similarity['Similarities'][0]*self._max_vote,
+            'user': user,
+            'post': item,
+            'voted': voted_count,
+            'unvoted': unvoted_count
+        }
+
     async def _register_user(self, user):
         await self._accessor.check_and_register_user(user)

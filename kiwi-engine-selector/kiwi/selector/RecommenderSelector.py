@@ -3,6 +3,7 @@ import kiwi.selector.recommender_distribution as distribution
 from kiwi.selector.HeuristicFetcher import HeuristicFetcher
 from logging import getLogger
 
+
 class RecommenderSelector:
     def __init__(self, recommenders):
         self.recommenders = recommenders
@@ -15,9 +16,13 @@ class RecommenderSelector:
         return cls(recommenders)
 
     async def get_recommendations(self, session, request):
-        recommender = await self.choose_recommenders(session, request)
-        pics = await recommender.get_content_for_user(session, request)
-        return pics
+        recommender = await self.choose_recommenders(session, request.user)
+        items = await recommender.get_content_for_user(session, request)
+        return items
+
+    async def predict_for(self, session, user, item):
+        recommender = await self.choose_recommenders(session, user)
+        return recommender.predict_for(session, user, item)
 
     async def get_heuristics(self, params):
         # don't know how to make sure that we avoid collision, that's why I will just reinstatiate the HeuristicFetcher
@@ -39,13 +44,16 @@ class RecommenderSelector:
             heuristics = await self.get_heuristics(params)
 
             activation = await self.recommenders[recommender].get_activation(session, heuristics)
-            getLogger("info").info("Recommender {} has an activation of {}".format(recommender, activation))
+            getLogger("info").info(
+                "Recommender {} has an activation of {}".format(recommender, activation))
             if activation > highest_activation:
                 highest_activation = activation
                 highest_recommender = recommender
 
-        getLogger("info").info("Highest recommender is {} with an actication value of {}".format(highest_recommender, highest_activation))
-        print("Highest recommender is {} with an actication value of {}".format(highest_recommender, highest_activation))
+        getLogger("info").info("Highest recommender is {} with an actication value of {}".format(
+            highest_recommender, highest_activation))
+        print("Highest recommender is {} with an actication value of {}".format(
+            highest_recommender, highest_activation))
         return self.recommenders[highest_recommender]
 
     async def distribute_posts(self, session, posts):

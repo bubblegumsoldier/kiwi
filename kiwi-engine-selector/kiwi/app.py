@@ -11,10 +11,13 @@ app = Sanic(__name__)
 selector = RecommenderSelector.from_config(RECOMMENDERS)
 
 
-@app.post('/recommendation')
+@app.get('/recommendation')
 async def images(request: Request):
-    post_json = request.json
-    recommendation_request = RecommendationRequest(**post_json)
+    """
+    Gets recommendations from a chosen Recommender.
+    Expects url parameters: user, count
+    """
+    recommendation_request = RecommendationRequest(**request.raw_args)
     response = await selector.get_recommendations(app.client_session,
                                                   recommendation_request)
     return response
@@ -22,6 +25,14 @@ async def images(request: Request):
 
 @app.post('/content')
 async def content(request: Request):
+    """
+    Distributes content to all registered recommenders. 
+    If one recommender has an error, this method will return status 500.
+    The erroring recommender will be logged.
+    Expects json object with: {posts: [post]}.
+    The required setup of post depends on the recommenders.
+    Minimum is {id: string|int}
+    """
     response = await selector.distribute_posts(app.client_session,
                                                request.json['posts'])
     if response.status == 500:
@@ -31,10 +42,27 @@ async def content(request: Request):
 
 @app.post('/feedback')
 async def feedback(request: Request):
+    """
+    Distributes feedback of the user to all recommenders.
+    Feedback should have shape: {feedback: {user, item, vote}}
+    """
     post_json = request.json
     voting = Voting(**post_json['feedback'])
     await selector.distribute_vote(app.client_session, voting)
     return json({'accepted': True})
+
+
+@app.get('/predict')
+async def predict(request: Request):
+    """
+    Excepts url parameters: user=..., item=...
+    Returns predicted score for this user/item combination.
+    """
+    user = request.raw_args['user']
+    item = request.raw_args['item']
+    prediction = await selector.predict_for(app.client_session, user, item)
+    return json(prediction)
+
 
 @app.listener('before_server_start')
 def init(sanic, loop):

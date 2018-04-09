@@ -1,6 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor, CancelledError
 from aiomysql import create_pool
-from asyncio import ensure_future
+from asyncio import ensure_future, gather
 from logging import getLogger
 from sanic import Sanic
 from sanic.request import Request
@@ -19,21 +19,23 @@ app = Sanic(__name__)
 def create_accessor(context):
     return DataAccessor(conn=context)
 
-
 async def retrain(context, loop):
+    print("Start training...")
+    start = time.time()
     async with context.pool.acquire() as conn:
         accessor = create_accessor(conn)
         content_frame = await accessor.get_content_frame()
         rating_frame = await accessor.get_vote_frame()
-        context.algorithm = ContentEngine(
-            content_frame,
-            rating_frame)
-        context.predictor = AsyncContentWrapper(
-            loop, context.executor, context.algorithm)
-        print("Start training...")
-        start = time.time()
-        await context.predictor.fit()
-        print("Trained in %s s", time.time() - start)
+    print("Collected data in {}".format(time.time() - start))
+    algorithm = ContentEngine(
+        content_frame,
+        rating_frame)
+    predictor = AsyncContentWrapper(
+        loop, context.executor, algorithm)
+    await predictor.fit()
+    print("Completed training in {}s".format(time.time() - start))
+    context.algorithm = algorithm
+    context.predictor = predictor
 
 
 @app.listener("before_server_start")

@@ -20,7 +20,8 @@ async def images(request: Request):
     recommendation_request = RecommendationRequest(**request.raw_args)
     response = await selector.get_recommendations(app.client_session,
                                                   recommendation_request)
-    return response
+    print(response.json)
+    return json(response.json, status=response.status)
 
 
 @app.post('/content')
@@ -35,7 +36,7 @@ async def content(request: Request):
     """
     response = await selector.distribute_posts(app.client_session,
                                                request.json['posts'])
-    if response.status == 500:
+    if not response:
         return json({}, status=500)
     return json({'accepted': True})
 
@@ -44,7 +45,7 @@ async def content(request: Request):
 async def feedback(request: Request):
     """
     Distributes feedback of the user to all recommenders.
-    Feedback should have shape: {feedback: {user, item, vote}}
+    Feedback should have shape: {feedback: {user, post, vote}}
     """
     post_json = request.json
     voting = Voting(**post_json['feedback'])

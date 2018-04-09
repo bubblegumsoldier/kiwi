@@ -37,15 +37,15 @@ async def teardown(sanic, loop):
 @app.get('/recommendation/<user>')
 @app.get('/recommendation/<user>/<count:int>')
 async def recommendation(request, user: str, count=10):
-    validate_user(user)
+    await validate_user(user)
     response = await recommender_router.recommend(app.http_session, user, count)
-    unvoted = response['recommendations']['unvoted']
-    await check_unvoted_count(unvoted, response.json['user'])
+    unvoted = response['unvoted']
+    await check_unvoted_count(unvoted, response['user'])
 
     return json({'recommendations': {
-        'user': response.json['user'],
+        'user': response['user'],
         'posts': await Enricher(app.mongo_connection).enrich(
-            response.json['posts'])}})
+            response['posts'])}})
 
 
 @app.route('/feedback', methods=["POST"])
@@ -53,7 +53,7 @@ async def feedback(request: Request):
     if not request.json:
         abort(HTTPStatus.BAD_REQUEST)
     user = request.json['feedback']['user']
-    validate_user(user)
+    await validate_user(user)
     await recommender_router.feedback(app.http_session, request.json)
     return json({}, status=HTTPStatus.ACCEPTED)
 
@@ -70,15 +70,16 @@ async def user(request: Request, user: str):
 
 @app.post('/content')
 async def content(request: Request):
-    response = await recommender_router.content(app.client_session,
-                                                request.json['posts'])
+    response = await recommender_router.content(app.http_session,
+                                                request.json)
     if response:
-        return json(status=200)
-    return json(status=500)
+        return json({}, status=200)
+    return json({}, status=500)
 
 
-async def validate_user(user):
+async def validate_user(user):    
     is_valid_user = await user_manager.authenticate_user(user, app.http_session)
+    print("User validation: {}".format(is_valid_user))
     if not is_valid_user:
         return abort(
             HTTPStatus.UNAUTHORIZED, message='User is not registered')
@@ -107,7 +108,7 @@ async def request_content(config):
             'return_url': config['self']}
     url = config['url']
 
-    post = app.client_session.post(url, json=data)
+    post = app.http_session.post(url, json=data)
     async with post as response:
         await response.text()
 

@@ -9,7 +9,7 @@ services:
       - "8080:8000"
     networks:
       - user-network
-      - service-network
+      - recommender-network
       - content-network
     environment:
       - USER_SERVICE=http://user:80
@@ -21,8 +21,8 @@ services:
       - MONGO_USER=admin
       - MONGO_PWD=12345
       - UNVOTED_THRESHOLD=50
-      - CONTENT_SERVICE=http://content:5000
-      - SELF=http://entry:8080
+      - CONTENT_SERVICE=http://content:5000/items
+      - SELF=http://entry:8000/content
 
   user: 
     build: 
@@ -46,9 +46,8 @@ services:
     ports: 
       - "8000"
     networks:
-      - service-network
+      - recommender-network
     restart: always
-    environment:
       
   content:
     build:
@@ -57,7 +56,6 @@ services:
     ports:
       - "5000"
     networks:
-      - service-network
       - content-network
     restart: always
     environment:
@@ -67,6 +65,7 @@ services:
       - MONGO_COLLECTION=posts 
       - MONGO_USER=admin
       - MONGO_PWD=12345
+      - RESET_PAGE_TIME=604800
 
   random:
     build:
@@ -75,8 +74,7 @@ services:
     ports:
       - "8000"
     networks:
-      - random-network
-      - service-network
+      - recommender-network
     restart: always
     environment:
       - MSQL_USER=random
@@ -84,6 +82,23 @@ services:
       - MSQL_HOST=mysqldb
       - MSQL_PORT=3306
       - MSQL_DATABASE=random_recommender
+
+  latest:
+    build:
+      context: ./kiwi-latest
+      dockerfile: latest.dockerfile
+    ports:
+      - "8000"
+    networks:
+      - recommender-network
+    restart: always
+    environment:
+      - MSQL_USER=latest
+      - MSQL_PWD=12345
+      - MSQL_HOST=mysqldb-latest
+      - MSQL_PORT=3306
+      - MSQL_DATABASE=latest_recommender
+  
   webapp:
     build:
       context: ./kiwi-mobile-frontend
@@ -118,14 +133,22 @@ services:
       context: ./kiwi-random
       dockerfile: mysql.dockerfile
     networks:
-      - random-network
+      - recommender-network
     ports:
-      - "3307:3306"
+      - "3306"
+
+  mysqldb-latest:
+    build:
+      context: ./kiwi-latest
+      dockerfile: mysql.dockerfile
+    networks:
+      - recommender-network
+    ports:
+      - "3306"
   
+
 networks:
-  random-network:
-    driver: bridge
-  service-network:
+  recommender-network:
     driver: bridge
   content-network:
     driver: bridge

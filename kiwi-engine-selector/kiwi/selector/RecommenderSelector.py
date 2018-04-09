@@ -38,7 +38,7 @@ class RecommenderSelector:
             # not all recommenders will get the exact same heuristics...
             # (e.g. time and age may vary during the iteration... - but for now that's okay)
             params = {
-                'user': user.user,
+                'user': user,
                 'algorithm': recommender
             }
             heuristics = await self.get_heuristics(params)

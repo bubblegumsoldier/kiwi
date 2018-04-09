@@ -9,12 +9,11 @@ class RecommenderRouter:
     async def recommend(self, session, user, count):
         url = '{}/{}'.format(self.base_url,
                              'recommendation')
-        json = {'user': user, 'count': count}
-        async with session.post(url, json=json) as response:
+        data = {'user': user, 'count': count}
+        async with session.get(url, params=data) as response:
             if response.status == HTTPStatus.OK:
                 return await response.json()
             abort(response.status)
-
 
     async def feedback(self, session, feedback_data):
         url = '{}/{}'.format(self.base_url,
@@ -25,9 +24,8 @@ class RecommenderRouter:
             abort(response.status)
 
     async def content(self, session, content_data):
-        url = '{}/{}'.format(self.base_url, 'feedback')
+        url = '{}/{}'.format(self.base_url, 'content')
         async with session.post(url, json=content_data) as response:
             if response.status == HTTPStatus.OK:
                 return await response.json()
             abort(response.status)
-

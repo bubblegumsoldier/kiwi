@@ -3,12 +3,9 @@ from sanic import Sanic
 from sanic.response import json
 from sanic.request import Request
 from aiohttp import ClientSession
-
-from kiwi.config import APP_CONFIG, CONTENT_CONFIG, RECOMMENDERS
+from kiwi.config import APP_CONFIG, RECOMMENDERS
 from kiwi.selector.Types import RecommendationRequest, Voting
 from kiwi.selector.RecommenderSelector import RecommenderSelector
-from kiwi.enricher.Enricher import Enricher
-from kiwi.database.MongoConnection import get_connection
 
 app = Sanic(__name__)
 selector = RecommenderSelector.from_config(RECOMMENDERS)
@@ -20,17 +17,7 @@ async def images(request: Request):
     recommendation_request = RecommendationRequest(**post_json)
     response = await selector.get_recommendations(app.client_session,
                                                   recommendation_request)
-    if response.json['unvoted'] <= CONTENT_CONFIG['unvoted_threshold']:
-        getLogger("root").warn(
-            '%s has %d unvoted posts remaining. Requesting content',
-            response.json['user'],
-            response.json['unvoted'])
-
-        await request_content()
-    return json({'recommendations': {
-        'user': response.json['user'],
-        'posts': await Enricher(app.mongo_connection).enrich(
-            response.json['posts'])}})
+    return response
 
 
 @app.post('/content')
@@ -49,30 +36,13 @@ async def feedback(request: Request):
     await selector.distribute_vote(app.client_session, voting)
     return json({'accepted': True})
 
-
-async def request_content():
-    data = {'count': CONTENT_CONFIG['unvoted_threshold'],
-            'return_url': build_url(**APP_CONFIG, endpoint='content')}
-    url = build_url(**CONTENT_CONFIG['address'])
-
-    post = app.client_session.post(url, json=data)
-    async with post as response:
-        await response.text()
-
-
-def build_url(**kwargs):
-    return 'http://{host}:{port}/{endpoint}'.format_map(kwargs)
-
-
 @app.listener('before_server_start')
 def init(sanic, loop):
-    sanic.mongo_connection = get_connection()
     sanic.client_session = ClientSession(loop=loop)
 
 
 @app.listener('after_server_stop')
 async def teardown(sanic, loop):
-    sanic.mongo_connection.close()
     await sanic.client_session.close()
 
 if __name__ == '__main__':

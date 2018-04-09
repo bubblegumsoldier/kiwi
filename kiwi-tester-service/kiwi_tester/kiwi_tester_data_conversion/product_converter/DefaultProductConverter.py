@@ -11,7 +11,7 @@ class DefaultProductConverter:
 
         {
             "id": ...,
-            "tags": []
+            "tags": "...|...|..."
         }
 
         """
@@ -21,7 +21,7 @@ class DefaultProductConverter:
         #print("Converting with DefaultProductConverter")
         return {
             "id": product[0],
-            "tags": product[1]
+            "tags": "|".join(product[1])
         }
 
     def __getattr__(self, name):

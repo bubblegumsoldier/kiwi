@@ -6,25 +6,14 @@ from kiwi_tester.KiwiTesterConfig import KiwiTesterConfig
 #from kiwi_tester.kiwi_tester_data_conversion.converter.NoneContainingMatrixConverter import NoneContainingMatrixConverter
 from kiwi_tester.kiwi_tester_data_conversion.data_splitter.ListUserPercentageSplitter import ListUserPercentageSplitter
 from kiwi_tester.kiwi_tester_data_conversion.product_converter.DefaultProductConverter import DefaultProductConverter
+from kiwi_tester.kiwi_tester_data_conversion.converter.EasyMatrixNormalizer import EasyMatrixNormalizer
 from kiwi_tester.kiwi_tester_execution.evaluators.RMSEEvaluator import RMSEEvaluator
 
 config = KiwiTesterConfig(
-    data_converter = ListUserPercentageSplitter(0.8
-        #NoneContainingMatrixConverter(
-        #    FlatMatrixConverter()
-        #)
-    ),
+    data_converter = ListUserPercentageSplitter(0.8),
     product_converter = DefaultProductConverter(),
-    testing_style = "instantfeedback",
-    mysql_config = {
-        'host': '...',
-        'username': '...',
-        'pw': '...',
-        'database': '...',
-        'table_prefix': '...'
-    },
     service_domain = "http://google.de/",
-    evaluator = RMSEEvaluator()
+    evaluator = RMSEEvaluator(EasyMatrixNormalizer(4))
 )
 
 data = [

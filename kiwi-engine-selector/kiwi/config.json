@@ -28,7 +28,6 @@
     }
   },
   "recommenders": {
-    "random": "http://random:8000",
-    "latest": "http://latest:8000"
+    "random": "http://content:8000"
   }
 }

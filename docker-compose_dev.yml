@@ -69,13 +69,8 @@ services:
 
   random:
     build:
-<<<<<<< HEAD
       context: ./kiwi-random
       dockerfile: service.dockerfile
-=======
-      context: ./kiwi-surprise
-      dockerfile: surprise.dockerfile
->>>>>>> add dev docker-compose
     ports:
       - "8000"
     networks:
@@ -101,7 +96,7 @@ services:
       - MSQL_USER=latest
       - MSQL_PWD=12345
       - MSQL_HOST=mysqldb-latest
-      - MSQL_PORT=3306
+      - MSQL_PORT=3308
       - MSQL_DATABASE=latest_recommender
   
   webapp:

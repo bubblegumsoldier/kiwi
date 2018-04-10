@@ -23,7 +23,6 @@ class KiwiTrainingSimulator:
             
             sys.stdout.write("{0:.0f}%".format(float(i)/float(size) * 100))
             sys.stdout.flush()
-            sleep(0.1)
             i += 1
         sys.stdout.write('\r')
         print("--> Successfully simulated training elements")

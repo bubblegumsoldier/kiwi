@@ -1,51 +1,31 @@
-from kiwi_tester.KiwiTester import KiwiTester
-from kiwi_tester.KiwiTesterConfig import KiwiTesterConfig
+def main():
+    default_module_path = "kiwi_tester.test_cases"
+    
+    from kiwi_tester.KiwiTester import KiwiTester
+    import argparse
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('module', type=str, help='The module to use within {}'.format(default_module_path))
+    args = parser.parse_args()
 
-#from kiwi_tester.kiwi_tester_data_conversion.converter.MatrixConverter import MatrixConverter
-#from kiwi_tester.kiwi_tester_data_conversion.converter.FlatMatrixConverter import FlatMatrixConverter
-#from kiwi_tester.kiwi_tester_data_conversion.converter.NoneContainingMatrixConverter import NoneContainingMatrixConverter
-from kiwi_tester.kiwi_tester_data_conversion.data_splitter.ListUserPercentageSplitter import ListUserPercentageSplitter
-from kiwi_tester.kiwi_tester_data_conversion.product_converter.DefaultProductConverter import DefaultProductConverter
-from kiwi_tester.kiwi_tester_data_conversion.converter.EasyMatrixNormalizer import EasyMatrixNormalizer
-from kiwi_tester.kiwi_tester_execution.evaluators.RMSEEvaluator import RMSEEvaluator
+    module_path = "{}.{}".format(default_module_path, args.module)
+    print("Importing module {}".format(module_path))
 
-config = KiwiTesterConfig(
-    data_converter = ListUserPercentageSplitter(0.8),
-    product_converter = DefaultProductConverter(),
-    service_domain = "http://google.de/",
-    evaluator = RMSEEvaluator(EasyMatrixNormalizer(4))
-)
+    module_path_config = "{}.{}".format(module_path, "get_config")
+    module_path_data = "{}.{}".format(module_path, "get_data")
+    module_path_products = "{}.{}".format(module_path, "get_products")
 
-data = [
-    ("bubblegumsoldier", "product_1", 1),
-    ("bubblegumsoldier", "product_2", 1),
-    ("bubblegumsoldier", "product_4", 1),
-    ("bubblegumsoldier", "product_5", 1),
-    ("bubblegumsoldier", "product_8", 1),
-    ("bubblegumsoldier", "product_9", 1),
-    ("bubblegumsoldier", "product_10", 1),
-    ("bubblegumsoldier", "product_12", 1),
-    ("peter", "product_1", 1),
-    ("peter", "product_2", 1),
-    ("peter", "product_3", 1),
-    ("peter", "product_8", 1),
-    ("peter", "product_12", 1)
-]
 
-products = [
-    ("product_1", ["tag1", "tag2", "tag3"]),
-    ("product_2", ["tag1", "tag2", "tag3"]),
-    ("product_3", ["tag1", "tag2", "tag3"]),
-    ("product_4", ["tag1", "tag2", "tag3"]),
-    ("product_5", ["tag1", "tag2", "tag3"]),
-    ("product_6", ["tag1", "tag2", "tag3"]),
-    ("product_7", ["tag1", "tag2", "tag3"]),
-    ("product_8", ["tag1", "tag2", "tag3"]),
-    ("product_9", ["tag1", "tag2", "tag3"]),
-    ("product_10", ["tag1", "tag2", "tag3"]),
-    ("product_11", ["tag1", "tag2", "tag3"]),
-    ("product_12", ["tag1", "tag2", "tag3"])
-]
+    import importlib
+    m_config = importlib.import_module(module_path_config)
+    m_data = importlib.import_module(module_path_data)
+    m_products = importlib.import_module(module_path_products)
 
-tester = KiwiTester(data, products, config)
-tester.start_full_procedure()
+    data = m_data.get_data()
+    products = m_products.get_products()
+    config = m_config.get_config()
+
+    tester = KiwiTester(data, products, config)
+    tester.start_full_procedure()
+
+if __name__ == "__main__":
+    main()

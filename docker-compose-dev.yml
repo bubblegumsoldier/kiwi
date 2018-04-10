@@ -62,6 +62,23 @@ services:
       - MONGO_USER=admin
       - MONGO_PWD=12345
 
+  content-rec:
+    build:
+      context: ./kiwi-content
+      dockerfile: service.dockerfile
+    ports:
+      - "8000"
+    networks:
+      - content-rec-network
+      - service-network
+    restart: always
+    environment:
+      - MSQL_USER=content
+      - MSQL_PWD=12345
+      - MSQL_HOST=mysqldb
+      - MSQL_PORT=3310
+      - MSQL_DATABASE=content_recommender
+
   random:
     build:
       context: ./kiwi-random
@@ -93,7 +110,7 @@ services:
       - MSQL_USER=latest
       - MSQL_PWD=12345
       - MSQL_HOST=mysqldb-latest
-      - MSQL_PORT=3306
+      - MSQL_PORT=3308
       - MSQL_DATABASE=latest_recommender
 
   webapp:
@@ -125,6 +142,15 @@ services:
     networks:
       - user-network
 
+  mysqldb-content:
+    build:
+      context: ./kiwi-content
+      dockerfile: mysql.dockerfile
+    networks:
+      - content-rec-network
+    ports:
+      - "3311:3310"
+
   mysqldb-latest:
     build:
       context: ./kiwi-latest
@@ -155,4 +181,6 @@ networks:
   user-network:
     driver: bridge
   webapp-network:
+    driver: bridge
+  content-rec-network:
     driver: bridge

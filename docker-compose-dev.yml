@@ -10,6 +10,11 @@ services:
     networks:
       - service-network
     restart: always
+    environment:
+      - RECOMMENDERS=['random=http://random:8000',
+                     'latest=http://latest:8000',
+                     'content=http://content-rec:8000',
+                     'knn=http://knn:8000']
     
   content-rec:
     build:
@@ -64,6 +69,26 @@ services:
       - MSQL_HOST=mysqldb-latest
       - MSQL_PORT=3306
       - MSQL_DATABASE=latest_recommender
+
+  knn:
+    build: 
+      context: ./kiwi-surprise
+      dockerfile: surprise.dockerfile
+    ports:
+      - "8001:8000"
+    networks:
+      - knn-network
+      - service-network
+    restart: always    
+    environment:
+      - MSQL_USER=collab
+      - MSQL_PWD=12345
+      - MSQL_HOST=mysqldb-collab
+      - MSQL_PORT=3306
+      - MSQL_DATABASE=collab_recommender
+      - RETRAINING_TIME=30
+      - RETRAIN_ON_REQUEST=['/feedback', '/content']
+
   mysqldb-content:
     build:
       context: ./kiwi-content
@@ -90,6 +115,15 @@ services:
       - random-network
     ports:
       - "3306"
+
+  mysqldb-collab:
+    build:
+      context: ./kiwi-surprise
+      dockerfile: mysql.dockerfile
+    networks:
+      - knn-network
+    ports:
+      - "3306"
   
 networks:
   random-network:
@@ -99,4 +133,6 @@ networks:
   service-network:
     driver: bridge
   content-rec-network:
+    driver: bridge
+  knn-network:
     driver: bridge

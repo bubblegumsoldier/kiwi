@@ -4,9 +4,6 @@ from surprise import Dataset, Reader
 import pandas as pd
 
 
-
-
-
 class DataAccessor:
     def __init__(self, conn=None):
         self._conn = conn
@@ -19,7 +16,7 @@ class DataAccessor:
 
         frame = pd.DataFrame.from_records(
             votes, columns=["user", "item", "vote"])
-        scale = rating_scale or await self._get_rating_scale(self._conn)        
+        scale = rating_scale or await self._get_rating_scale(self._conn)
 
         return Dataset.load_from_df(
             frame,

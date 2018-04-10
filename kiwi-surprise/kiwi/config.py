@@ -1,6 +1,7 @@
 from os import environ
 from collections import namedtuple
 import surprise
+from ast import literal_eval
 
 MySQLConfig = namedtuple('MySQLConfig', 'host port user password db')
 
@@ -33,3 +34,16 @@ def read_mysql_config():
         password=environ.get('MSQL_PWD', None),
         db=environ.get('MSQL_DATABASE', None)
     )
+
+
+def set_retraining_cycle():
+    """
+    Setting RETRAINING_TIME retrains the algorithm periodically (seconds)
+    Setting ON_REQUEST retrains it after a request to the given endpoint(s)
+    """
+    periodic = environ.get('RETRAINING_TIME')
+    on_request = literal_eval(environ.get('RETRAIN_ON_REQUEST', 'None'))
+    return {
+        'on_request': on_request,
+        'periodic': int(periodic) if periodic else periodic
+    }

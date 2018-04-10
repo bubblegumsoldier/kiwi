@@ -26,8 +26,5 @@
       "module": "kiwi.heuristics.user",
       "arguments": ["user"]
     }
-  },
-  "recommenders": {
-    "random": "http://content:8000"
   }
 }

@@ -1,6 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor, CancelledError
 from aiomysql import create_pool
-from asyncio import sleep
+from asyncio import sleep, ensure_future
+from functools import partial
 from logging import getLogger
 from sanic import Sanic
 from sanic.request import Request
@@ -8,12 +9,13 @@ from sanic.response import json
 from kiwi.database.DataAccessor import DataAccessor
 from kiwi.Algorithm import Algorithm
 from kiwi.Recommender import Recommender
-from kiwi.config import create_algorithm, read_mysql_config
+from kiwi.config import create_algorithm, read_mysql_config, set_retraining_cycle
 from kiwi.TransferTypes import create_vote
 
 
 app = Sanic(__name__)
 
+retrain_config = set_retraining_cycle()
 
 def create_accessor(context):
     return DataAccessor(conn=context)
@@ -24,19 +26,23 @@ def create_accessor(context):
 #     return BuiltinContext()
 
 
-async def periodic_retrain():
-    await sleep(30)
+async def periodic_retrain(period):
+    await sleep(period)
     while app.run_retrain:
-        getLogger('root').info("Retraining...")
-        loop = app.loop
-        async with app.pool.acquire() as conn:
-            accessor = create_accessor(conn)
-            new_predictor = Algorithm(
-                loop, app.executor, create_algorithm())
-            await new_predictor.fit(await accessor.trainset())
-            app.predictor = new_predictor
-            getLogger('root').info('Retraining finished...')
-            await sleep(30)
+        await retrain(app)
+        await sleep(period)
+
+
+async def retrain(app):
+    getLogger('root').info("Retraining...")
+    loop = app.loop
+    async with app.pool.acquire() as conn:
+        accessor = create_accessor(conn)
+        new_predictor = Algorithm(
+            loop, app.executor, create_algorithm())
+        await new_predictor.fit(await accessor.trainset())
+        app.predictor = new_predictor
+        getLogger('root').info('Retraining finished...')
 
 
 @app.listener("before_server_start")
@@ -63,6 +69,8 @@ async def generate_accessor(request):
 
 @app.middleware("response")
 async def teardown_accessor(request, response):
+    if request.path in retrain_config['on_request']:
+        ensure_future(retrain(app))
     app.conn.close()
     await app.conn.ensure_closed()
     await app.pool.release(app.conn)
@@ -115,5 +123,6 @@ async def content(request: Request):
 
 if __name__ == '__main__':
     app.run_retrain = True
-    app.add_task(periodic_retrain)
+    if retrain_config['periodic']:
+        app.add_task(partial(periodic_retrain, retrain_config['periodic']))
     app.run(host='0.0.0.0', port=8000)

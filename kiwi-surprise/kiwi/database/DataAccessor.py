@@ -111,4 +111,7 @@ class DataAccessor:
             await cursor.execute('SELECT min(vote), max(vote) from votes')
             min_vote, max_vote = await cursor.fetchone()
             getLogger('root').info('%s, %s', min_vote, max_vote)
-            return(float(min_vote), float(max_vote))
+
+            # defaults if no ratings exist yet
+            return(float(min_vote) if min_vote else 0,
+                   float(max_vote) if max_vote else 1)

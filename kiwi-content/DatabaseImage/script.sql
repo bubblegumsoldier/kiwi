@@ -23,7 +23,7 @@ Create Table votes(
 
 
 Create USER 'content'@'%' identified by '12345';
-Grant Select, Insert ON random_recommender.* to 'content'@'%';
+Grant Select, Insert ON content_recommender.* to 'content'@'%';
 
 
 

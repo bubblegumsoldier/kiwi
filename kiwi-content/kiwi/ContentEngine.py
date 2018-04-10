@@ -4,6 +4,7 @@ import time
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import normalize
+from logging import getLogger
 
 
 class ContentEngine:
@@ -19,10 +20,13 @@ class ContentEngine:
         self.user_vectors = user_vectors
     
     def fit(self):
-        self.build_feature_vectors()
-        if self.user_vectors is None:
-            self.build_user_taste_vectors() 
-        return self          
+        try:
+            self.build_feature_vectors()
+            if self.user_vectors is None:
+                self.build_user_taste_vectors() 
+            return self          
+        except ValueError as e:
+            getLogger('error').warn(e)
 
     def build_feature_vectors(self, content=None):
         """

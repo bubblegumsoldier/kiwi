@@ -1,67 +1,16 @@
 version: '2'
 
 services: 
-  entry: 
-    build:
-      context: ./kiwi-entry
-      dockerfile: entry.dockerfile
-    ports:
-      - "8080:8000"
-    networks:
-      - user-network
-      - service-network
-
-  user: 
-    build: 
-      context: ./kiwi-user-manager
-      dockerfile: user.dockerfile
-    ports:
-      - "80"
-    networks:
-      - user-network
-    environment:
-      - KIWI_USER_MANAGER_DB_HOST=mongodb-user
-      - KIWI_USER_MANAGER_DB_DATABASE=kiwi_users
-      - KIWI_USER_MANAGER_DB_USER=admin
-      - KIWI_USER_MANAGER_DB_PASSWORD=12345
-
-
   engine:
     build:
       context: ./kiwi-engine-selector
       dockerfile: engine.dockerfile
     ports: 
-      - "8000"
+      - "8000:8000"
     networks:
       - service-network
-      - content-network
     restart: always
-    environment:
-      - MONGO_HOST=mongodb-content
-      - MONGO_PORT=27017
-      - MONGO_DB=imgur_posts
-      - MONGO_COLLECTION=posts 
-      - MONGO_USER=admin
-      - MONGO_PWD=12345
-
-  content:
-    build:
-      context: ./kiwi-content-crawler
-      dockerfile: content.dockerfile
-    ports:
-      - "5000"
-    networks:
-      - service-network
-      - content-network
-    restart: always
-    environment:
-      - MONGO_HOST=mongodb-content
-      - MONGO_PORT=27017
-      - MONGO_DB=imgur_posts
-      - MONGO_COLLECTION=posts 
-      - MONGO_USER=admin
-      - MONGO_PWD=12345
-
+    
   content-rec:
     build:
       context: ./kiwi-content
@@ -78,6 +27,9 @@ services:
       - MSQL_HOST=mysqldb-content
       - MSQL_PORT=3306
       - MSQL_DATABASE=content_recommender
+      - MIN_RATING=1
+      - MAX_RATING=5
+      - POS_CUTOFF=3.5
 
   random:
     build:
@@ -112,36 +64,6 @@ services:
       - MSQL_HOST=mysqldb-latest
       - MSQL_PORT=3306
       - MSQL_DATABASE=latest_recommender
-
-  webapp:
-    build:
-      context: ./kiwi-mobile-frontend
-      dockerfile: webapp.dockerfile
-    networks:
-      - webapp-network
-    ports:
-      - "80:80"
-
-  mongodb-content:
-    image: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=12345
-    ports:
-      - "27017"
-    networks:
-       - content-network
-  
-  mongodb-user:
-    image: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=12345
-    ports:
-      - "27017"
-    networks:
-      - user-network
-
   mysqldb-content:
     build:
       context: ./kiwi-content
@@ -175,12 +97,6 @@ networks:
   latest-network:
     driver: bridge
   service-network:
-    driver: bridge
-  content-network:
-    driver: bridge
-  user-network:
-    driver: bridge
-  webapp-network:
     driver: bridge
   content-rec-network:
     driver: bridge

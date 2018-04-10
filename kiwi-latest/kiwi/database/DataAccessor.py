@@ -28,6 +28,9 @@ class DataAccessor:
     async def get_unvoted_count(self, user):
         return await self._get_unvoted_count(user, self.conn)
 
+    async def get_ranking(self, item):
+        return await self._get_ranking(item, self.conn)
+
     async def store_feedback(self, vote):
         try:
             await self._insert_vote(vote, self.conn)
@@ -46,6 +49,12 @@ class DataAccessor:
             return {'posts': products,
                     'unvoted': cursor.rowcount,
                     'user': username}
+
+    async def get_post_count(self):
+        return await self._count_posts(self.conn)
+
+    async def get_rating_scale(self):
+        return await self._get_rating_scale(self.conn)
 
     async def _get_unvoted_count(self, user, conn):
         post_count = await self._count_posts(conn)
@@ -91,3 +100,15 @@ class DataAccessor:
             await cursor.execute('SELECT COUNT(post_id) FROM products')
             count = await cursor.fetchone()
             return int(count[0])
+
+    async def _get_ranking(self, item, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute('SELECT COUNT(*) FROM products p WHERE p.upload_time < (SELECT upload_time from products where post_id=%s ORDER BY upload_time ASC)', item)
+            return await cursor.fetchone()
+
+    async def _get_rating_scale(self, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute('SELECT min(vote), max(vote) from votes')
+            min_vote, max_vote = await cursor.fetchone()
+            return(float(min_vote), float(max_vote))
+        

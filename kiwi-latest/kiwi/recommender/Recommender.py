@@ -20,5 +20,9 @@ class Recommender:
         inserted = await self.accessor.add_content(filtered_posts)
         return {'inserted_count': inserted}
 
+    async def predict_for(self, user, item):
+        total_count = self.accessor.get_post_count()
+        ranking = self.accessor.get_ranking(item)
+
     async def _register_user(self, user):
         await self.accessor.check_and_register_user(user)

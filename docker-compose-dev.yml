@@ -76,7 +76,7 @@ services:
       - MSQL_USER=content
       - MSQL_PWD=12345
       - MSQL_HOST=mysqldb-content
-      - MSQL_PORT=3310
+      - MSQL_PORT=336
       - MSQL_DATABASE=content_recommender
 
   random:
@@ -110,7 +110,7 @@ services:
       - MSQL_USER=latest
       - MSQL_PWD=12345
       - MSQL_HOST=mysqldb-latest
-      - MSQL_PORT=3308
+      - MSQL_PORT=3306
       - MSQL_DATABASE=latest_recommender
 
   webapp:

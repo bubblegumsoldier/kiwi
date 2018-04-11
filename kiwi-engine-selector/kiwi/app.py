@@ -45,10 +45,10 @@ async def content(request: Request):
 async def feedback(request: Request):
     """
     Distributes feedback of the user to all recommenders.
-    Feedback should have shape: {feedback: {user, post, vote}}
+    Feedback should have shape: {vote: {user, post, vote}}
     """
     post_json = request.json
-    voting = Voting(**post_json['feedback'])
+    voting = Voting(**post_json['vote'])
     await selector.distribute_vote(app.client_session, voting)
     return json({'accepted': True})
 

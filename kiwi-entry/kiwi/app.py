@@ -54,7 +54,7 @@ async def feedback(request: Request):
         abort(HTTPStatus.BAD_REQUEST)
     user = request.json['feedback']['user']
     await validate_user(user)
-    await recommender_router.feedback(app.http_session, request.json)
+    await recommender_router.feedback(app.http_session, {'vote': request.json['feedback']})
     return json({}, status=HTTPStatus.ACCEPTED)
 
 

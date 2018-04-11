@@ -27,13 +27,12 @@ class KiwiRequestSender:
 
         def send_feedback(self, user, product, rating):
             rating_request = {
-                "feedback": {
+                "vote": {
                     "user": user,
                     "post": product,
                     "vote": rating
                 }
             }
-            print(rating_request)
             r = requests.post(self._endpoints["feedback"], json = rating_request)
             if r.status_code != requests.codes.ok:
                 raise ServerError("Server returned wrong status code...", r.status_code)

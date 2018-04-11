@@ -1,6 +1,7 @@
 from kiwi.ContentEngine import ContentEngine
 from asyncio import AbstractEventLoop
-from pandas import Series
+from logging import getLogger
+
 
 class AsyncContentWrapper:
     def __init__(self, loop: AbstractEventLoop, executor, content_engine: ContentEngine):
@@ -9,20 +10,24 @@ class AsyncContentWrapper:
         self._executor = executor
 
     async def fit(self):
-        return await self._loop.run_in_executor(
-            self._executor,
-            self._content_engine.fit)
+        try:
+            return await self._loop.run_in_executor(
+                self._executor,
+                self._content_engine.fit)
+        except ValueError as e:
+            getLogger('error').info(
+                "Fitting unsuccessful, likely because no items are present")
+            getLogger('error').warn(e)
 
-    async def build_feature_vectors(self, content=None):
+    async def build_feature_vectors(self):
         """
         :content: Pandas dataframe with ItemId Tags (tags as | separated                  substrings). If None, uses the content frame passed to the              engine on creation.
         """
         await self._loop.run_in_executor(
             self._executor,
-            self._content_engine.build_feature_vectors,
-            content)
+            self._content_engine.build_feature_vectors)
 
-    async def build_user_taste_vectors(self, ratings=None):
+    async def build_user_taste_vectors(self):
         """
         User taste vectors for all users in the rating set.
 
@@ -31,16 +36,20 @@ class AsyncContentWrapper:
         """
         await self._loop.run_in_executor(
             self._executor,
-            self._content_engine.build_user_taste_vectors,
-            ratings)
+            self._content_engine.build_user_taste_vectors)
 
-    async def build_user_taste_vector(self, user, ratings=None, insert=False):
-        return await self._loop.run_in_executor(
-            self._executor,
-            self._content_engine.build_user_taste_vector,
-            user,
-            ratings,
-            insert)
+    async def build_user_taste_vector(self, user, insert=False):
+        try:
+            return await self._loop.run_in_executor(
+                self._executor,
+                self._content_engine.build_user_taste_vector,
+                user,
+                insert)
+        except ValueError:
+            getLogger('error').warn(
+                'Error during user taste vector building, likely no known content present')
+            raise Exception(
+                'Cannot build user taste vector. Feedback not stored.')
 
     async def predict_similarities(self, user, item=None):
         """
@@ -52,10 +61,15 @@ class AsyncContentWrapper:
         :returns: Numpy array of [similarity, itemid]. (shape: n, 2)
         """
         return await self._loop.run_in_executor(
-            self._executor, 
-            self._content_engine.predict_similarities, 
+            self._executor,
+            self._content_engine.predict_similarities,
             user, item)
 
     async def update_ratings(self, vote):
-        self._content_engine.ratings = \
-            self._content_engine.ratings.append(Series(vote), ignore_index=True)
+        self._content_engine.update_ratings(vote)
+
+    async def get_user_taste_vector(self, uid):
+        try:
+            return self._content_engine.user_vectors.loc[uid]
+        except KeyError:
+            raise Exception('User does not exist')

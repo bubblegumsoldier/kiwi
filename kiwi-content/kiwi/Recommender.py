@@ -28,11 +28,11 @@ class Recommender:
 
     async def store_feedback(self, vote):
         await self._register_user(vote.user)
-        success = await self._accessor.store_feedback(vote)
         await self._algo.update_ratings(vote)
         await self._algo.build_user_taste_vector(vote.user, insert=True)
-        voted, unvoted = await self._accessor.get_voted_and_unvoted_count(vote.user)
+        success = await self._accessor.store_feedback(vote)
         if success:
+            voted, unvoted = await self._accessor.get_voted_and_unvoted_count(vote.user)
             return {'user': vote.user, 'post': vote.post, 'unvoted': unvoted, 'voted': voted}
         return {}
 

@@ -11,10 +11,8 @@ services:
       - service-network
     restart: always
     environment:
-      - RECOMMENDERS=['random=http://random:8000',
-                     'latest=http://latest:8000',
-                     'content=http://content-rec:8000',
-                     'knn=http://knn:8000']
+      - RECOMMENDERS=[
+                     'content=http://content-rec:8000']
     
   content-rec:
     build:

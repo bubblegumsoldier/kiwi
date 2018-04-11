@@ -8,7 +8,7 @@ def get_config():
     config = KiwiTesterConfig(
         data_converter = RandomPercentageSplitter(0.8),
         product_converter = DefaultProductConverter(),
-        service_domain = "http://google.de/",
+        service_domain = "http://localhost:8000/",
         evaluator = RMSEEvaluator(EasyMatrixNormalizer(4))
     )
     return config

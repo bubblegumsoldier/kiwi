@@ -13,14 +13,15 @@ class KiwiRequestSender:
                 "content": self._append_endpoint(self._config.service_domain, "content"),
                 "feedback": self._append_endpoint(self._config.service_domain, "feedback"),
                 "recommendation": self._append_endpoint(self._config.service_domain, "recommendation"),
-                "prediction": self._append_endpoint(self._config.service_domain, "prediction"),
+                "prediction": self._append_endpoint(self._config.service_domain, "predict"),
             }
 
         def send_content(self, products):
             content_request = {
                 "posts": products
             }
-            r = requests.post(self._endpoints["content"], data = content_request)
+            print(self._endpoints["content"])
+            r = requests.post(self._endpoints["content"], json = content_request)
             if r.status_code != requests.codes.ok:
                 raise ServerError("Server returned wrong status code...", r.status_code)
 
@@ -32,7 +33,8 @@ class KiwiRequestSender:
                     "vote": rating
                 }
             }
-            r = requests.post(self._endpoints["feedback"], data = rating_request)
+            print(rating_request)
+            r = requests.post(self._endpoints["feedback"], json = rating_request)
             if r.status_code != requests.codes.ok:
                 raise ServerError("Server returned wrong status code...", r.status_code)
 
@@ -42,7 +44,7 @@ class KiwiRequestSender:
                 "user": user,
                 "post": product
             }
-            r = requests.get(self._endpoints["prediction"], data = prediction_request)
+            r = requests.get(self._endpoints["prediction"], json = prediction_request)
             if r.status_code != requests.codes.ok:
                 raise ServerError("Server returned wrong status code...", r.status_code)
             return r.json().prediction

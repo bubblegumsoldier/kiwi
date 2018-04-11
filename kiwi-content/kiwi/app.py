@@ -124,5 +124,13 @@ async def predict(request: Request):
     print(result)
     return json(result)
 
+@app.get('/activation')
+async def activation(request: Request):
+    '''
+    Returns the activation value for the given set of heuristics
+    '''
+    heuristics = request.json['heuristics']
+    return json({"activation": 100, 'received_heuristics': heuristics})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)

@@ -1,8 +1,10 @@
 import pandas as pd
+import os
 
 def get_data():
+    dir_path = os.path.dirname(os.path.realpath(__file__))
     print("Loading data...")
-    data_path = "/home/henry/Desktop/ml-latest-small/ratings.csv"
+    data_path = os.path.join(dir_path, "data", "ratings.csv")
     frame = pd.read_csv(data_path, sep=',', names=['UserId', 'ItemId', 'Vote', 'Time'])
     matrix = []
     for i, row in frame.iterrows():

@@ -25,8 +25,8 @@ class DataAccessor:
             user, count, self.conn)
         return unvoted_posts
 
-    async def get_unvoted_count(self, user):
-        return await self._get_unvoted_count(user, self.conn)
+    async def get_voted_and_unvoted_count(self, user):
+        return await self._get_voted_and_unvoted_count(user, self.conn)
 
     async def store_feedback(self, vote):
         try:
@@ -39,18 +39,22 @@ class DataAccessor:
     async def add_content(self, posts):
         return await self._insert_posts(posts, self.conn)
 
+    async def get_post_count(self):
+        return await self._count_posts(self.conn)
+
+    async def get_mean_and_std(self):
+        return await self._get_mean_and_std(self.conn)
+
     async def _get_random_unvoted(self, username, count, conn):
         async with conn.cursor() as cursor:
             await cursor.execute(RANDOM_SELECT, username)
             products = [row[0] for row in await cursor.fetchmany(count)]
-            return {'posts': products,
-                    'unvoted': cursor.rowcount,
-                    'user': username}
+            return products
 
-    async def _get_unvoted_count(self, user, conn):
+    async def _get_voted_and_unvoted_count(self, user, conn):
         post_count = await self._count_posts(conn)
         voted = await self._vote_count(user, conn)
-        return post_count - voted
+        return (voted, post_count - voted)
 
     async def _insert_vote(self, vote, conn):
         async with conn.cursor() as cursor:
@@ -91,3 +95,10 @@ class DataAccessor:
             await cursor.execute('SELECT COUNT(post_id) FROM products')
             count = await cursor.fetchone()
             return int(count[0])
+
+    async def _get_mean_and_std(self, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute('SELECT AVG(vote), STD(vote) FROM votes')
+            dist = await cursor.fetchone()
+            return (float(dist[0]) if dist else 0,
+                    float(dist[1]) if dist else 0)

@@ -16,6 +16,12 @@ def read_mysql_config():
     )
 
 
+def get_rating_config():
+    return {
+        'min_rating': float(environ.get('MIN_RATING', 0)),
+        'max_rating': float(environ.get('MAX_RATING', 1))
+    }
+
 def read_app_config():
     with open(path.join(path.dirname(__file__), 'config.json')) as f:
         config = load(f)

@@ -1,7 +1,7 @@
 from logging import getLogger
 from aiomysql import IntegrityError
 
-RANDOM_SELECT = '''
+LATEST_SELECT = '''
             SELECT DISTINCT p.post_id, p.upload_time
             FROM products p
             WHERE p.post_id NOT IN (
@@ -44,17 +44,12 @@ class DataAccessor:
 
     async def _get_random_unvoted(self, username, count, conn):
         async with conn.cursor() as cursor:
-            await cursor.execute(RANDOM_SELECT, username)
+            await cursor.execute(LATEST_SELECT, username)
             products = [row[0] for row in await cursor.fetchmany(count)]
-            return {'posts': products,
-                    'unvoted': cursor.rowcount,
-                    'user': username}
+            return products
 
     async def get_post_count(self):
         return await self._count_posts(self.conn)
-
-    async def get_rating_scale(self):
-        return await self._get_rating_scale(self.conn)
 
     async def _get_unvoted_count(self, user, conn):
         post_count = await self._count_posts(conn)
@@ -104,11 +99,4 @@ class DataAccessor:
     async def _get_ranking(self, item, conn):
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT COUNT(*) FROM products p WHERE p.upload_time < (SELECT upload_time from products where post_id=%s ORDER BY upload_time ASC)', item)
-            return await cursor.fetchone()
-
-    async def _get_rating_scale(self, conn):
-        async with conn.cursor() as cursor:
-            await cursor.execute('SELECT min(vote), max(vote) from votes')
-            min_vote, max_vote = await cursor.fetchone()
-            return(float(min_vote), float(max_vote))
-        
+            return (await cursor.fetchone())[0] + 1

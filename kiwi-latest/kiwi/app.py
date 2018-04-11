@@ -5,11 +5,11 @@ from sanic.response import json
 from aiomysql import create_pool
 from kiwi.recommender.Recommender import Recommender
 from kiwi.database.DataAccessor import DataAccessor
-from kiwi.config import read_app_config, read_mysql_config
+from kiwi.config import read_app_config, read_mysql_config, read_rating_config
 from kiwi.Types import Vote
 
-app = Sanic(__name__)
-
+app = Sanic('latest-recommender')
+rating_config = read_rating_config()
 
 @app.listener('before_server_start')
 async def setup(sanic, loop):
@@ -26,6 +26,20 @@ async def teardown(sanic, loop):
     await sanic.pool.wait_closed()
 
 
+@app.middleware("request")
+async def generate_accessor(request):
+    app.conn = await app.pool.acquire()
+    accessor = DataAccessor(app.conn)
+    app.recommender = Recommender(accessor, **rating_config)
+
+
+@app.middleware("response")
+async def teardown_accessor(request, response):
+    app.conn.close()
+    await app.conn.ensure_closed()
+    await app.pool.release(app.conn)
+
+
 @app.get('/recommendation')
 async def recommend(request):
     '''
@@ -34,12 +48,9 @@ async def recommend(request):
     Returns json object {posts, unvoted, user}
     '''
     args = request.raw_args
-    async with app.pool.acquire() as conn:
-        accessor = DataAccessor(conn)
-        recommender = Recommender(accessor)
-        pictures = await recommender.recommend_for(args['user'],
-                                                   int(args.get('count', 10)))
-        return json(pictures)
+    recommendations = await app.recommender.recommend_for(args['user'],
+                                                          int(args.get('count', 10)))
+    return json(recommendations)
 
 
 @app.post('/feedback')
@@ -49,15 +60,12 @@ async def feedback(request: Request):
     Returns {user, unvoted} if successful.
     Returns {} with Error Code 500 (Internal Server Error) if unsuccessful
     '''
-    async with app.pool.acquire() as conn:
-        accessor = DataAccessor(conn)
-        recommender = Recommender(accessor)
 
-        vote_info = await recommender.store_feedback(
-            Vote(**request.json['vote']))
-        if vote_info:
-            return json(vote_info)
-        return json({}, status=HTTPStatus.INTERNAL_SERVER_ERROR)
+    vote_info = await app.recommender.store_feedback(
+        Vote(**request.json['vote']))
+    if vote_info:
+        return json(vote_info)
+    return json({}, status=HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
 @app.post('/content')
@@ -68,12 +76,10 @@ async def add_posts(request: Request):
     If single posts cannot be inserted, due to duplication returns the 
     actually inserted count.
     '''
-    async with app.pool.acquire() as conn:
-        accessor = DataAccessor(conn)
-        recommender = Recommender(accessor)
 
-        inserted_info = await recommender.add_content(request.json['posts'])
-        return json(inserted_info)
+    inserted_info = await app.recommender.add_content(request.json['posts'])
+    return json(inserted_info)
+
 
 @app.get('/activation')
 async def activation(request: Request):
@@ -83,5 +89,16 @@ async def activation(request: Request):
     heuristics = request.json['heuristics']
     return json({"activation": 100, 'received_heuristics': heuristics})
 
+
+@app.get('/predict')
+async def predict(request: Request):
+    user = request.raw_args['user']
+    item = request.raw_args['item']
+    prediction = await app.recommender.predict_for(user, item)
+    return json(prediction)
+
+
 if __name__ == '__main__':
-    app.run(**read_app_config()._asdict())
+    config = read_app_config()._asdict()
+    print(config)
+    app.run(host='0.0.0.0', port=8000)

@@ -31,6 +31,9 @@ class Algorithm:
         split_items = [iids[i::4] for i in range(4)]
         return list(chain(*[await self._estimate(uid, items) for items in split_items]))
 
+    async def predict(self, uid, iid):
+        return self.knn.predict(uid, iid, clip=True)
+
     async def get_closest_known_user(self, uid, ratings):
         """
         Surprise does not support users that are not known to the trainset at all.

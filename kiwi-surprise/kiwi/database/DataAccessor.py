@@ -5,22 +5,22 @@ import pandas as pd
 
 
 class DataAccessor:
-    def __init__(self, conn=None):
+    def __init__(self, conn=None, rating_scale=(0, 1)):
         self._conn = conn
+        self.rating_scale = rating_scale
 
-    async def trainset(self, rating_scale=None):
+    async def trainset(self):
         '''
         Currently will return all votes, i.e. will always be the new trainset
         '''
         votes = list(await self._get_votes(self._conn))
 
         frame = pd.DataFrame.from_records(
-            votes, columns=["user", "item", "vote"])
-        scale = rating_scale or await self._get_rating_scale(self._conn)
+            votes, columns=["user", "item", "vote"])        
 
         return Dataset.load_from_df(
             frame,
-            Reader(rating_scale=scale)
+            Reader(rating_scale=self.rating_scale)
         ).build_full_trainset()
 
     async def get_unvoted_items(self, uid):
@@ -102,13 +102,3 @@ class DataAccessor:
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT user, product, CAST(vote as DECIMAL(3,2)) vote from votes')
             return await cursor.fetchall()
-
-    async def _get_rating_scale(self, conn):
-        async with conn.cursor() as cursor:
-            await cursor.execute('SELECT min(vote), max(vote) from votes')
-            min_vote, max_vote = await cursor.fetchone()
-            getLogger('root').info('%s, %s', min_vote, max_vote)
-
-            # defaults if no ratings exist yet
-            return(float(min_vote) if min_vote else 0,
-                   float(max_vote) if max_vote else 1)

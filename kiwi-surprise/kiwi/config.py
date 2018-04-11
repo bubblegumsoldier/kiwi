@@ -23,6 +23,13 @@ def create_algorithm():
     return algo
 
 
+def read_rating_config():
+    return (
+        environ.get('MIN_RATING', 0),
+        environ.get('MAX_RATING', 1),
+    )
+
+
 def read_mysql_config():
     """
     Reads the environment variables injected by docker/docker-compose/virtualenv to connect to the mysql database.

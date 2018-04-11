@@ -9,21 +9,15 @@ from sanic.response import json
 from kiwi.database.DataAccessor import DataAccessor
 from kiwi.Algorithm import Algorithm
 from kiwi.Recommender import Recommender
-from kiwi.config import create_algorithm, read_mysql_config, set_retraining_cycle
+from kiwi.config import (create_algorithm, read_mysql_config,
+                         set_retraining_cycle, read_rating_config)
 from kiwi.TransferTypes import create_vote
 
 
 app = Sanic(__name__)
 
 retrain_config = set_retraining_cycle()
-
-def create_accessor(context):
-    return DataAccessor(conn=context)
-    # return BuiltinDataAccessor(context=context)
-
-
-# def create_pool(*args, **kwargs):
-#     return BuiltinContext()
+rating_scale = read_rating_config()
 
 
 async def periodic_retrain(period):
@@ -37,7 +31,7 @@ async def retrain(app):
     getLogger('root').info("Retraining...")
     loop = app.loop
     async with app.pool.acquire() as conn:
-        accessor = create_accessor(conn)
+        accessor = DataAccessor(conn=conn, rating_scale=rating_scale)
         new_predictor = Algorithm(
             loop, app.executor, create_algorithm())
         await new_predictor.fit(await accessor.trainset())
@@ -53,10 +47,10 @@ async def setup(context, loop):
         **read_mysql_config()._asdict(),
         autocommit=True,
         loop=loop,
-        pool_recycle=120)
+        pool_recycle=600)
 
     async with context.pool.acquire() as conn:
-        accessor = create_accessor(conn)
+        accessor = DataAccessor(conn=conn, rating_scale=rating_scale)
         trainset = await accessor.trainset()
         await context.predictor.fit(trainset)
 
@@ -64,12 +58,13 @@ async def setup(context, loop):
 @app.middleware("request")
 async def generate_accessor(request):
     app.conn = await app.pool.acquire()
-    app.accessor = create_accessor(app.conn)
+    app.accessor = DataAccessor(conn=app.conn, rating_scale=rating_scale)
 
 
 @app.middleware("response")
 async def teardown_accessor(request, response):
-    if request.path in retrain_config['on_request']:
+    if (retrain_config['on_request']
+            and request.path in retrain_config['on_request']):
         ensure_future(retrain(app))
     app.conn.close()
     await app.conn.ensure_closed()
@@ -95,7 +90,6 @@ async def recommend(request):
     recommender = Recommender(app.predictor, app.accessor)
     posts = await recommender.recommend_for(args['user'],
                                             int(args.get('count', 10)))
-    getLogger('root').info("%r", posts)
     return json(posts)
 
 
@@ -119,6 +113,15 @@ async def content(request: Request):
     recommender = Recommender(app.predictor, app.accessor)
     inserted_items = await recommender.add_content(request.json['posts'])
     return json(inserted_items)
+
+
+@app.get('/predict')
+async def predict(request: Request):
+    user = request.raw_args['user']
+    item = request.raw_args['item']
+    recommender = Recommender(app.predictor, app.accessor)
+    predictions = await recommender.predict_for(user, item)
+    return json(predictions)
 
 
 if __name__ == '__main__':

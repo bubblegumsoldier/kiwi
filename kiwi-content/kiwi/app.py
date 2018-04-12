@@ -5,6 +5,7 @@ from logging import getLogger
 from sanic import Sanic
 from sanic.request import Request
 from sanic.response import json
+from sanic.exceptions import abort
 from kiwi.database.DataAccessor import DataAccessor
 from kiwi.Recommender import Recommender
 from kiwi.config import read_mysql_config, read_config
@@ -18,6 +19,7 @@ app = Sanic(__name__)
 
 def create_accessor(context):
     return DataAccessor(conn=context)
+
 
 async def retrain(context, loop):
     print("Start training...")
@@ -77,7 +79,7 @@ async def recommend(request):
     '''
     Gets recommendations for user
     Expects args in query string form -> user=x&count=n
-    Returns json object {posts, unvoted, user, meta}    
+    Returns json object {posts, unvoted, user, meta}
     '''
     args = request.raw_args
     recommender = Recommender(
@@ -89,30 +91,33 @@ async def recommend(request):
 
 @app.post('/feedback')
 async def feedback(request: Request):
-    '''Stores the feedback for a recommended post. Will return a information object on success and an empty object on failure. 
+    '''Stores the feedback for a recommended post. Will return a information object on success and an empty object on failure.
     Think about returning 409-Conflict on failure instead, because the empty object can cause an issue in engine service.'''
     vote = request.json['vote']
     config = read_config()
     recommender = Recommender(
         app.predictor, app.accessor, config)
-    vote_result = await recommender.store_feedback(
-        create_vote(vote, config['positive_cutoff']))
-    return json(vote_result)
-
+    try:
+        vote_result = await recommender.store_feedback(
+            create_vote(vote, config['positive_cutoff']))
+        return json(vote_result)
+    except KeyError:
+        abort(400, "Unknown user")
 
 @app.post('/content')
 async def content(request: Request):
     '''
-    Inserts posts into the database. The request needs the format 
+    Inserts posts into the database. The request needs the format
     { "posts": [{"id": string, "tags": string}]}.
     Returns the amout of inserted items and 200-OK.
         '''
-    recommender = Recommender(
-        app.predictor, app.accessor, read_config())
-    inserted_items = await recommender.add_content(request.json['posts'])
-    if inserted_items > 0:
+    filtered_posts = [(post['id'], post['tags'])
+                      for post in request.json['posts']]
+    inserted = await app.accessor.add_content(filtered_posts)
+    if inserted > 0:
         ensure_future(retrain(app, app.loop))
-    return json({"inserted_count": inserted_items})
+    return json({"inserted_count": inserted})
+
 
 @app.get('/predict')
 async def predict(request: Request):
@@ -120,9 +125,14 @@ async def predict(request: Request):
         app.predictor, app.accessor, read_config())
     user = request.raw_args['user']
     item = request.raw_args['item']
-    result = await recommender.predict(user, item)
-    print(result)
-    return json(result)
+    try:
+        result = await recommender.predict(user, item)
+        return json(result)
+    except ValueError:
+        abort(400, message='Unkown item or user')        
+    except KeyError: 
+        abort(400, message='Unkown item or user')
+
 
 @app.get('/activation')
 async def activation(request: Request):
@@ -131,6 +141,20 @@ async def activation(request: Request):
     '''
     heuristics = request.json['heuristics']
     return json({"activation": 100, 'received_heuristics': heuristics})
+
+
+@app.post('/training')
+async def training(request: Request):
+    votes = request.json['votes']
+    inserted_user = await app.accessor.batch_register_users(
+        {vote['user'] for vote in votes})
+    inserted = await app.accessor.insert_votes(
+        (vote['user'], vote['post'], vote['vote']) for vote in votes)
+    ensure_future(retrain(app, app.loop))
+    return json({
+        'inserted_users': inserted_user,
+        'inserted_votes': inserted})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)

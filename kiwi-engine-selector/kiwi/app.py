@@ -65,6 +65,17 @@ async def predict(request: Request):
     return json(prediction)
 
 
+@app.post('/train')
+async def train(request: Request):
+    """
+    Expects json with {votes: [vote]}
+    Where vote -> {user post vote}
+    Should simplify and speedup training process
+    """
+    training = await selector.distribute_votes(app.client_session, request.json)
+    return json(training)
+
+
 @app.listener('before_server_start')
 def init(sanic, loop):
     sanic.client_session = ClientSession(loop=loop)

@@ -1,0 +1,3 @@
+{
+  "tests/test_content_engine.py::ContentEngineTest::test_user_vector_without_content": true
+}

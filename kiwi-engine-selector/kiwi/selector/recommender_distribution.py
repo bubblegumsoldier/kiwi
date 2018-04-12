@@ -9,8 +9,15 @@ async def content(session, recommenders, posts):
     If any recommender fails (i.e. not 200), the returned status code will be 500
     """
     results = await gather(*[_content(session, name, recommender, posts)
-                            for name, recommender in recommenders.items()])
+                             for name, recommender in recommenders.items()])
     return all([True if status == 200 else False for status in results])
+
+
+async def votes(session, recommenders, votes):
+    results = await gather(*[r.push_votes(session, votes)
+                             for r in recommenders])
+    return all([True if status == 500 else False for status in results])
+
 
 
 async def feedback(session, recommenders, voting):

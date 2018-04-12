@@ -9,9 +9,8 @@ ENV PYTHONPATH=$PYTHONPATH:/var/www/kiwi
 
 EXPOSE 8000
 
-
-COPY ./kiwi /var/www/kiwi
-COPY ./requirements.txt /var/www
+COPY ./kiwi /var/www/kiwi-latest/kiwi
+COPY ./requirements.txt /var/www/kiwi-latest
 
 WORKDIR var/www
 

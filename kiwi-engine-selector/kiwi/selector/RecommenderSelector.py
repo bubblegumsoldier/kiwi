@@ -61,3 +61,6 @@ class RecommenderSelector:
 
     async def distribute_vote(self, session, vote):
         return await distribution.feedback(session, self.recommenders, vote)
+
+    async def distribute_votes(self, session, votes):
+        return await distribution.votes(session, self.recommenders, votes)

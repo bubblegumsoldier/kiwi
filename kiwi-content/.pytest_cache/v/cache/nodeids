@@ -1,0 +1,8 @@
+[
+  "tests/test_content_engine.py::ContentEngineTest::test_empty_initial_ratings_rating_added",
+  "tests/test_content_engine.py::ContentEngineTest::test_empty_setup_does_not_train",
+  "tests/test_content_engine.py::ContentEngineTest::test_empty_setup_with_content",
+  "tests/test_content_engine.py::ContentEngineTest::test_existing_taste_vector_does_not_change_without_update",
+  "tests/test_content_engine.py::ContentEngineTest::test_get_nonexisting_user_vector_raises",
+  "tests/test_content_engine.py::ContentEngineTest::test_update_existing_taste_vector"
+]

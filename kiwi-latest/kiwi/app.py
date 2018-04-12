@@ -5,11 +5,14 @@ from sanic.response import json
 from aiomysql import create_pool
 from kiwi.recommender.Recommender import Recommender
 from kiwi.database.DataAccessor import DataAccessor
-from kiwi.config import read_app_config, read_mysql_config, read_rating_config
+from kiwi.config import (read_app_config, read_mysql_config,
+                         read_rating_config, get_sql_statements)
 from kiwi.Types import Vote
 
 app = Sanic('latest-recommender')
 rating_config = read_rating_config()
+SQL_STMTS = get_sql_statements()
+
 
 @app.listener('before_server_start')
 async def setup(sanic, loop):
@@ -29,8 +32,8 @@ async def teardown(sanic, loop):
 @app.middleware("request")
 async def generate_accessor(request):
     app.conn = await app.pool.acquire()
-    accessor = DataAccessor(app.conn)
-    app.recommender = Recommender(accessor, **rating_config)
+    app.accessor = DataAccessor(app.conn, SQL_STMTS)
+    app.recommender = Recommender(app.accessor, **rating_config)
 
 
 @app.middleware("response")
@@ -73,12 +76,28 @@ async def add_posts(request: Request):
     '''
     Stores new content in form {posts: post[]}
     Returns {inserted_count}.
-    If single posts cannot be inserted, due to duplication returns the 
+    If single posts cannot be inserted, due to duplication returns the
     actually inserted count.
     '''
-
     inserted_info = await app.recommender.add_content(request.json['posts'])
     return json(inserted_info)
+
+
+@app.post('/training')
+async def add_votes(request: Request):
+    '''
+    Expects votes as json {votes: [vote]}
+    vote -> {user post vote}
+    '''
+    votes = request.json['votes']
+    inserted_user = await app.accessor.batch_register_users(
+        {vote['user'] for vote in votes})
+    inserted = await app.accessor.insert_votes(
+        (vote['user'], vote['post'], vote['vote']) for vote in votes)
+    return json({
+        'inserted_users': inserted_user,
+        'inserted_votes': inserted
+    })
 
 
 @app.get('/activation')

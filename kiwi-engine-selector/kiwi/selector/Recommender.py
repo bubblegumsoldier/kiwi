@@ -29,6 +29,12 @@ class Recommender:
         session = session.post(url, json={'vote': voting._asdict()})
         return await self._get_response(session)
 
+
+    async def push_votes(self, session, votes):
+        url = self._format_template('training')
+        session = session.post(url, json=votes)
+        return await self._get_response(session)
+
     async def push_content(self, session: ClientSession, posts):
         url = self._format_template('content')
         session = session.post(url, json={'posts': posts})

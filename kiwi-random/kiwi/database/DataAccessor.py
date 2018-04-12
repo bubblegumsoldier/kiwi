@@ -16,9 +16,11 @@ class DataAccessor:
     def __init__(self, conn):
         self.conn = conn
 
-    async def check_and_register_user(self, user):
-        if not await self._is_user_known(user, self.conn):
-            await self._insert_user(user, self.conn)
+    async def register_user(self, user):
+        await self._insert_users([user], self.conn)
+
+    async def batch_register_users(self, users):
+        return await self._insert_users(users, self.conn)
 
     async def recommend_for(self, user, count):
         unvoted_posts = await self._get_random_unvoted(
@@ -28,13 +30,12 @@ class DataAccessor:
     async def get_voted_and_unvoted_count(self, user):
         return await self._get_voted_and_unvoted_count(user, self.conn)
 
+    async def insert_votes(self, votes):
+        return await self._insert_votes(votes, self.conn)
+
     async def store_feedback(self, vote):
-        try:
-            await self._insert_vote(vote, self.conn)
-            return True
-        except IntegrityError as exp:
-            getLogger('root').error('Feedback Error: %r', exp)
-            return False
+        inserted = await self._insert_votes([vote], self.conn)
+        return True if inserted == 1 else False
 
     async def add_content(self, posts):
         return await self._insert_posts(posts, self.conn)
@@ -56,27 +57,23 @@ class DataAccessor:
         voted = await self._vote_count(user, conn)
         return (voted, post_count - voted)
 
-    async def _insert_vote(self, vote, conn):
+    async def _insert_votes(self, votes, conn):
         async with conn.cursor() as cursor:
-            await cursor.execute(
-                'INSERT INTO votes (user, product, vote) values(%s, %s, %s)',
-                vote)
+            await cursor.executemany(
+                'INSERT IGNORE INTO votes (user, product, vote) values(%s, %s, %s)',
+                votes)
+            return cursor.rowcount
 
-    async def _insert_user(self, username, conn):
+    async def _insert_users(self, users, conn):
         async with conn.cursor() as cursor:
-            await cursor.execute('INSERT INTO users values(%s)', username)
+            await cursor.executemany('INSERT IGNORE INTO users values(%s)', users)
+            return cursor.rowcount
 
     async def _insert_posts(self, posts, conn):
-        inserted = 0
         async with conn.cursor() as cursor:
-            for post in posts:
-                try:
-                    await cursor.execute('INSERT INTO products VALUES(%s)',
-                                         post)
-                    inserted += 1
-                except IntegrityError as exp:
-                    getLogger('root').error('Content Error:%r', exp)
-            return inserted
+            await cursor.executemany(
+                'INSERT IGNORE INTO products VALUES(%s)', posts)
+            return cursor.rowcount
 
     async def _is_user_known(self, username, conn):
         async with conn.cursor() as cursor:

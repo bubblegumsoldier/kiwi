@@ -11,6 +11,7 @@ from kiwi.Types import Vote
 app = Sanic(__name__)
 rating_config = get_rating_config()
 
+
 @app.listener('before_server_start')
 async def setup(sanic, loop):
     pool = await create_pool(**read_mysql_config()._asdict(),
@@ -29,8 +30,8 @@ async def teardown(sanic, loop):
 @app.middleware("request")
 async def generate_accessor(request):
     app.conn = await app.pool.acquire()
-    accessor = DataAccessor(app.conn)
-    app.recommender = Recommender(accessor, **rating_config)
+    app.accessor = DataAccessor(app.conn)
+    app.recommender = Recommender(app.accessor, **rating_config)
 
 
 @app.middleware("response")
@@ -94,6 +95,23 @@ async def predict(request):
     user = request.raw_args['user']
     item = request.raw_args['item']
     return json(await app.recommender.predict_for(user, item))
+
+
+@app.post('/training')
+async def add_votes(request: Request):
+    '''
+    Expects votes as json {votes: [vote]}
+    vote -> {user post vote}
+    '''
+    votes = request.json['votes']
+    inserted_user = await app.accessor.batch_register_users(
+        {vote['user'] for vote in votes})
+    inserted = await app.accessor.insert_votes(
+        (vote['user'], vote['post'], vote['vote']) for vote in votes)
+    return json({
+        'inserted_users': inserted_user,
+        'inserted_votes': inserted
+    })
 
 if __name__ == '__main__':
     app.run(**read_app_config()._asdict())

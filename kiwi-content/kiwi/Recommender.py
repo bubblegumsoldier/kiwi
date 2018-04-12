@@ -36,11 +36,6 @@ class Recommender:
             return {'user': vote.user, 'post': vote.post, 'unvoted': unvoted, 'voted': voted}
         return {}
 
-    async def add_content(self, posts):
-        filtered_posts = [(post['id'], post['tags']) for post in posts]
-        inserted = await self._accessor.add_content(filtered_posts)
-        return inserted
-
     async def predict(self, user, item):
         await self._register_user(user)
         voted_count, unvoted_count = await \
@@ -55,7 +50,7 @@ class Recommender:
         }
 
     async def _register_user(self, user):
-        await self._accessor.check_and_register_user(user)
+        await self._accessor.register_user(user)
 
     def _scale_rating(self, similarity):
         scaled = similarity*self._max_vote

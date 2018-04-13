@@ -14,6 +14,7 @@ class KiwiRequestSender:
                 "feedback": self._append_endpoint(self._config.service_domain, "feedback"),
                 "recommendation": self._append_endpoint(self._config.service_domain, "recommendation"),
                 "prediction": self._append_endpoint(self._config.service_domain, "predict"),
+                "training": self._append_endpoint(self._config.service_domain, "training")
             }
 
         def send_content(self, products):
@@ -22,6 +23,16 @@ class KiwiRequestSender:
             }
             print(self._endpoints["content"])
             r = requests.post(self._endpoints["content"], json = content_request)
+            if r.status_code != requests.codes.ok:
+                raise ServerError("Server returned wrong status code...", r.status_code)
+
+        def send_training(self, training):
+            training_request = {
+                votes: training
+            }
+            #training should look like this:
+            # [{user: "xyz", post: "xyz", vote: "0.1"}, ...]
+            r = requests.post(self._endpoints["training"], json = training_request)
             if r.status_code != requests.codes.ok:
                 raise ServerError("Server returned wrong status code...", r.status_code)
 

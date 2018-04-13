@@ -124,6 +124,18 @@ async def predict(request: Request):
     return json(predictions)
 
 
+@app.post('/training')
+async def training(request: Request):
+    votes = request.json['votes']
+    inserted_user = await app.accessor.batch_register_users(
+        {vote['user'] for vote in votes})
+    inserted = await app.accessor.insert_votes(
+        (vote['user'], vote['post'], vote['vote']) for vote in votes)
+    return json({
+        'inserted_users': inserted_user,
+        'inserted_votes': inserted})
+
+
 if __name__ == '__main__':
     app.run_retrain = True
     if retrain_config['periodic']:

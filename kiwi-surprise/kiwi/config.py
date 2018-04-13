@@ -25,8 +25,8 @@ def create_algorithm():
 
 def read_rating_config():
     return (
-        environ.get('MIN_RATING', 0),
-        environ.get('MAX_RATING', 1),
+        int(environ.get('MIN_RATING', 0)),
+        int(environ.get('MAX_RATING', 1)),
     )
 
 

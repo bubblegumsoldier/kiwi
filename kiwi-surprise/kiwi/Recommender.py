@@ -54,4 +54,4 @@ class Recommender:
         }
 
     async def _register_user(self, user):
-        await self._accessor.check_and_register_user(user)
+        await self._accessor.register_user(user)

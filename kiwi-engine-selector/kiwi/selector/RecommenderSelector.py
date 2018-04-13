@@ -24,7 +24,7 @@ class RecommenderSelector:
 
     async def predict_for(self, session, user, item):
         recommender = await self.choose_recommenders(session, user)
-        return recommender.predict_for(session, user, item)
+        return await recommender.predict_for(session, user, item)
 
     async def get_heuristics(self, params):
         # don't know how to make sure that we avoid collision, that's why I will just reinstatiate the HeuristicFetcher

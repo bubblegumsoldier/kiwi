@@ -20,7 +20,7 @@ class Recommender:
         return await self._get_response(session)
 
     async def predict_for(self, session, user, item):
-        url = self._format_template('prediction')
+        url = self._format_template('predict')
         response = session.get(url, params={'user': user, 'item': item})
         return await self._get_response(response)
 

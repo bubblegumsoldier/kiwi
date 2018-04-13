@@ -16,8 +16,10 @@ class RecommenderSelector:
         return cls(recommenders)
 
     async def get_recommendations(self, session, request):
-        recommender = await self.choose_recommenders(session, request.user)
+        recommender, name = await \
+            self.choose_recommenders(session, request.user)
         items = await recommender.get_content_for_user(session, request)
+        items.json['recommender'] = name
         return items
 
     async def predict_for(self, session, user, item):
@@ -54,7 +56,7 @@ class RecommenderSelector:
             highest_recommender, highest_activation))
         print("Highest recommender is {} with an actication value of {}".format(
             highest_recommender, highest_activation))
-        return self.recommenders[highest_recommender]
+        return self.recommenders[highest_recommender], highest_recommender
 
     async def distribute_posts(self, session, posts):
         return await distribution.content(session, self.recommenders, posts)

@@ -15,8 +15,8 @@ async def content(session, recommenders, posts):
 
 async def votes(session, recommenders, votes):
     results = await gather(*[r.push_votes(session, votes)
-                             for r in recommenders])
-    return all([True if status == 500 else False for status in results])
+                             for r in recommenders.values()])
+    return {name: response.json for name, response in zip(recommenders.keys(), results)}
 
 
 

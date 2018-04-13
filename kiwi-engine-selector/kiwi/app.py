@@ -65,7 +65,7 @@ async def predict(request: Request):
     return json(prediction)
 
 
-@app.post('/train')
+@app.post('/training')
 async def train(request: Request):
     """
     Expects json with {votes: [vote]}

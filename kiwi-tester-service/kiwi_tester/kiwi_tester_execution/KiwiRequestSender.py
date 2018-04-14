@@ -28,7 +28,7 @@ class KiwiRequestSender:
 
         def send_training(self, training):
             training_request = {
-                votes: training
+                "votes": training
             }
             #training should look like this:
             # [{user: "xyz", post: "xyz", vote: "0.1"}, ...]

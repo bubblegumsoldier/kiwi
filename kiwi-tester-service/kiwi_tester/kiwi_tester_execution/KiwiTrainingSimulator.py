@@ -9,6 +9,9 @@ class KiwiTrainingSimulator:
         self._config = config
 
     def start_training(self):
+        if self._config.skip_training:
+            print("-> Skipping Training")
+            return
         dba = DatabaseAccessor(self._config)
         size = dba.get_training_size()
         print("Simulating {} training elements...".format(size))
@@ -21,6 +24,26 @@ class KiwiTrainingSimulator:
                 "post": c_training[1],
                 "vote": c_training[2]
             })
-        KiwiRequestSender(self._config).send_training(full_training_data)
+        
+        chunk_size = 1000
+        chunks = list(self._chunks(full_training_data, chunk_size))
+
+        print("(Using {} chunks of size ~{})".format(len(chunks), chunk_size))
+
+        for i, c in enumerate(chunks):
+            sys.stdout.write('\r')
+            
+            sys.stdout.write("{0:.0f}%".format(float(i)/float(len(chunks)) * 100))
+            KiwiRequestSender(self._config).send_training(c)
+
+            sys.stdout.flush()
+
+        sys.stdout.write('\r')
+
         
         print("--> Successfully simulated training elements")
+
+    def _chunks(self, l, n):
+        """Yield successive n-sized chunks from l."""
+        for i in range(0, len(l), n):
+            yield l[i:i + n]

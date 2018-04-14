@@ -22,7 +22,14 @@ class ListUserPercentageSplitter:
             import json
             print(json.dumps(dataset, indent=4, sort_keys=True))
         print("Converting with ListUserPercentageSplitter")
-        return self._split_into_two_sets(dataset)
+        two_sets = self._split_into_two_sets(dataset)
+        users_of_0 = [el[0] for el in two_sets[0]]
+        users_of_1 = [el[0] for el in two_sets[1]]
+        for el in users_of_0:
+            if not el in users_of_0:
+                print(el)
+        
+        return two_sets
 
     def _split_into_two_sets(self, dataset):
         training_set = []

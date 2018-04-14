@@ -9,6 +9,9 @@ class KiwiTestingSimulator:
         self._config = config
     
     def start_testing(self):
+        if self._config.skip_testing:
+            print("-> Skipping Testing")
+            return
         dba = DatabaseAccessor(self._config)
         rs = KiwiRequestSender(self._config)
         size = dba.get_testing_size()

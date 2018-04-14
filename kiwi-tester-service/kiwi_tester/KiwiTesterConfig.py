@@ -11,6 +11,9 @@ class KiwiTesterConfig:
         self.mysql_config = kwargs.get('mysql_config')
         self.service_domain = kwargs.get('service_domain')
         self.evaluator = kwargs.get("evaluator")
+        self.skip_products = kwargs.get("skip_products")
+        self.skip_training = kwargs.get("skip_training")
+        self.skip_testing = kwargs.get("skip_testing")
 
     def _init_defaults(self):
         self.data_converter = MatrixConverter()
@@ -25,3 +28,6 @@ class KiwiTesterConfig:
         }
         self.service_domain = '...'
         self.evaluator = RMSEEvaluator()
+        self.skip_products = False
+        self.skip_training = False
+        self.skip_testing = False

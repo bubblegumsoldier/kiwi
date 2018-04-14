@@ -23,7 +23,7 @@ class RecommenderSelector:
         return items
 
     async def predict_for(self, session, user, item):
-        recommender = await self.choose_recommenders(session, user)
+        recommender, name = await self.choose_recommenders(session, user)
         return await recommender.predict_for(session, user, item)
 
     async def get_heuristics(self, params):

@@ -132,13 +132,22 @@ class ContentEngine:
 
     def _predict_single(self, user, item):
         user_vector = self._get_user_vector(user).values.reshape(1, -1)
-        sim = cosine_similarity(
-            user_vector,
-            self.tf_vectors[self.tf_vectors['ItemId'] == item].iloc[:, 1:]
-        ).flatten()
-        return pd.DataFrame([(sim[0], item)], columns=['Similarities', 'ItemId'])
+        try:
+            sim = cosine_similarity(
+                user_vector,
+                self.tf_vectors[self.tf_vectors['ItemId'] == item].iloc[:, 1:]
+            ).flatten()
+        except ValueError:
+            getLogger('error').warn('User not found.')
+            sim = [0]
+        finally:
+            return pd.DataFrame([(sim[0], item)], columns=['Similarities', 'ItemId'])
 
     def _get_user_vector(self, user):
-        if self.user_vectors is not None:
-            return self.user_vectors.loc[user]
-        return self.build_user_taste_vector(user, insert=True)
+        try:
+            if self.user_vectors is not None:
+                return self.user_vectors.loc[user]
+            return self.build_user_taste_vector(user, insert=True)            
+        except KeyError:
+            getLogger('error').warn('User not found.')
+            return self.build_user_taste_vector(user, insert=True)

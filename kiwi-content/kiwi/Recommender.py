@@ -10,7 +10,7 @@ class Recommender:
         voted_count, unvoted_count = await \
             self._accessor.get_voted_and_unvoted_count(user)
         unvoted = await self._accessor.get_unvoted_items(user)
-        ranking = await self._algo.predict_similarities(user)  # [(id, sim)]
+        ranking = await self._algo.predict_similarities(user)
 
         choose = ranking[ranking['ItemId'].isin(unvoted)]
         returns = choose[:count]
@@ -41,6 +41,7 @@ class Recommender:
         voted_count, unvoted_count = await \
             self._accessor.get_voted_and_unvoted_count(user)
         similarity = await self._algo.predict_similarities(user, item)
+        
         return {
             'prediction': self._scale_rating(similarity['Similarities'][0]),
             'user': user,

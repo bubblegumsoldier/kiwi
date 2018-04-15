@@ -30,14 +30,15 @@ class KiwiTrainingSimulator:
 
         print("(Using {} chunks of size ~{})".format(len(chunks), chunk_size))
 
-        for i, c in enumerate(chunks):
+        for i, c in enumerate(chunks, start=1):
+            retrain = True if i == len(chunks) else False 
             sys.stdout.write('\r')
             
             sys.stdout.write("{0:.0f}%".format(float(i)/float(len(chunks)) * 100))
-            KiwiRequestSender(self._config).send_training(c)
+            KiwiRequestSender(self._config).send_training(c, retrain)
 
             sys.stdout.flush()
-
+        time.sleep(len(chunks))
         sys.stdout.write('\r')
 
         

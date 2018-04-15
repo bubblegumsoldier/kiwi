@@ -21,4 +21,4 @@ class KiwiEvaluator:
         prediction_matrix = remover_to_create_prediction_m.convert(original_testing_matrix)
         original_matrix = remover_to_create_original_m.convert(original_testing_matrix)
 
-        return self._config.evaluator.evaluate(prediction_matrix, original_matrix)
+        return self._config.evaluator.evaluate(original_matrix,prediction_matrix)

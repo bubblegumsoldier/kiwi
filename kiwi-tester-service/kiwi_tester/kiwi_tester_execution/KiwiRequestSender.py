@@ -26,9 +26,10 @@ class KiwiRequestSender:
             if r.status_code != requests.codes.ok:
                 raise ServerError("Server returned wrong status code...", r.status_code)
 
-        def send_training(self, training):
+        def send_training(self, training, retrain=False):
             training_request = {
-                "votes": training
+                "votes": training,
+                "retrain": retrain
             }
             #training should look like this:
             # [{user: "xyz", post: "xyz", vote: "0.1"}, ...]

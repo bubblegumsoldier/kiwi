@@ -1,6 +1,42 @@
 version: '2'
 
 services: 
+  mysqldb-content:
+    build:
+      context: ./kiwi-content
+      dockerfile: mysql.dockerfile
+    networks:
+      - content-rec-network
+    ports:
+      - "3306"
+
+  # mysqldb-latest:
+  #   build:
+  #     context: ./kiwi-latest
+  #     dockerfile: mysql.dockerfile
+  #   networks:
+  #     - latest-network
+  #   ports:
+  #     - "3306"
+
+  # mysqldb:
+  #   build:
+  #     context: ./kiwi-random
+  #     dockerfile: mysql.dockerfile
+  #   networks:
+  #     - random-network
+  #   ports:
+  #     - "3306"
+
+  # mysqldb-collab:
+  #   build:
+  #     context: ./kiwi-surprise
+  #     dockerfile: mysql.dockerfile
+  #   networks:
+  #     - knn-network
+  #   ports:
+  #     - "3306"
+
   engine:
     build:
       context: ./kiwi-engine-selector
@@ -37,94 +73,64 @@ services:
       - MAX_RATING=5
       - POS_CUTOFF=3.5
 
-  random:
-    build:
-      context: ./kiwi-random
-      dockerfile: service.dockerfile
-    ports:
-      - "8000"
-    networks:
-      - random-network
-      - service-network
-    restart: always
-    environment:
-      - MSQL_USER=random
-      - MSQL_PWD=12345
-      - MSQL_HOST=mysqldb
-      - MSQL_PORT=3306
-      - MSQL_DATABASE=random_recommender
+  # random:
+  #   build:
+  #     context: ./kiwi-random
+  #     dockerfile: service.dockerfile
+  #   ports:
+  #     - "8000"
+  #   networks:
+  #     - random-network
+  #     - service-network
+  #   restart: always
+  #   environment:
+  #     - MIN_RATING=1
+  #     - MAX_RATING=5
+  #     - MSQL_USER=random
+  #     - MSQL_PWD=12345
+  #     - MSQL_HOST=mysqldb
+  #     - MSQL_PORT=3306
+  #     - MSQL_DATABASE=random_recommender
 
-  latest:
-    build:
-      context: ./kiwi-latest
-      dockerfile: latest.dockerfile
-    ports:
-      - "8000"
-    networks:
-      - latest-network
-      - service-network
-    restart: always
-    environment:
-      - MSQL_USER=latest
-      - MSQL_PWD=12345
-      - MSQL_HOST=mysqldb-latest
-      - MSQL_PORT=3306
-      - MSQL_DATABASE=latest_recommender
+  # latest:
+  #   build:
+  #     context: ./kiwi-latest
+  #     dockerfile: latest.dockerfile
+  #   ports:
+  #     - "8000"
+  #   networks:
+  #     - latest-network
+  #     - service-network
+  #   restart: always
+  #   environment:
+  #     - MIN_RATING=1
+  #     - MAX_RATING=5
+  #     - MSQL_USER=latest
+  #     - MSQL_PWD=12345
+  #     - MSQL_HOST=mysqldb-latest
+  #     - MSQL_PORT=3306
+  #     - MSQL_DATABASE=latest_recommender
 
-  knn:
-    build: 
-      context: ./kiwi-surprise
-      dockerfile: surprise.dockerfile
-    ports:
-      - "8001:8000"
-    networks:
-      - knn-network
-      - service-network
-    restart: always    
-    environment:
-      - MSQL_USER=collab
-      - MSQL_PWD=12345
-      - MSQL_HOST=mysqldb-collab
-      - MSQL_PORT=3306
-      - MSQL_DATABASE=collab_recommender
-      - RETRAINING_TIME=30
-      - RETRAIN_ON_REQUEST=['/feedback', '/content']
+  # knn:
+  #   build: 
+  #     context: ./kiwi-surprise
+  #     dockerfile: surprise.dockerfile
+  #   ports:
+  #     - "8001:8000"
+  #   networks:
+  #     - knn-network
+  #     - service-network
+  #   restart: always    
+  #   environment:
+  #     - MIN_RATING=1
+  #     - MAX_RATING=5
+  #     - MSQL_USER=collab
+  #     - MSQL_PWD=12345
+  #     - MSQL_HOST=mysqldb-collab
+  #     - MSQL_PORT=3306
+  #     - MSQL_DATABASE=collab_recommender
+  #     - RETRAIN_ON_REQUEST=['/feedback']
 
-  mysqldb-content:
-    build:
-      context: ./kiwi-content
-      dockerfile: mysql.dockerfile
-    networks:
-      - content-rec-network
-    ports:
-      - "3306"
-
-  mysqldb-latest:
-    build:
-      context: ./kiwi-latest
-      dockerfile: mysql.dockerfile
-    networks:
-      - latest-network
-    ports:
-      - "3306"
-
-  mysqldb:
-    build:
-      context: ./kiwi-random
-      dockerfile: mysql.dockerfile
-    networks:
-      - random-network
-    ports:
-      - "3306"
-
-  mysqldb-collab:
-    build:
-      context: ./kiwi-surprise
-      dockerfile: mysql.dockerfile
-    networks:
-      - knn-network
-    ports:
-      - "3306"
   
 networks:
   random-network:

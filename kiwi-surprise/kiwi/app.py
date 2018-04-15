@@ -4,7 +4,7 @@ from asyncio import sleep, ensure_future
 from functools import partial
 from logging import getLogger
 from sanic import Sanic
-from sanic.request import Request
+from sanic.request.Request import Request
 from sanic.response import json
 from kiwi.database.DataAccessor import DataAccessor
 from kiwi.Algorithm import AlgorithmWrapper
@@ -61,9 +61,10 @@ async def generate_accessor(request):
 
 
 @app.middleware("response")
-async def teardown_accessor(request, response):
-    if (retrain_config['on_request']
-            and request.path in retrain_config['on_request']):
+async def teardown_accessor(request: Request, response):    
+    if request.path in retrain_config.get('on_request', []):
+        ensure_future(retrain(app))
+    if request.path == "/training" and request.retrain:
         ensure_future(retrain(app))
     app.conn.close()
     await app.conn.ensure_closed()
@@ -126,6 +127,7 @@ async def predict(request: Request):
 @app.post('/training')
 async def training(request: Request):
     votes = request.json['votes']
+    request.retrain = request.json.get('retrain', False)
     inserted_user = await app.accessor.batch_register_users(
         {vote['user'] for vote in votes})
     inserted = await app.accessor.insert_votes(

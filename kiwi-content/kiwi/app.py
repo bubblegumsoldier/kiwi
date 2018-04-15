@@ -126,13 +126,8 @@ async def predict(request: Request):
         app.predictor, app.accessor, read_config())
     user = request.raw_args['user']
     item = request.raw_args['item']
-    try:
-        result = await recommender.predict(user, item)
-        return json(result)
-    except ValueError:
-        abort(400, message='Unkown item or user')        
-    except KeyError: 
-        abort(400, message='Unkown item or user')
+    result = await recommender.predict(user, item)
+    return json(result)
 
 
 @app.get('/activation')
@@ -154,11 +149,13 @@ async def activation(request: Request):
 @app.post('/training')
 async def training(request: Request):
     votes = request.json['votes']
+    do_retrain = request.json.get('retrain', False)
     inserted_user = await app.accessor.batch_register_users(
         {vote['user'] for vote in votes})
     inserted = await app.accessor.insert_votes(
         (vote['user'], vote['post'], vote['vote']) for vote in votes)
-    ensure_future(retrain(app, app.loop))
+    if do_retrain:
+        ensure_future(retrain(app, app.loop))
     return json({
         'inserted_users': inserted_user,
         'inserted_votes': inserted})

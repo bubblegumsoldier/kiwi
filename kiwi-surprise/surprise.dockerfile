@@ -2,6 +2,7 @@ FROM python:3
 
 ENV PYTHONPATH=$PYTHONPATH:/kiwi
 
+ENV ALGO_PATH=algorithms/knn_user.py
 
 COPY ./kiwi /kiwi
 COPY ./requirements.txt /

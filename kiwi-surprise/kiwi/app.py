@@ -135,6 +135,16 @@ async def training(request: Request):
         'inserted_votes': inserted})
 
 
+@app.get('/activation')
+async def activation(request: Request):
+    '''
+    Returns the activation value for the given set of heuristics
+    '''
+    heuristics = request.json['heuristics']
+    a = algorithm_module.get_activation(heuristics, app.accessor)
+
+    return json({"activation": a, 'received_heuristics': heuristics})
+
 if __name__ == '__main__':
     app.run_retrain = True
     if retrain_config['periodic']:

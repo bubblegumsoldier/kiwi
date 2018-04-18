@@ -19,5 +19,8 @@ def create_algorithm():
 
 
 
-def get_activation(heuristics):
-    return 0
+def get_activation(heuristics, accessor):
+    voted_count, unvoted_count = accessor.get_voted_and_unvoted_count(user)
+    u = float(voted_count) / float(voted_count + unvoted_count)
+    import random
+    return min(100, u*100 + random.randrange(10))

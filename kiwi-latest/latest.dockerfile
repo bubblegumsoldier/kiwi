@@ -14,6 +14,7 @@ COPY ./requirements.txt /var/www/
 
 WORKDIR var/www
 
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt 
 
 ENTRYPOINT [ "python", "kiwi/app.py" ]

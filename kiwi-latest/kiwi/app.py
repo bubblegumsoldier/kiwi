@@ -8,6 +8,7 @@ from kiwi.database.DataAccessor import DataAccessor
 from kiwi.config import (read_app_config, read_mysql_config,
                          read_rating_config, get_sql_statements)
 from kiwi.Types import Vote
+from kiwi.recommender.ActivationCalculator import ActivationCalculator
 
 app = Sanic('latest-recommender')
 rating_config = read_rating_config()
@@ -106,7 +107,8 @@ async def activation(request: Request):
     Returns the activation value for the given set of heuristics
     '''
     heuristics = request.json['heuristics']
-    return json({"activation": 100, 'received_heuristics': heuristics})
+    activation = ActivationCalculator(heuristics, app.accessor).get_activation()
+    return json({"activation": activation, 'received_heuristics': heuristics})
 
 
 @app.get('/predict')

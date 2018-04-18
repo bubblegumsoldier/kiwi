@@ -1,8 +1,7 @@
-from kiwi.Algorithm import Algorithm
 
 
 class Recommender:
-    def __init__(self, algorithm: Algorithm, data_accessor):
+    def __init__(self, algorithm, data_accessor):
         self._algo = algorithm
         self._accessor = data_accessor
 

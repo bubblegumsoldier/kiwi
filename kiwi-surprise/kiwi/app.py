@@ -7,18 +7,17 @@ from sanic import Sanic
 from sanic.request import Request
 from sanic.response import json
 from kiwi.database.DataAccessor import DataAccessor
-from kiwi.Algorithm import Algorithm
+from kiwi.Algorithm import AlgorithmWrapper
 from kiwi.Recommender import Recommender
-from kiwi.config import (create_algorithm, read_mysql_config,
-                         set_retraining_cycle, read_rating_config)
+import kiwi.config as config
 from kiwi.TransferTypes import create_vote
 
 
 app = Sanic(__name__)
 
-retrain_config = set_retraining_cycle()
-rating_scale = read_rating_config()
-
+retrain_config = config.set_retraining_cycle()
+rating_scale = config.read_rating_config()
+algorithm_module = config.get_algorithm_config()
 
 async def periodic_retrain(period):
     await sleep(period)
@@ -32,8 +31,8 @@ async def retrain(app):
     loop = app.loop
     async with app.pool.acquire() as conn:
         accessor = DataAccessor(conn=conn, rating_scale=rating_scale)
-        new_predictor = Algorithm(
-            loop, app.executor, create_algorithm())
+        new_predictor = AlgorithmWrapper(
+            loop, app.executor, algorithm_module.create_algorithm())
         await new_predictor.fit(await accessor.trainset())
         app.predictor = new_predictor
         getLogger('root').info('Retraining finished...')
@@ -42,9 +41,9 @@ async def retrain(app):
 @app.listener("before_server_start")
 async def setup(context, loop):
     context.executor = ThreadPoolExecutor()
-    context.predictor = Algorithm(loop, context.executor, create_algorithm())
+    context.predictor = AlgorithmWrapper(loop, context.executor, algorithm_module.create_algorithm())
     context.pool = await create_pool(
-        **read_mysql_config()._asdict(),
+        **config.read_mysql_config()._asdict(),
         autocommit=True,
         loop=loop,
         pool_recycle=600)

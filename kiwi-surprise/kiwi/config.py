@@ -1,26 +1,23 @@
-from os import environ
+from os import environ, path
 from collections import namedtuple
-import surprise
 from ast import literal_eval
+import importlib
+  
 
 MySQLConfig = namedtuple('MySQLConfig', 'host port user password db')
 
 
-def create_algorithm():
-    """
-    See: http://surprise.readthedocs.io/en/stable/prediction_algorithms.html
-    Just change the algorithm and the option set for a different prediction algorithm.
-    """
-    options = {
-        'name': 'cosine',
-        'user_based': True
-    }
-    algo = surprise.KNNWithMeans(
-        min_k=1,
-        k=40,
-        sim_options=options)
+def get_algorithm_config():
+    base_path = path.dirname(path.realpath(__file__))
+    rel_path = environ.get('ALGO_PATH')
+    print(base_path, rel_path)
+    spec = importlib.util.spec_from_file_location("algorithm", path.join(base_path, rel_path))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    print("{!r}".format(module))
+    return module
 
-    return algo
+get_algorithm_config()
 
 
 def read_rating_config():

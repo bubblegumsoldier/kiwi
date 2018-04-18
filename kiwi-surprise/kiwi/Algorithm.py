@@ -2,7 +2,7 @@ from itertools import chain
 from heapq import nlargest
 
 
-class Algorithm:
+class AlgorithmWrapper:
     def __init__(self, loop, executor, algo):
         self.knn = algo
         self._loop = loop

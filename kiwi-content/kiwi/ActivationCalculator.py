@@ -6,7 +6,7 @@ import math
 class ActivationCalculator:
     def __init__(self, heuristics, accessor):
         self.heuristics = heuristics
-        self.accessor = data_accessor
+        self.accessor = accessor
     
     def get_activation(self, user_taste_vector):
         #needed heuristics:

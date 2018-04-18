@@ -27,7 +27,7 @@ class DataAccessor:
         return await self._get_unvoted(uid, self._conn)
 
     async def register_user(self, user):
-        if not self._select_user(user, self._conn):
+        if not await self._select_user(user, self._conn):
             await self._insert_users([user], self._conn)
 
     async def batch_register_users(self, users):

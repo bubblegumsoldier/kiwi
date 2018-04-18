@@ -17,7 +17,7 @@ class DataAccessor:
         self.conn = conn
 
     async def register_user(self, user):
-        if not self._select_user(user, self.conn):
+        if not await self._select_user(user, self.conn):
             await self._insert_users([user], self.conn)
 
     async def batch_register_users(self, users):

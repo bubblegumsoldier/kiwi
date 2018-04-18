@@ -21,7 +21,7 @@ class ActivationCalculator:
 
         user = self.heuristics["user"]
         
-        voted_count, unvoted_count = self.accessor.get_voted_and_unvoted_count(user)
+        voted_count, unvoted_count = await self.accessor.get_voted_and_unvoted_count(user)
         u = float(voted_count) / float(voted_count + unvoted_count)
 
         v = numpy.std(utv) / numpy.mean(utv)

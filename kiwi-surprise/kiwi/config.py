@@ -8,8 +8,13 @@ MySQLConfig = namedtuple('MySQLConfig', 'host port user password db')
 
 
 def get_algorithm_config():
+    """
+    ALGO_PATH needs to be an environment variable that stores a relative
+    path, from the directory of this file to the file that contains the 
+    algorithm configuration.
+    """
     base_path = path.dirname(path.realpath(__file__))
-    rel_path = environ.get('ALGO_PATH')
+    rel_path = environ.get('ALGO_PATH', 'algorithms/knn_user.py')
     print(base_path, rel_path)
     spec = importlib.util.spec_from_file_location("algorithm", path.join(base_path, rel_path))
     module = importlib.util.module_from_spec(spec)

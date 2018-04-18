@@ -12,7 +12,8 @@ class AsyncDataAccessor:
         self.stmts = statements
 
     async def register_user(self, user):
-        return await self._insert_users([user], self.conn)
+        if not self._select_user(user, self.conn):
+            return await self._insert_users([user], self.conn)
 
     async def batch_register_users(self, users):
         return await self._insert_users(users, self.conn)

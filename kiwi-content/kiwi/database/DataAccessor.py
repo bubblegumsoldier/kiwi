@@ -28,7 +28,8 @@ class DataAccessor:
             columns=['UserId', 'ItemId', 'Like'])
 
     async def register_user(self, user):
-        await self._insert_users([user], self._conn)
+        if not self._select_user(user, self._conn):
+            await self._insert_users([user], self._conn)
 
     async def batch_register_users(self, users):
         return await self._insert_users(users, self._conn)
@@ -96,3 +97,10 @@ class DataAccessor:
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT post_id, tags from products')
             return list(await cursor.fetchall())
+
+    async def _select_user(self, user, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute(
+                'SELECT * FROM users WHERE users.uname = %s',
+                user)
+            return await cursor.fetchone()

@@ -27,7 +27,8 @@ class DataAccessor:
         return await self._get_unvoted(uid, self._conn)
 
     async def register_user(self, user):
-        await self._insert_users([user], self._conn)
+        if not self._select_user(user, self._conn):
+            await self._insert_users([user], self._conn)
 
     async def batch_register_users(self, users):
         return await self._insert_users(users, self._conn)
@@ -94,3 +95,10 @@ class DataAccessor:
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT user, product, CAST(vote as DECIMAL(3,2)) vote from votes')
             return await cursor.fetchall()
+
+    async def _select_user(self, user, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute(
+                'SELECT * FROM users WHERE users.uname = %s',
+                user)
+            return await cursor.fetchone()

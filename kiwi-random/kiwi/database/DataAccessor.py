@@ -17,7 +17,8 @@ class DataAccessor:
         self.conn = conn
 
     async def register_user(self, user):
-        await self._insert_users([user], self.conn)
+        if not self._select_user(user, self.conn):
+            await self._insert_users([user], self.conn)
 
     async def batch_register_users(self, users):
         return await self._insert_users(users, self.conn)
@@ -75,12 +76,6 @@ class DataAccessor:
                 'INSERT IGNORE INTO products VALUES(%s)', posts)
             return cursor.rowcount
 
-    async def _is_user_known(self, username, conn):
-        async with conn.cursor() as cursor:
-            await cursor.execute('SELECT * FROM users WHERE users.uname = %s',
-                                 username)
-            return cursor.rowcount > 0
-
     async def _vote_count(self, username, conn):
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT * FROM votes v WHERE v.user = %s',
@@ -99,3 +94,10 @@ class DataAccessor:
             dist = await cursor.fetchone()
             return (float(dist[0]) if dist else 0,
                     float(dist[1]) if dist else 0)
+
+    async def _select_user(self, user, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute(
+                'SELECT * FROM users WHERE users.uname = %s',
+                user)
+            return await cursor.fetchone()

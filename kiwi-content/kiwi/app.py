@@ -12,6 +12,7 @@ from kiwi.config import read_mysql_config, read_config
 from kiwi.TransferTypes import create_vote
 from kiwi.AsyncContentWrapper import AsyncContentWrapper
 from kiwi.ContentEngine import ContentEngine
+from kiwi.ActivationCalculator import ActivationCalculator
 import time
 
 app = Sanic(__name__)
@@ -140,7 +141,14 @@ async def activation(request: Request):
     Returns the activation value for the given set of heuristics
     '''
     heuristics = request.json['heuristics']
-    return json({"activation": 100, 'received_heuristics': heuristics})
+    try:
+        utv = app.predictor.get_user_taste_vector(heuristics["user"])
+    except Exception:
+        utv = None
+    
+    a = ActivationCalculator(heuristics).get_activation(utv)
+
+    return json({"activation": a, 'received_heuristics': heuristics})
 
 
 @app.post('/training')

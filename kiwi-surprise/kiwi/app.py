@@ -4,7 +4,7 @@ from asyncio import sleep, ensure_future
 from functools import partial
 from logging import getLogger
 from sanic import Sanic
-from sanic.request.Request import Request
+from sanic.request import Request
 from sanic.response import json
 from kiwi.database.DataAccessor import DataAccessor
 from kiwi.Algorithm import AlgorithmWrapper

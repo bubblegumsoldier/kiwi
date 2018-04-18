@@ -130,7 +130,7 @@ services:
       - MSQL_PORT=3306
       - MSQL_DATABASE=collab_recommender
       - RETRAIN_ON_REQUEST=['/feedback']
-      - ALGO_PATH=algorithms/knn_user
+      - ALGO_PATH=algorithms/knn_user.py
 
   
 networks:

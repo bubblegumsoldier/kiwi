@@ -60,10 +60,14 @@ class AsyncContentWrapper:
         :item: Item id of a item that should be estimated.
         :returns: Numpy array of [similarity, itemid]. (shape: n, 2)
         """
-        return await self._loop.run_in_executor(
-            self._executor,
-            self._content_engine.predict_similarities,
-            user, item)
+        try:
+            return await self._loop.run_in_executor(
+                self._executor,
+                self._content_engine.predict_similarities,
+                user, item)
+        except ValueError:
+            raise Exception('Cannot calculate recommendations, algorithm has not been initialized correctly. Maybe add content?')
+
 
     async def update_ratings(self, vote):
         self._content_engine.update_ratings(vote)

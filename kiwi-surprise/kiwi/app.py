@@ -143,7 +143,7 @@ async def activation(request: Request):
     Returns the activation value for the given set of heuristics
     '''
     heuristics = request.json['heuristics']
-    a = algorithm_module.get_activation(heuristics, app.accessor)
+    a = await algorithm_module.get_activation(heuristics, app.accessor)
 
     return json({"activation": a, 'received_heuristics': heuristics})
 

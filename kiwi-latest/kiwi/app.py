@@ -107,7 +107,8 @@ async def activation(request: Request):
     Returns the activation value for the given set of heuristics
     '''
     heuristics = request.json['heuristics']
-    activation = ActivationCalculator(heuristics, app.accessor).get_activation()
+    ac = ActivationCalculator(heuristics, app.accessor)
+    activation = await ac.get_activation()
     return json({"activation": activation, 'received_heuristics': heuristics})
 
 

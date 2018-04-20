@@ -8,7 +8,7 @@ class ActivationCalculator:
         self.heuristics = heuristics
         self.accessor = accessor
     
-    def get_activation(self, user_taste_vector):
+    async def get_activation(self, user_taste_vector):
         #needed heuristics:
         # user-votes in %
         # for this we need "user"

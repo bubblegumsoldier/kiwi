@@ -141,7 +141,8 @@ async def activation(request: Request):
     except Exception:
         utv = None
     
-    a = ActivationCalculator(heuristics, app.accessor).get_activation(utv)
+    ac = ActivationCalculator(heuristics, app.accessor)
+    a = await ac.get_activation(utv)
 
     return json({"activation": a, 'received_heuristics': heuristics})
 

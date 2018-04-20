@@ -18,7 +18,7 @@ class ActivationCalculator:
         gesamt = (((1-x)*v)+(((x**2)*(v2**2))**5))*50.0
         return gesamt
 
-    def get_activation(self):
+    async def get_activation(self):
         #needed heuristics:
         # user-votes in %
         # for this we need "user"

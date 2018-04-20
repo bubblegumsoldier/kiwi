@@ -26,7 +26,7 @@ class ActivationCalculator:
 
         v = numpy.std(utv) / numpy.mean(utv)
         print("Deviation: {}".format(v))
-        f = math.exp((-(100.0/9.0)*(u**2))+((100.0/9.0)*u) * v)
+        f = math.exp((-(100.0/9.0)*(u**2))+((100.0/9.0)*u)) * 6 * v
         a = min(MAX, f)
 
         return a

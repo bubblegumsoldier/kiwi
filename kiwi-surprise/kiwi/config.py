@@ -27,8 +27,8 @@ get_algorithm_config()
 
 def read_rating_config():
     return (
-        int(environ.get('MIN_RATING', 0)),
-        int(environ.get('MAX_RATING', 1)),
+        float(environ.get('MIN_RATING', 0)),
+        float(environ.get('MAX_RATING', 1)),
     )
 
 

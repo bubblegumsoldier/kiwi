@@ -18,8 +18,8 @@ def read_mysql_config():
 
 def read_rating_config():
     return {
-        "min_rating": environ.get('MIN_RATING', 0),
-        "max_rating": environ.get('MAX_RATING', 1)
+        "min_rating": float(environ.get('MIN_RATING', 0)),
+        "max_rating": float(environ.get('MAX_RATING', 1))
     }
 
 

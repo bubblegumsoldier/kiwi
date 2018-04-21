@@ -12,7 +12,7 @@ class ActivationCalculator:
         #needed heuristics:
         # user-votes in %
         # for this we need "user"
-        if not user_taste_vector:
+        if user_taste_vector is None:
             return 0
         
         utv = user_taste_vector

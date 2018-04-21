@@ -137,7 +137,7 @@ async def activation(request: Request):
     '''
     heuristics = request.json['heuristics']
     try:
-        utv = app.predictor.get_user_taste_vector(heuristics["user"])
+        utv = await app.predictor.get_user_taste_vector(heuristics["user"])
     except Exception:
         utv = None
     

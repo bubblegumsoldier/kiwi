@@ -20,7 +20,7 @@ def create_algorithm():
 
 
 async def get_activation(heuristics, accessor):
-    voted_count, unvoted_count = await accessor.get_voted_and_unvoted_count(user)
+    voted_count, unvoted_count = await accessor.get_voted_and_unvoted_count(heuristics["user"])
     u = float(voted_count) / float(voted_count + unvoted_count)
     import random
     return min(100, u*100 + random.randrange(10))

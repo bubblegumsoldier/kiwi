@@ -33,6 +33,10 @@ class AsyncDataAccessor:
         voted = await self._count_votes(user, self.conn)
         return (voted, total)
 
+    async def get_voted_and_unvoted_count(self, user):
+        total, voted = await self.get_voted_and_total_count(user)
+        return (voted, (total-voted))
+
     async def _select_user(self, user, conn):
         async with conn.cursor() as cursor:
             await cursor.execute(self.stmts['select_user'], user)

@@ -34,7 +34,7 @@ class AsyncDataAccessor:
         return (voted, total)
 
     async def get_voted_and_unvoted_count(self, user):
-        total, voted = await self.get_voted_and_total_count(user)
+        voted, total = await self.get_voted_and_total_count(user)
         return (voted, (total-voted))
 
     async def _select_user(self, user, conn):

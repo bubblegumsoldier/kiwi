@@ -21,7 +21,6 @@ class KiwiRequestSender:
             content_request = {
                 "posts": products
             }
-            print(self._endpoints["content"])
             r = requests.post(self._endpoints["content"], json = content_request)
             if r.status_code != requests.codes.ok:
                 raise ServerError("Server returned wrong status code...", r.status_code)
@@ -51,9 +50,7 @@ class KiwiRequestSender:
 
         def get_prediction_for_user_and_product(self, user, product):
             url = "{}?user={}&item={}".format(self._endpoints["prediction"], user, product)
-            print(url)
             r = requests.get(url)
-            print(r.json())
             if r.status_code != requests.codes.ok:
                 raise ServerError("Server returned wrong status code...", r.status_code)
             return r.json()[1]["prediction"]

@@ -51,7 +51,7 @@ def set_retraining_cycle():
     Setting ON_REQUEST retrains it after a request to the given endpoint(s)
     """
     periodic = environ.get('RETRAINING_TIME')
-    on_request = literal_eval(environ.get('RETRAIN_ON_REQUEST', 'None'))
+    on_request = literal_eval(environ.get('RETRAIN_ON_REQUEST', '[]'))
     return {
         'on_request': on_request,
         'periodic': int(periodic) if periodic else periodic

@@ -64,7 +64,7 @@ async def generate_accessor(request):
 async def teardown_accessor(request: Request, response):    
     if request.path in retrain_config.get('on_request', []):
         ensure_future(retrain(app))
-    if request.path == "/training" and request.retrain:
+    if request.path == "/training" and request.json.get('retrain', False):
         ensure_future(retrain(app))
     app.conn.close()
     await app.conn.ensure_closed()
@@ -127,7 +127,6 @@ async def predict(request: Request):
 @app.post('/training')
 async def training(request: Request):
     votes = request.json['votes']
-    request.retrain = request.json.get('retrain', False)
     inserted_user = await app.accessor.batch_register_users(
         {vote['user'] for vote in votes})
     inserted = await app.accessor.insert_votes(
@@ -150,5 +149,6 @@ async def activation(request: Request):
 if __name__ == '__main__':
     app.run_retrain = True
     if retrain_config['periodic']:
+        print("Periodic training enabled")
         app.add_task(partial(periodic_retrain, retrain_config['periodic']))
     app.run(host='0.0.0.0', port=8000)

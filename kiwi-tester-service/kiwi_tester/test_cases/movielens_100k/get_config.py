@@ -10,7 +10,7 @@ def get_config():
         product_converter = DefaultProductConverter(),
         service_domain = "http://localhost:8000/",
         evaluator = RMSEEvaluator(EasyMatrixNormalizer(4)),
-        skip_training = True,
-        skip_products = True
+        skip_training = False,
+        skip_products = False
     )
     return config

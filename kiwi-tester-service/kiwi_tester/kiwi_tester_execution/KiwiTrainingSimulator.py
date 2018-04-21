@@ -38,7 +38,6 @@ class KiwiTrainingSimulator:
             KiwiRequestSender(self._config).send_training(c, retrain)
 
             sys.stdout.flush()
-        time.sleep(len(chunks))
         sys.stdout.write('\r')
 
         

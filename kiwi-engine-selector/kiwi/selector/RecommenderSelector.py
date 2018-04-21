@@ -7,6 +7,7 @@ from logging import getLogger
 class RecommenderSelector:
     def __init__(self, recommenders):
         self.recommenders = recommenders
+        self.decisions = {}
 
     @classmethod
     def from_config(cls, config):
@@ -56,7 +57,15 @@ class RecommenderSelector:
             highest_recommender, highest_activation))
         print("Highest recommender is {} with an actication value of {}".format(
             highest_recommender, highest_activation))
+        await self._log_selection(highest_recommender)
+        print(self.decisions)
         return self.recommenders[highest_recommender], highest_recommender
+
+    async def _log_selection(self, r):
+        if r in self.decisions:
+            self.decisions[r] += 1
+        else:
+            self.decisions[r] = 1
 
     async def distribute_posts(self, session, posts):
         return await distribution.content(session, self.recommenders, posts)

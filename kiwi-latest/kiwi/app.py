@@ -32,16 +32,16 @@ async def teardown(sanic, loop):
 
 @app.middleware("request")
 async def generate_accessor(request):
-    app.conn = await app.pool.acquire()
-    app.accessor = DataAccessor(app.conn, SQL_STMTS)
-    app.recommender = Recommender(app.accessor, **rating_config)
+    request['conn'] = await app.pool.acquire()
+    request['accessor'] = DataAccessor(request['conn'], SQL_STMTS)
+    request['recommender'] = Recommender(request['accessor'], **rating_config)
 
 
 @app.middleware("response")
 async def teardown_accessor(request, response):
-    app.conn.close()
-    await app.conn.ensure_closed()
-    await app.pool.release(app.conn)
+    request['conn'].close()
+    await request['conn'].ensure_closed()
+    await app.pool.release(request['conn'])
 
 
 @app.get('/recommendation')
@@ -52,7 +52,7 @@ async def recommend(request):
     Returns json object {posts, unvoted, user}
     '''
     args = request.raw_args
-    recommendations = await app.recommender.recommend_for(args['user'],
+    recommendations = await request['recommender'].recommend_for(args['user'],
                                                           int(args.get('count', 10)))
     return json(recommendations)
 
@@ -65,7 +65,7 @@ async def feedback(request: Request):
     Returns {} with Error Code 500 (Internal Server Error) if unsuccessful
     '''
 
-    vote_info = await app.recommender.store_feedback(
+    vote_info = await request['recommender'].store_feedback(
         Vote(**request.json['vote']))
     if vote_info:
         return json(vote_info)
@@ -80,7 +80,7 @@ async def add_posts(request: Request):
     If single posts cannot be inserted, due to duplication returns the
     actually inserted count.
     '''
-    inserted_info = await app.recommender.add_content(request.json['posts'])
+    inserted_info = await request['recommender'].add_content(request.json['posts'])
     return json(inserted_info)
 
 
@@ -91,10 +91,9 @@ async def add_votes(request: Request):
     vote -> {user post vote}
     '''
     votes = request.json['votes']
-    inserted_user = await app.accessor.batch_register_users(
-        {vote['user'] for vote in votes})
-    inserted = await app.accessor.insert_votes(
-        (vote['user'], vote['post'], vote['vote']) for vote in votes)
+    inserted_user = await request['accessor'].batch_register_users(
+        {vote[0] for vote in votes})
+    inserted = await request['accessor'].insert_votes(votes)
     return json({
         'inserted_users': inserted_user,
         'inserted_votes': inserted
@@ -107,7 +106,7 @@ async def activation(request: Request):
     Returns the activation value for the given set of heuristics
     '''
     heuristics = request.json['heuristics']
-    ac = ActivationCalculator(heuristics, app.accessor)
+    ac = ActivationCalculator(heuristics, request['accessor'])
     activation = await ac.get_activation()
     return json({"activation": activation, 'received_heuristics': heuristics})
 
@@ -116,7 +115,7 @@ async def activation(request: Request):
 async def predict(request: Request):
     user = request.raw_args['user']
     item = request.raw_args['item']
-    prediction = await app.recommender.predict_for(user, item)
+    prediction = await request['recommender'].predict_for(user, item)
     return json(prediction)
 
 

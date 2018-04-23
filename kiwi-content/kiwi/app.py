@@ -56,15 +56,15 @@ async def setup(context, loop):
 
 @app.middleware("request")
 async def generate_accessor(request):
-    app.conn = await app.pool.acquire()
-    app.accessor = create_accessor(app.conn)
+    request['conn'] = await app.pool.acquire()
+    request['accessor'] = create_accessor(request['conn'])
 
 
 @app.middleware("response")
 async def teardown_accessor(request, response):
-    app.conn.close()
-    await app.conn.ensure_closed()
-    await app.pool.release(app.conn)
+    request['conn'].close()
+    await request['conn'].ensure_closed()
+    await app.pool.release(request['conn'])
 
 
 @app.listener("before_server_stop")
@@ -84,7 +84,7 @@ async def recommend(request):
     '''
     args = request.raw_args
     recommender = Recommender(
-        app.predictor, app.accessor, read_config())
+        app.predictor, request['accessor'], read_config())
     posts = await recommender.recommend_for(args['user'],
                                             int(args.get('count', 10)))
     return json(posts)
@@ -97,7 +97,7 @@ async def feedback(request: Request):
     vote = request.json['vote']
     config = read_config()
     recommender = Recommender(
-        app.predictor, app.accessor, config)
+        app.predictor, request['accessor'], config)
     try:
         vote_result = await recommender.store_feedback(
             create_vote(vote, config['positive_cutoff']))
@@ -114,7 +114,7 @@ async def content(request: Request):
         '''
     filtered_posts = [(post['id'], post['tags'])
                       for post in request.json['posts']]
-    inserted = await app.accessor.add_content(filtered_posts)
+    inserted = await request['accessor'].add_content(filtered_posts)
     if inserted > 0:
         ensure_future(retrain(app, app.loop))
     return json({"inserted_count": inserted})
@@ -123,7 +123,7 @@ async def content(request: Request):
 @app.get('/predict')
 async def predict(request: Request):
     recommender = Recommender(
-        app.predictor, app.accessor, read_config())
+        app.predictor, request['accessor'], read_config())
     user = request.raw_args['user']
     item = request.raw_args['item']
     result = await recommender.predict(user, item)
@@ -141,7 +141,7 @@ async def activation(request: Request):
     except Exception:
         utv = None
     
-    ac = ActivationCalculator(heuristics, app.accessor)
+    ac = ActivationCalculator(heuristics, request['accessor'])
     a = await ac.get_activation(utv)
 
     return json({"activation": a, 'received_heuristics': heuristics})
@@ -151,10 +151,9 @@ async def activation(request: Request):
 async def training(request: Request):
     votes = request.json['votes']
     do_retrain = request.json.get('retrain', False)
-    inserted_user = await app.accessor.batch_register_users(
-        {vote['user'] for vote in votes})
-    inserted = await app.accessor.insert_votes(
-        (vote['user'], vote['post'], vote['vote']) for vote in votes)
+    inserted_user = await request['accessor'].batch_register_users(
+        {vote[0] for vote in votes})
+    inserted = await request['accessor'].insert_votes(votes)
     if do_retrain:
         ensure_future(retrain(app, app.loop))
     return json({

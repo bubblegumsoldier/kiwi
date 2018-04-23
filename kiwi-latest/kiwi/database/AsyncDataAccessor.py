@@ -65,7 +65,6 @@ class AsyncDataAccessor:
 
     async def _insert_votes(self, votes, conn):
         async with conn.cursor() as cursor:
-            print(votes)
             await cursor.executemany(self.stmts['insert_vote'], votes)
             return cursor.rowcount
 

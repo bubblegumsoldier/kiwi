@@ -19,6 +19,7 @@ retrain_config = config.set_retraining_cycle()
 rating_scale = config.read_rating_config()
 algorithm_module = config.get_algorithm_config()
 
+
 async def periodic_retrain(period):
     await sleep(period)
     while app.run_retrain:
@@ -41,7 +42,8 @@ async def retrain(app):
 @app.listener("before_server_start")
 async def setup(context, loop):
     context.executor = ThreadPoolExecutor()
-    context.predictor = AlgorithmWrapper(loop, context.executor, algorithm_module.create_algorithm())
+    context.predictor = AlgorithmWrapper(
+        loop, context.executor, algorithm_module.create_algorithm())
     context.pool = await create_pool(
         **config.read_mysql_config()._asdict(),
         autocommit=True,
@@ -56,19 +58,20 @@ async def setup(context, loop):
 
 @app.middleware("request")
 async def generate_accessor(request):
-    app.conn = await app.pool.acquire()
-    app.accessor = DataAccessor(conn=app.conn, rating_scale=rating_scale)
+    request['conn'] = await app.pool.acquire()
+    request['accessor'] = DataAccessor(
+        conn=request['conn'], rating_scale=rating_scale)
 
 
 @app.middleware("response")
-async def teardown_accessor(request: Request, response):    
+async def teardown_accessor(request: Request, response):
     if request.path in retrain_config.get('on_request', []):
         ensure_future(retrain(app))
     if request.path == "/training" and request.json.get('retrain', False):
         ensure_future(retrain(app))
-    app.conn.close()
-    await app.conn.ensure_closed()
-    await app.pool.release(app.conn)
+    request['conn'].close()
+    await request['conn'].ensure_closed()
+    await app.pool.release(request['conn'])
 
 
 @app.listener("before_server_stop")
@@ -87,7 +90,7 @@ async def recommend(request):
     Returns json object {posts, unvoted, user}    
     '''
     args = request.raw_args
-    recommender = Recommender(app.predictor, app.accessor)
+    recommender = Recommender(app.predictor, request['accessor'])
     posts = await recommender.recommend_for(args['user'],
                                             int(args.get('count', 10)))
     return json(posts)
@@ -98,7 +101,7 @@ async def feedback(request: Request):
     '''Stores the feedback for a recommended post. Will return a information object on success and an empty object on failure. 
     Think about returning 409-Conflict on failure instead, because the empty object can cause an issue in engine service.'''
     vote = request.json['vote']
-    recommender = Recommender(app.predictor, app.accessor)
+    recommender = Recommender(app.predictor, request['accessor'])
     vote_result = await recommender.store_feedback(create_vote(vote))
     return json(vote_result)
 
@@ -110,7 +113,7 @@ async def content(request: Request):
     { "posts": [{"id": string}]}.
     Returns the amout of inserted items and 200-OK.
         '''
-    recommender = Recommender(app.predictor, app.accessor)
+    recommender = Recommender(app.predictor, request['accessor'])
     inserted_items = await recommender.add_content(request.json['posts'])
     return json(inserted_items)
 
@@ -119,7 +122,7 @@ async def content(request: Request):
 async def predict(request: Request):
     user = request.raw_args['user']
     item = request.raw_args['item']
-    recommender = Recommender(app.predictor, app.accessor)
+    recommender = Recommender(app.predictor, request['accessor'])
     predictions = await recommender.predict_for(user, item)
     return json(predictions)
 
@@ -127,10 +130,9 @@ async def predict(request: Request):
 @app.post('/training')
 async def training(request: Request):
     votes = request.json['votes']
-    inserted_user = await app.accessor.batch_register_users(
-        {vote['user'] for vote in votes})
-    inserted = await app.accessor.insert_votes(
-        (vote['user'], vote['post'], vote['vote']) for vote in votes)
+    inserted_user = await request['accessor'].batch_register_users(
+        {vote[0] for vote in votes})
+    inserted = await request['accessor'].insert_votes(votes)
     return json({
         'inserted_users': inserted_user,
         'inserted_votes': inserted})
@@ -142,7 +144,7 @@ async def activation(request: Request):
     Returns the activation value for the given set of heuristics
     '''
     heuristics = request.json['heuristics']
-    a = await algorithm_module.get_activation(heuristics, app.accessor)
+    a = await algorithm_module.get_activation(heuristics, request['accessor'])
 
     return json({"activation": a, 'received_heuristics': heuristics})
 

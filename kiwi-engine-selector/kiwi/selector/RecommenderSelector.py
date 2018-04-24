@@ -58,7 +58,6 @@ class RecommenderSelector:
         print("Highest recommender is {} with an actication value of {}".format(
             highest_recommender, highest_activation))
         await self._log_selection(highest_recommender)
-        print(self.decisions)
         return self.recommenders[highest_recommender], highest_recommender
 
     async def _log_selection(self, r):

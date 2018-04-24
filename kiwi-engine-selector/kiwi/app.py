@@ -20,7 +20,6 @@ async def images(request: Request):
     recommendation_request = RecommendationRequest(**request.raw_args)
     response = await selector.get_recommendations(app.client_session,
                                                   recommendation_request)
-    print(response.json)
     return json(response.json, status=response.status)
 
 

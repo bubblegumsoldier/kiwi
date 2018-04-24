@@ -10,7 +10,7 @@ class KiwiContentInitializer:
             print("-> Skipping products")
             return
         print("Initializing product database on server...")
-        chunk_size = 100
+        chunk_size = 1000
         chunks = list(self._chunks(products, chunk_size))
         print("(Using {} chunks of size ~{})".format(len(chunks), chunk_size))
 

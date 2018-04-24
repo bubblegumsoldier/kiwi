@@ -1,10 +1,11 @@
 requests
+requests-futures
 numpy
-scipy
-matplotlib
-ipython
-jupyter
+# scipy
+# matplotlib
+# ipython
+# jupyter
 pandas
-sympy
-nose
-scikit-learn
+# sympy
+# nose
+# scikit-learn

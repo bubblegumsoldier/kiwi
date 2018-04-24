@@ -63,7 +63,7 @@ async def predict(request: Request):
     item = request.raw_args['item']
     prediction = await selector.predict_for(app.client_session, user, item)
     print(prediction)
-    return json(prediction)
+    return json(prediction.json, status = prediction.status)
 
 
 @app.post('/training')

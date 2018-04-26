@@ -9,7 +9,7 @@ def get_config():
         data_converter = RandomPercentageSplitter(0.8),
         product_converter = DefaultProductConverter(),
         service_domain = "http://localhost:8000/",
-        evaluator = RMSEEvaluator(EasyMatrixNormalizer(4)),
+        evaluator = RMSEEvaluator(),
         skip_training = False,
         skip_products = False
     )

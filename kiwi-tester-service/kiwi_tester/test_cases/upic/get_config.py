@@ -9,6 +9,6 @@ def get_config():
         data_converter = ListUserPercentageSplitter(0.8),
         product_converter = DefaultProductConverter(),
         service_domain = "http://localhost:8000/",
-        evaluator = RMSEEvaluator(EasyMatrixNormalizer(1))
+        evaluator = RMSEEvaluator()
     )
     return config

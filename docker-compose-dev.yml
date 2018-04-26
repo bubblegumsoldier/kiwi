@@ -158,7 +158,7 @@ services:
       - MAX_RATING=5
       - MSQL_USER=collab
       - MSQL_PWD=12345
-      - MSQL_HOST=mysqldb-collab
+      - MSQL_HOST=mysqldb-svd
       - MSQL_PORT=3306
       - MSQL_DATABASE=collab_recommender
       - RETRAIN_ON_REQUEST=['/feedback']

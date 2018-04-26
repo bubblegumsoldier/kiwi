@@ -127,7 +127,7 @@ services:
       context: ./kiwi-surprise
       dockerfile: knn.dockerfile
     ports:
-      - "8001:8000"
+      - "8000"
     networks:
       - knn-network
       - service-network
@@ -148,7 +148,7 @@ services:
       context: ./kiwi-surprise
       dockerfile: svd.dockerfile
     ports:
-      - "8001:8000"
+      - "8000"
     networks:
       - svd-network
       - service-network

@@ -37,6 +37,15 @@ services:
     ports:
       - "3306"
 
+  mysqldb-svd:
+    build:
+      context: ./kiwi-surprise
+      dockerfile: mysql.dockerfile
+    networks:
+      - svd-network
+    ports:
+      - "3306"
+
   engine:
     build:
       context: ./kiwi-engine-selector
@@ -51,7 +60,8 @@ services:
         'content=http://content-rec:8000',
         'latest=http://latest:8000',
         'random=http://random:8000',
-        'knn=http://knn:8000'
+        'knn=http://knn:8000',
+        'svd=http://svd:8000'
         ]
     
   content-rec:
@@ -115,7 +125,7 @@ services:
   knn:
     build: 
       context: ./kiwi-surprise
-      dockerfile: surprise.dockerfile
+      dockerfile: knn.dockerfile
     ports:
       - "8001:8000"
     networks:
@@ -133,6 +143,27 @@ services:
       - RETRAIN_ON_REQUEST=['/feedback']
       - ALGO_PATH=algorithms/knn_user.py
 
+  svd:
+    build: 
+      context: ./kiwi-surprise
+      dockerfile: svd.dockerfile
+    ports:
+      - "8001:8000"
+    networks:
+      - svd-network
+      - service-network
+    restart: always    
+    environment:
+      - MIN_RATING=1
+      - MAX_RATING=5
+      - MSQL_USER=collab
+      - MSQL_PWD=12345
+      - MSQL_HOST=mysqldb-collab
+      - MSQL_PORT=3306
+      - MSQL_DATABASE=collab_recommender
+      - RETRAIN_ON_REQUEST=['/feedback']
+      - ALGO_PATH=algorithms/svd.py
+
   
 networks:
   random-network:
@@ -144,4 +175,6 @@ networks:
   content-rec-network:
     driver: bridge
   knn-network:
+    driver: bridge
+  svd-network:
     driver: bridge

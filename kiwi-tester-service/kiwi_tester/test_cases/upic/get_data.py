@@ -8,6 +8,6 @@ def get_data():
     frame = pd.read_csv(data_path, sep=';', names=['UserId', 'ItemId', 'Vote'])
     matrix = []
     for i, row in frame.iterrows():
-        matrix.append(tuple(row.tolist()))
+        matrix.append(tuple(row.tolist()[:2]))
     print("Successfully loaded {} ratings".format(len(matrix)))
     return matrix

@@ -5,7 +5,7 @@ def get_products():
     dir_path = os.path.dirname(os.path.realpath(__file__))
     print("Loading products...")
     data_path = os.path.join(dir_path, "data", "upic_posts.csv")
-    frame = pd.read_csv(data_path, sep=',', names=['id', 'title', 'tags_raw'])
+    frame = pd.read_csv(data_path, sep=',', names=['id', 'tags_raw'])
     matrix = []
     for i, row in frame.iterrows():
         matrix.append(

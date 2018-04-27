@@ -1,4 +1,5 @@
 import surprise
+from random import randrange
 
 
 def create_algorithm():
@@ -7,7 +8,7 @@ def create_algorithm():
     Just change the algorithm and the option set for a different prediction algorithm.
     """
     options = {
-        'name': 'cosine',
+        'name': 'msd',
         'user_based': True
     }
     algo = surprise.KNNWithMeans(
@@ -18,9 +19,7 @@ def create_algorithm():
     return algo
 
 
-
 async def get_activation(heuristics, accessor):
     voted_count, unvoted_count = await accessor.get_voted_and_unvoted_count(heuristics["user"])
     u = float(voted_count) / float(voted_count + unvoted_count)
-    import random
-    return min(100, u*100 + random.randrange(10))
+    return min(100, u * 100 + randrange(10))

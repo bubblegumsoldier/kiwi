@@ -10,15 +10,6 @@ services:
     ports:
       - "3306"
 
-  mysqldb-latest:
-    build:
-      context: ./kiwi-latest
-      dockerfile: mysql.dockerfile
-    networks:
-      - latest-network
-    ports:
-      - "3306"
-
   mysqldb:
     build:
       context: ./kiwi-random
@@ -58,7 +49,6 @@ services:
     environment:
       - RECOMMENDERS=[
         'content=http://content-rec:8000',
-        'latest=http://latest:8000',
         'random=http://random:8000',
         'knn=http://knn:8000',
         'svd=http://svd:8000'
@@ -103,25 +93,6 @@ services:
       - MSQL_PORT=3306
       - MSQL_DATABASE=random_recommender
 
-  latest:
-    build:
-      context: ./kiwi-latest
-      dockerfile: latest.dockerfile
-    ports:
-      - "8000"
-    networks:
-      - latest-network
-      - service-network
-    restart: always
-    environment:
-      - MIN_RATING=1
-      - MAX_RATING=5
-      - MSQL_USER=latest
-      - MSQL_PWD=12345
-      - MSQL_HOST=mysqldb-latest
-      - MSQL_PORT=3306
-      - MSQL_DATABASE=latest_recommender
-
   knn:
     build: 
       context: ./kiwi-surprise
@@ -141,7 +112,7 @@ services:
       - MSQL_PORT=3306
       - MSQL_DATABASE=collab_recommender
       - RETRAIN_ON_REQUEST=['/feedback']
-      - ALGO_PATH=algorithms/knn_user.py
+      - ALGO_PATH=algorithms/knn_item_msd_zscore.py
 
   svd:
     build: 
@@ -167,8 +138,6 @@ services:
   
 networks:
   random-network:
-    driver: bridge
-  latest-network:
     driver: bridge
   service-network:
     driver: bridge

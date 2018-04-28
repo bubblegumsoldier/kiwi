@@ -6,6 +6,8 @@ from kiwi_tester.kiwi_tester_execution.KiwiContentInitializer import KiwiContent
 from kiwi_tester.kiwi_tester_execution.KiwiTrainingSimulator import KiwiTrainingSimulator
 from kiwi_tester.kiwi_tester_execution.KiwiTestingSimulator import KiwiTestingSimulator
 from kiwi_tester.kiwi_tester_execution.KiwiEvaluator import KiwiEvaluator
+from kiwi_tester_statistics.StatisticContainer import StatisticContainer
+from kiwi_tester_statistics.StatisticSaver import StatisticSaver
 
 class KiwiTester:
     
@@ -15,13 +17,25 @@ class KiwiTester:
         self.config = config
     
     def start_full_procedure(self):
+        self.start_statistic_logging()
         self.convert_data_and_initialize_database()
         self.do_training_and_testing()
         self.do_evaluation()
+        self.save_statistics()
         print("SCORE: {}".format(self.evaluation))
 
+    def start_statistic_logging():
+        if self.config.stats_output:
+            self.statistic_container = StatisticContainer(True)
+
+    def save_statistics():
+        if not self.config.stats_output:
+            return
+        self.statistic_container.log_execution_end()
+        StatisticSaver(self.config).save_statistic_container(self.statistic_container)
+
     def do_evaluation(self):
-        self.kiwi_evaluator = KiwiEvaluator(self.config)
+        self.kiwi_evaluator = KiwiEvaluator(self.config, self.statistic_container)
         self.evaluation = self.kiwi_evaluator.get_evaluation()
 
     def do_training_and_testing(self):
@@ -45,7 +59,7 @@ class KiwiTester:
         self.products = [self.config.product_converter.convert(product) for product in self.raw_products]
     
     def do_testing(self):
-        self.testing_simulator = KiwiTestingSimulator(self.config)
+        self.testing_simulator = KiwiTestingSimulator(self.config, self.statistic_container)
         self.testing_simulator.start_testing()
 
     def convert_data_and_initialize_database(self):

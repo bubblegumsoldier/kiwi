@@ -3,10 +3,12 @@ from kiwi_tester.kiwi_tester_database_access.DatabaseAccessor import DatabaseAcc
 
 import time
 import sys
+import datetime
 
 class KiwiTestingSimulator:
-    def __init__(self, config):
+    def __init__(self, config, statistic_container):
         self._config = config
+        self.statistic_container = statistic_container
     
     def start_testing(self):
         if self._config.skip_testing:
@@ -26,8 +28,22 @@ class KiwiTestingSimulator:
             c_testing = dba.get_next_testing()
             sys.stdout.write('\r')
             
+            start_datetime = datetime.datetime.now()
             prediction = rs.get_prediction_for_user_and_product(c_testing[0], c_testing[1])
             dba.set_current_testing_prediction(prediction)
+            end_datetime = datetime.datetime.now()
+
+            time_delta = end_datetime - start_datetime
+            ms = time_delta.microseconds
+            
+            self.statistic_container.add_testing_result(
+                c_testing[0], #user
+                c_testing[1], #item
+                c_testing[2], #vote
+                prediction,   #prediction
+                None,         #recommender
+                ms
+            )
 
             rs.send_feedback(c_testing[0], c_testing[1], c_testing[2])
 

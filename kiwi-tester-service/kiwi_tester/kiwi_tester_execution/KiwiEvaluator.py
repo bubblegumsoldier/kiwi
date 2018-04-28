@@ -4,8 +4,9 @@ from kiwi_tester.kiwi_tester_data_conversion.converter.ListMatrixColumnRemover i
 from kiwi_tester.kiwi_tester_data_conversion.converter.ListMatrixTupleToSingleItem import ListMatrixTupleToSingleItem
 
 class KiwiEvaluator:
-    def __init__(self, config):
+    def __init__(self, config, statistic_container):
         self._config = config
+        self.statistic_container = statistic_container
 
     def get_evaluation(self):
         dba = DatabaseAccessor(self._config)
@@ -21,4 +22,6 @@ class KiwiEvaluator:
         prediction_matrix = remover_to_create_prediction_m.convert(original_testing_matrix)
         original_matrix = remover_to_create_original_m.convert(original_testing_matrix)
 
-        return self._config.evaluator.evaluate(original_matrix,prediction_matrix)
+        evaluation = self._config.evaluator.evaluate(original_matrix,prediction_matrix)
+        self.statistic_container.set_evaluation_score(evaluation)
+        return evaluation

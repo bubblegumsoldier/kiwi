@@ -7,7 +7,29 @@ class StatisticSaver:
             self.config = config
 
         def save_statistic_container(self, container):
-            pass
+            with open(self.config.stats_output, "wf") as f:
+                f.write(self.evaluation_score_to_text(container))
+                f.write("\n")
+                f.write(self.execution_time_to_text(container))
+                f.write("\n")
+                f.write(self.testing_results_to_text(container)) 
+            print("==> Successfully saved statistics to file {}".format(self.config.stats_output))
+
+        def evaluation_score_to_text(self, container):
+            return "Evaluation: {0:.3g}".format(container.evaluation_score)
+        
+        def execution_time_to_text(self, container):
+            return "Execution started: {}\nExecution ended: {}\n==>{} min, {0:.3g} s".format(
+                str(container.execution_time_start),
+                str(container.execution_time_end),
+                container.get_execution_duration_in_minutes_and_seconds()[0],
+                container.get_execution_duration_in_minutes_and_seconds()[1]
+            )
+
+        def testing_results_to_text(self, container):
+            lines = ["{};{};{};{};{};{}ms".format(c[0], c[1], c[2], c[3], c[4], c[5]) for c in container.testing_results]
+            return "\n".join(lines)
+                
     
     instance = None
     def __init__(self, config):

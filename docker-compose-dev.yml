@@ -70,9 +70,9 @@ services:
       - MSQL_HOST=mysqldb-content
       - MSQL_PORT=3306
       - MSQL_DATABASE=content_recommender
-      - MIN_RATING=1
-      - MAX_RATING=5
-      - POS_CUTOFF=3.5
+      - MIN_RATING=0
+      - MAX_RATING=1
+      - POS_CUTOFF=0.5
 
   random:
     build:

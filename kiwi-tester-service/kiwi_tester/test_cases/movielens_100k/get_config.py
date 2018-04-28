@@ -3,14 +3,18 @@ from kiwi_tester.kiwi_tester_data_conversion.data_splitter.RandomPercentageSplit
 from kiwi_tester.kiwi_tester_data_conversion.product_converter.DefaultProductConverter import DefaultProductConverter
 from kiwi_tester.kiwi_tester_data_conversion.converter.EasyMatrixNormalizer import EasyMatrixNormalizer
 from kiwi_tester.kiwi_tester_execution.evaluators.RMSEEvaluator import RMSEEvaluator
+from datetime import datetime
+
 
 def get_config():
+    now_as_string = str(datetime.now()).replace(" ", "_").replace(":", "_").replace("-", "_").replace(".", "_")
     config = KiwiTesterConfig(
         data_converter = RandomPercentageSplitter(0.8),
         product_converter = DefaultProductConverter(),
         service_domain = "http://localhost:8000/",
         evaluator = RMSEEvaluator(),
         skip_training = False,
-        skip_products = False
+        skip_products = False,
+        stats_output = "~/Desktop/movielens_100k_stats_{}.xls".format(now_as_string)
     )
     return config

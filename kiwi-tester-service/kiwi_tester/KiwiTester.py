@@ -24,11 +24,11 @@ class KiwiTester:
         self.save_statistics()
         print("SCORE: {}".format(self.evaluation))
 
-    def start_statistic_logging():
+    def start_statistic_logging(self):
         if self.config.stats_output:
             self.statistic_container = StatisticContainer(True)
 
-    def save_statistics():
+    def save_statistics(self):
         if not self.config.stats_output:
             return
         self.statistic_container.log_execution_end()

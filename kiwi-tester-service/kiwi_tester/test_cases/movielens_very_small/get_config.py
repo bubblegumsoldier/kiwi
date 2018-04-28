@@ -13,6 +13,6 @@ def get_config():
         product_converter = DefaultProductConverter(),
         service_domain = "http://localhost:8000/",
         evaluator = RMSEEvaluator(EasyMatrixNormalizer(1)),
-        stats_output = "~/Desktop/movielens_very_small_stats_{}.xls".format(now_as_string)
+        stats_output = "/stats/movielens_very_small_stats_{}.xls".format(now_as_string)
     )
     return config

@@ -12,6 +12,6 @@ def get_config():
         product_converter = DefaultProductConverter(),
         service_domain = "http://localhost:8000/",
         evaluator = RMSEEvaluator(),
-        stats_output = "~/Desktop/upic_stats_{}.xls".format(now_as_string)
+        stats_output = "/stats/upic_stats_{}.xls".format(now_as_string)
     )
     return config

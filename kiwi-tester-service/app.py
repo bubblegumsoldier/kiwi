@@ -3,8 +3,10 @@ def main():
     
     from kiwi_tester.KiwiTester import KiwiTester
     import argparse
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser()
     parser.add_argument('module', type=str, help='The module to use within {}'.format(default_module_path))
+    parser.add_argument('statout', type=str, help='Filepath to output the stats to')    
+    parser.add_argument('--skiptesting', "-t", help='skip testing', action='store_true')
     args = parser.parse_args()
 
     module_path = "{}.{}".format(default_module_path, args.module)
@@ -23,7 +25,12 @@ def main():
     data = m_data.get_data()
     products = m_products.get_products()
     config = m_config.get_config()
+    if args.statout is not None:
+        config.stats_output = args.statout
+    if args.skiptesting is True:
+        config.skip_testing = True
 
+    print("Saving stats file to {}".format(config.stats_output))
     tester = KiwiTester(data, products, config)
     tester.start_full_procedure()
 

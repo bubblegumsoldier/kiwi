@@ -69,9 +69,8 @@ async def teardown_accessor(request: Request, response):
         ensure_future(retrain(app))
     if request.path == "/training" and request.json.get('retrain', False):
         ensure_future(retrain(app))
-    request['conn'].close()
     await request['conn'].ensure_closed()
-    await app.pool.release(request['conn'])
+    app.pool.release(request['conn'])
 
 
 @app.listener("before_server_stop")

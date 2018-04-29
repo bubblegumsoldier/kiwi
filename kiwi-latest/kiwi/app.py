@@ -39,9 +39,8 @@ async def generate_accessor(request):
 
 @app.middleware("response")
 async def teardown_accessor(request, response):
-    request['conn'].close()
     await request['conn'].ensure_closed()
-    await app.pool.release(request['conn'])
+    app.pool.release(request['conn'])
 
 
 @app.get('/recommendation')

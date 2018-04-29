@@ -29,7 +29,7 @@ class KiwiTestingSimulator:
             sys.stdout.write('\r')
             
             start_datetime = datetime.datetime.now()
-            prediction = rs.get_prediction_for_user_and_product(c_testing[0], c_testing[1])
+            prediction, recommender = rs.get_prediction_for_user_and_product(c_testing[0], c_testing[1])
             dba.set_current_testing_prediction(prediction)
             end_datetime = datetime.datetime.now()
 
@@ -41,7 +41,7 @@ class KiwiTestingSimulator:
                 c_testing[1], #item
                 c_testing[2], #vote
                 prediction,   #prediction
-                None,         #recommender
+                recommender,         #recommender
                 ms
             )
 

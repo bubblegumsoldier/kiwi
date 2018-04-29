@@ -105,6 +105,7 @@ async def feedback(request: Request):
     except KeyError:
         abort(400, "Unknown user")
 
+
 @app.post('/content')
 async def content(request: Request):
     '''
@@ -140,7 +141,7 @@ async def activation(request: Request):
         utv = await app.predictor.get_user_taste_vector(heuristics["user"])
     except Exception:
         utv = None
-    
+
     ac = ActivationCalculator(heuristics, request['accessor'])
     a = await ac.get_activation(utv)
 
@@ -150,10 +151,12 @@ async def activation(request: Request):
 @app.post('/training')
 async def training(request: Request):
     votes = request.json['votes']
+    config = read_config()
     do_retrain = request.json.get('retrain', False)
     inserted_user = await request['accessor'].batch_register_users(
         {vote[0] for vote in votes})
-    inserted = await request['accessor'].insert_votes(votes)
+    inserted = await request['accessor'].insert_votes(
+        (vote[0], vote[1], 1 if float(vote[2]) > config['positive_cutoff'] else -1) for vote in votes)
     if do_retrain:
         ensure_future(retrain(app, app.loop))
     return json({

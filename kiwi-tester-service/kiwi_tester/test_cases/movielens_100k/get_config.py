@@ -15,6 +15,6 @@ def get_config():
         evaluator = RMSEEvaluator(),
         skip_training = False,
         skip_products = False,
-        stats_output = "/stats/movielens_100k_stats_{}.xls".format(now_as_string)
+        stats_output = "/stats/movielens_100k_stats_{}.txt".format(now_as_string)
     )
     return config

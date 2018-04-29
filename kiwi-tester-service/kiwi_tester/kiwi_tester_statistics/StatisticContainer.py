@@ -12,14 +12,14 @@ class StatisticContainer:
         self.evaluation_score = score
     
     def add_testing_result(self, user, item, vote, prediction, recommender, duration):
-        self.testing_results.append((user, item, vote, recommender, duration))
+        self.testing_results.append((user, item, vote, prediction, recommender, duration))
         
     def log_execution_end(self):
         self.execution_time_end = datetime.datetime.now()
     
     def get_execution_duration_in_seconds(self):
         delta = self.execution_time_end - self.execution_time_start
-        return delta
+        return delta.seconds
 
     def get_execution_duration_in_minutes_and_seconds(self):
         return divmod(self.get_execution_duration_in_seconds(), 60)

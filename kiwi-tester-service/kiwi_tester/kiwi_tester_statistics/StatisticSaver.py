@@ -16,10 +16,10 @@ class StatisticSaver:
             print("==> Successfully saved statistics to file {}".format(self.config.stats_output))
 
         def evaluation_score_to_text(self, container):
-            return "Evaluation: {0:.3g}".format(container.evaluation_score)
+            return "Evaluation: {0:.6g}".format(container.evaluation_score)
         
         def execution_time_to_text(self, container):
-            return "Execution started: {}\nExecution ended: {}\n==>{} min, {0:.3g} s".format(
+            return "Execution started: {}\nExecution ended: {}\n==>{} min, {} s".format(
                 str(container.execution_time_start),
                 str(container.execution_time_end),
                 container.get_execution_duration_in_minutes_and_seconds()[0],

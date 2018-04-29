@@ -18,7 +18,7 @@ class KiwiTestingSimulator:
         rs = KiwiRequestSender(self._config)
         size = dba.get_testing_size()
 
-        print("Simulating {} testing elements...".format(size))
+        print("Simulating {} testing elements {}...".format(size, ("without feedback" if self._config.no_testing_feedback else "")))
 
         from time import sleep
         sys.stdout.write('0%')
@@ -45,8 +45,8 @@ class KiwiTestingSimulator:
                 activation,
                 ms
             )
-
-            rs.send_feedback(c_testing[0], c_testing[1], c_testing[2])
+            if not self._config.no_testing_feedback:
+                rs.send_feedback(c_testing[0], c_testing[1], c_testing[2])
 
             sys.stdout.write("{0:.0f}%".format(float(i)/float(size) * 100))
             sys.stdout.flush()

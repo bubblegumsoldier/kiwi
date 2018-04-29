@@ -7,6 +7,7 @@ def main():
     parser.add_argument('module', type=str, help='The module to use within {}'.format(default_module_path))
     parser.add_argument('statout', type=str, help='Filepath to output the stats to')    
     parser.add_argument('--skiptesting', "-t", help='skip testing', action='store_true')
+    parser.add_argument('--notestingfeedback', "-ntf", help='No testing feedback', action='store_true')
     args = parser.parse_args()
 
     module_path = "{}.{}".format(default_module_path, args.module)
@@ -29,6 +30,8 @@ def main():
         config.stats_output = args.statout
     if args.skiptesting is True:
         config.skip_testing = True
+    if args.notestingfeedback is True:
+        config.no_testing_feedback = True
 
     print("Saving stats file to {}".format(config.stats_output))
     tester = KiwiTester(data, products, config)

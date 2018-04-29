@@ -15,6 +15,7 @@ class KiwiTesterConfig:
         self.skip_training = kwargs.get("skip_training")
         self.skip_testing = kwargs.get("skip_testing")
         self.stats_output = kwargs.get("stats_output")
+        self.no_testing_feedback = kwargs.get("no_testing_feedback")
 
     def _init_defaults(self):
         self.data_converter = MatrixConverter()
@@ -33,3 +34,4 @@ class KiwiTesterConfig:
         self.skip_training = False
         self.skip_testing = False
         self.stats_output = None
+        self.no_testing_feedback = False

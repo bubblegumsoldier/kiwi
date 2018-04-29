@@ -6,8 +6,8 @@ from kiwi_tester.kiwi_tester_execution.KiwiContentInitializer import KiwiContent
 from kiwi_tester.kiwi_tester_execution.KiwiTrainingSimulator import KiwiTrainingSimulator
 from kiwi_tester.kiwi_tester_execution.KiwiTestingSimulator import KiwiTestingSimulator
 from kiwi_tester.kiwi_tester_execution.KiwiEvaluator import KiwiEvaluator
-from kiwi_tester_statistics.StatisticContainer import StatisticContainer
-from kiwi_tester_statistics.StatisticSaver import StatisticSaver
+from kiwi_tester.kiwi_tester_statistics.StatisticContainer import StatisticContainer
+from kiwi_tester.kiwi_tester_statistics.StatisticSaver import StatisticSaver
 
 class KiwiTester:
     

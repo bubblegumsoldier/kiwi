@@ -60,9 +60,10 @@ async def predict(request: Request):
     """
     user = request.raw_args['user']
     item = request.raw_args['item']
-    prediction, name = await selector.predict_for(app.client_session, user, item)
+    prediction, name, activation = await selector.predict_for(app.client_session, user, item)
     prediction_dict = prediction.json
     prediction_dict["recommender"] = name
+    prediction_dict["activation"] = activation
     return json(prediction.json, status = prediction.status)
 
 

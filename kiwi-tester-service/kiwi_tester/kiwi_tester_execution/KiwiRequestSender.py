@@ -62,7 +62,7 @@ class KiwiRequestSender:
             if r.status_code != requests.codes.ok:
                 raise ServerError(
                     "Server returned wrong status code...", r.status_code)
-            return r.json()["prediction"], r.json()["recommender"]
+            return r.json()["prediction"], r.json()["recommender"], r.json()["activation"]
 
         def get_recommendation_for_user(self, user):
             recommendation_request = {

@@ -27,7 +27,7 @@ class StatisticSaver:
             )
 
         def testing_results_to_text(self, container):
-            lines = ["{};{};{};{};{};{}ms".format(c[0], c[1], c[2], c[3], c[4], c[5]) for c in container.testing_results]
+            lines = ["{};{};{};{};{};{};{}ms".format(c[0], c[1], c[2], c[3], c[4], c[5], c[6]) for c in container.testing_results]
             return "\n".join(lines)
                 
     

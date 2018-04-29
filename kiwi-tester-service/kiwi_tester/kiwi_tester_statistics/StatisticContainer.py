@@ -11,8 +11,8 @@ class StatisticContainer:
     def set_evaluation_score(self, score):
         self.evaluation_score = score
     
-    def add_testing_result(self, user, item, vote, prediction, recommender, duration):
-        self.testing_results.append((user, item, vote, prediction, recommender, duration))
+    def add_testing_result(self, user, item, vote, prediction, recommender, activation, duration):
+        self.testing_results.append((user, item, vote, prediction, recommender, activation, duration))
         
     def log_execution_end(self):
         self.execution_time_end = datetime.datetime.now()

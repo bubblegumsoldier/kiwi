@@ -17,15 +17,15 @@ class RecommenderSelector:
         return cls(recommenders)
 
     async def get_recommendations(self, session, request):
-        recommender, name = await \
+        recommender, name, activation = await \
             self.choose_recommenders(session, request.user)
         items = await recommender.get_content_for_user(session, request)
         items.json['recommender'] = name
         return items
 
     async def predict_for(self, session, user, item):
-        recommender, name = await self.choose_recommenders(session, user)
-        return await recommender.predict_for(session, user, item), name
+        recommender, name, activation = await self.choose_recommenders(session, user)
+        return await recommender.predict_for(session, user, item), name, activation
 
     async def get_heuristics(self, params):
         # don't know how to make sure that we avoid collision, that's why I will just reinstatiate the HeuristicFetcher
@@ -58,7 +58,7 @@ class RecommenderSelector:
         print("Highest recommender is {} with an actication value of {}".format(
             highest_recommender, highest_activation))
         await self._log_selection(highest_recommender)
-        return self.recommenders[highest_recommender], highest_recommender
+        return self.recommenders[highest_recommender], highest_recommender, highest_activation
 
     async def _log_selection(self, r):
         if r in self.decisions:

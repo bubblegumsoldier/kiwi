@@ -22,7 +22,6 @@ class DataAccessor:
         return await self._get_unvoted(uid, self._conn)
 
     async def get_vote_frame(self):
-        # votes have to be 1, -1 at this point -> adapter somewhere
         return pd.DataFrame(
             await self._get_votes(self._conn),
             columns=['UserId', 'ItemId', 'Like'])

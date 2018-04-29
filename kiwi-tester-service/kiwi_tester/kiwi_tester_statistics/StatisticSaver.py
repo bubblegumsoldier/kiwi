@@ -7,7 +7,7 @@ class StatisticSaver:
             self.config = config
 
         def save_statistic_container(self, container):
-            with open(self.config.stats_output, "wf") as f:
+            with open(self.config.stats_output, "w") as f:
                 f.write(self.evaluation_score_to_text(container))
                 f.write("\n")
                 f.write(self.execution_time_to_text(container))

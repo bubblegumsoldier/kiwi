@@ -48,10 +48,7 @@ services:
     restart: always
     environment:
       - RECOMMENDERS=[
-        'content=http://content-rec:8000',
-        'random=http://random:8000',
-        'knn=http://knn:8000',
-        'svd=http://svd:8000'
+        'content-rec=http://content-rec:8000'
         ]
     
   content-rec:
@@ -72,7 +69,7 @@ services:
       - MSQL_DATABASE=content_recommender
       - MIN_RATING=0
       - MAX_RATING=1
-      - POS_CUTOFF=0.5
+      - POS_CUTOFF=0
 
   random:
     build:
@@ -85,8 +82,8 @@ services:
       - service-network
     restart: always
     environment:
-      - MIN_RATING=1
-      - MAX_RATING=5
+      - MIN_RATING=0
+      - MAX_RATING=1
       - MSQL_USER=random
       - MSQL_PWD=12345
       - MSQL_HOST=mysqldb
@@ -104,8 +101,8 @@ services:
       - service-network
     restart: always    
     environment:
-      - MIN_RATING=1
-      - MAX_RATING=5
+      - MIN_RATING=0
+      - MAX_RATING=1
       - MSQL_USER=collab
       - MSQL_PWD=12345
       - MSQL_HOST=mysqldb-collab
@@ -125,8 +122,8 @@ services:
       - service-network
     restart: always    
     environment:
-      - MIN_RATING=1
-      - MAX_RATING=5
+      - MIN_RATING=0
+      - MAX_RATING=1
       - MSQL_USER=collab
       - MSQL_PWD=12345
       - MSQL_HOST=mysqldb-svd

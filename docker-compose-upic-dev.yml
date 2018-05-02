@@ -48,7 +48,10 @@ services:
     restart: always
     environment:
       - RECOMMENDERS=[
-        'content-rec=http://content-rec:8000'
+        'svd=http://svd:8000',
+        'content=http://content-rec:8000',
+        'knn=http://knn:8000',
+        'random=http://random:8000'
         ]
     
   content-rec:
@@ -70,6 +73,8 @@ services:
       - MIN_RATING=0
       - MAX_RATING=1
       - POS_CUTOFF=0
+    volumes:
+      - './kiwi-content/kiwi:/kiwi'
 
   random:
     build:
@@ -89,6 +94,8 @@ services:
       - MSQL_HOST=mysqldb
       - MSQL_PORT=3306
       - MSQL_DATABASE=random_recommender
+    volumes:
+      - './kiwi-random/kiwi:/kiwi'
 
   knn:
     build: 
@@ -110,6 +117,8 @@ services:
       - MSQL_DATABASE=collab_recommender
       - RETRAIN_ON_REQUEST=['/feedback']
       - ALGO_PATH=algorithms/knn_item_msd_zscore.py
+    volumes:
+      - './kiwi-surprise/kiwi:/kiwi'
 
   svd:
     build: 
@@ -131,6 +140,8 @@ services:
       - MSQL_DATABASE=collab_recommender
       - RETRAIN_ON_REQUEST=['/feedback']
       - ALGO_PATH=algorithms/svd.py
+    volumes:
+     - './kiwi-surprise/kiwi:/kiwi'
 
   
 networks:

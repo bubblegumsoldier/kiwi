@@ -1,6 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor, CancelledError
 from aiomysql import create_pool
-from asyncio import ensure_future, gather
+from asyncio import ensure_future, gather, sleep
+from pymysql.err import OperationalError
 from logging import getLogger
 from sanic import Sanic
 from sanic.request import Request
@@ -20,6 +21,25 @@ app = Sanic(__name__)
 
 def create_accessor(context):
     return DataAccessor(conn=context)
+
+
+async def repeated_pool(loop, sleeper, tries):
+    n = 1
+    while n <= tries:
+        try:
+            return await create_pool(**read_mysql_config()._asdict(),
+                                     autocommit=True,
+                                     loop=loop,
+                                     pool_recycle=600)
+        except OperationalError as e:
+            getLogger('root').warn(e)
+            getLogger('root').warn("Waiting {}s before retry".format(sleeper))
+            await sleep(sleeper)
+            n += 1
+    return await create_pool(**read_mysql_config()._asdict(),
+                             autocommit=True,
+                             loop=loop,
+                             pool_recycle=600)
 
 
 async def retrain(context, loop):
@@ -44,13 +64,7 @@ async def retrain(context, loop):
 @app.listener("before_server_start")
 async def setup(context, loop):
     context.executor = ThreadPoolExecutor()
-
-    context.pool = await create_pool(
-        **read_mysql_config()._asdict(),
-        autocommit=True,
-        loop=loop,
-        pool_recycle=120)
-
+    context.pool = await repeated_pool(loop, 5, 10)
     await retrain(context, loop)
 
 

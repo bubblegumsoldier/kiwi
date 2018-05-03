@@ -15,11 +15,9 @@ def get_algorithm_config():
     """
     base_path = path.dirname(path.realpath(__file__))
     rel_path = environ.get('ALGO_PATH', 'algorithms/knn_user.py')
-    print(base_path, rel_path)
     spec = importlib.util.spec_from_file_location("algorithm", path.join(base_path, rel_path))
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    print("{!r}".format(module))
     return module
 
 get_algorithm_config()

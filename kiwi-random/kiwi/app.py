@@ -7,7 +7,9 @@ from kiwi.recommender.Recommender import Recommender
 from kiwi.database.DataAccessor import DataAccessor
 from kiwi.config import read_app_config, read_mysql_config, get_rating_config
 from kiwi.Types import Vote
-
+from logging import getLogger
+from pymysql.err import OperationalError
+from asyncio import sleep
 from kiwi.recommender.ActivationCalculator import ActivationCalculator
 
 
@@ -15,12 +17,28 @@ app = Sanic(__name__)
 rating_config = get_rating_config()
 
 
-@app.listener('before_server_start')
-async def setup(sanic, loop):
-    pool = await create_pool(**read_mysql_config()._asdict(),
+async def repeated_pool(loop, sleeper, tries):
+    n = 1
+    while n <= tries:
+        try:
+            return await create_pool(**read_mysql_config()._asdict(),
+                                     autocommit=True,
+                                     loop=loop,
+                                     pool_recycle=600)
+        except OperationalError as e:
+            getLogger('root').warn(e)
+            getLogger('root').warn("Waiting {}s before retry".format(sleeper))
+            await sleep(sleeper)
+            n += 1
+    return await create_pool(**read_mysql_config()._asdict(),
                              autocommit=True,
                              loop=loop,
                              pool_recycle=600)
+
+
+@app.listener('before_server_start')
+async def setup(sanic, loop):
+    pool = await repeated_pool(loop, 5, 10)
     sanic.pool = pool
 
 

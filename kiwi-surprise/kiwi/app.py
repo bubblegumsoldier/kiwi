@@ -11,6 +11,7 @@ from kiwi.Algorithm import AlgorithmWrapper
 from kiwi.Recommender import Recommender
 import kiwi.config as config
 from kiwi.TransferTypes import create_vote
+from pymysql.err import OperationalError
 
 
 app = Sanic(__name__)
@@ -18,6 +19,26 @@ app = Sanic(__name__)
 retrain_config = config.set_retraining_cycle()
 rating_scale = config.read_rating_config()
 algorithm_module = config.get_algorithm_config()
+
+
+async def repeated_pool(loop, sleeper, tries):
+    n = 1
+    while n <= tries:
+        try:
+            return await create_pool(**config.read_mysql_config()._asdict(),
+                                     autocommit=True,
+                                     loop=loop,
+                                     pool_recycle=600)
+        except OperationalError as e:
+            getLogger('root').warn(e)
+            getLogger('root').warn("Waiting {}s before retry".format(sleeper))
+            await sleep(sleeper)
+            n += 1
+
+    return await create_pool(**config.read_mysql_config()._asdict(),
+                             autocommit=True,
+                             loop=loop,
+                             pool_recycle=600)
 
 
 async def periodic_retrain(period):
@@ -44,11 +65,7 @@ async def setup(context, loop):
     context.executor = ThreadPoolExecutor()
     context.predictor = AlgorithmWrapper(
         loop, context.executor, algorithm_module.create_algorithm())
-    context.pool = await create_pool(
-        **config.read_mysql_config()._asdict(),
-        autocommit=True,
-        loop=loop,
-        pool_recycle=600)
+    context.pool = await repeated_pool(loop, 5, 10)
 
     async with context.pool.acquire() as conn:
         accessor = DataAccessor(conn=conn, rating_scale=rating_scale)

@@ -92,8 +92,9 @@ class DataAccessor:
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT AVG(vote), STD(vote) FROM votes')
             dist = await cursor.fetchone()
-            return (float(dist[0]) if dist else 0,
-                    float(dist[1]) if dist else 0)
+            mean, std = dist if dist else (0, 0)
+            return (float(mean if mean else 0),
+                    float(std if std else 0))
 
     async def _select_user(self, user, conn):
         async with conn.cursor() as cursor:

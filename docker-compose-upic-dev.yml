@@ -74,7 +74,7 @@ services:
       - MAX_RATING=1
       - POS_CUTOFF=0
     volumes:
-      - './kiwi-content/kiwi:/kiwi'
+      - './kiwi-content/kiwi:/var/www/kiwi'
 
   random:
     build:
@@ -95,12 +95,12 @@ services:
       - MSQL_PORT=3306
       - MSQL_DATABASE=random_recommender
     volumes:
-      - './kiwi-random/kiwi:/kiwi'
+      - './kiwi-random/kiwi:/var/www/kiwi'
 
   knn:
     build: 
       context: ./kiwi-surprise
-      dockerfile: knn.dockerfile
+      dockerfile: surprise.dockerfile
     ports:
       - "8000"
     networks:
@@ -123,7 +123,7 @@ services:
   svd:
     build: 
       context: ./kiwi-surprise
-      dockerfile: svd.dockerfile
+      dockerfile: surprise.dockerfile
     ports:
       - "8000"
     networks:

@@ -9,27 +9,15 @@ class ActivationCalculator:
         self.heuristics = heuristics
         self.accessor = data_accessor
 
-    def g(self, x):
-        return math.exp(-3.0 * x) * 100.0
-
-    def f(self, x):
-        v = numpy.random.exponential(1, None) / 10.0
-        v2 = 1 - v
-        x = 1 - x
-        gesamt = (((1 - x) * v) + (((x**2) * (v2**2))**5)) * 50.0
-        return gesamt
+    def exp_func(self, x):
+        '''
+        x is the number of votes the user has given
+        '''
+        return math.exp(-0.5 * x)*100
 
     async def get_activation(self):
-        MAX = 100
-
         user = self.heuristics["user"]
-        voted_count, unvoted_count = await self.accessor.get_voted_and_unvoted_count(user)
-        try:
-            user_vote_ratio = voted_count / (voted_count + unvoted_count)
-        except ZeroDivisionError:
-            user_vote_ratio = 0
-
-        a = min(MAX, 2 * self.f(user_vote_ratio) +
-                0.8 * self.g(user_vote_ratio))
+        voted_count, _ = await self.accessor.get_voted_and_unvoted_count(user)
+        a = self.exp_func(voted_count)
         print("Kiwi-Random Activation: {}".format(a))
         return a

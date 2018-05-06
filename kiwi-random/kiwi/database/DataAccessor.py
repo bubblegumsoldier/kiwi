@@ -31,6 +31,9 @@ class DataAccessor:
     async def get_voted_and_unvoted_count(self, user):
         return await self._get_voted_and_unvoted_count(user, self.conn)
 
+    async def get_total_votes(self):
+        return await self._vote_count(self.conn)
+
     async def insert_votes(self, votes):
         return await self._insert_votes(votes, self.conn)
 
@@ -55,7 +58,7 @@ class DataAccessor:
 
     async def _get_voted_and_unvoted_count(self, user, conn):
         post_count = await self._count_posts(conn)
-        voted = await self._vote_count(user, conn)
+        voted = await self._vote_count_user(user, conn)
         return (voted, post_count - voted)
 
     async def _insert_votes(self, votes, conn):
@@ -76,11 +79,17 @@ class DataAccessor:
                 'INSERT IGNORE INTO products VALUES(%s)', posts)
             return cursor.rowcount
 
-    async def _vote_count(self, username, conn):
+    async def _vote_count_user(self, username, conn):
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT * FROM votes v WHERE v.user = %s',
                                  username)
             return cursor.rowcount
+
+    async def _vote_count(self, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute('SELECT Count(*) FROM votes v')
+            count = await cursor.fetchone()
+            return int(count[0])
 
     async def _count_posts(self, conn):
         async with conn.cursor() as cursor:

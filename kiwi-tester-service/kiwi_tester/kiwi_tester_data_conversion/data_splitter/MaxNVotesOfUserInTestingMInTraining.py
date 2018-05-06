@@ -32,7 +32,6 @@ class MaxNVotesOfUserInTestingMInTraining:
     def _split_into_two_sets(self, dataset):
         training_set = []
         testing_set = []
-        shuffle(dataset)
         for el in dataset:
             if (self._get_votes_of_user_in_set(testing_set, el[0])
                     < self._n):

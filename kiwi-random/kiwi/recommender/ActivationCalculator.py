@@ -13,7 +13,7 @@ class ActivationCalculator:
         '''
         x is the number of votes the user has given
         '''
-        return math.exp(-0.5 * x)*100
+        return math.exp(-x)*100
 
     async def get_activation(self):
         user = self.heuristics["user"]

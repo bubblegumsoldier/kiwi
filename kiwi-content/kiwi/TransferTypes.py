@@ -9,7 +9,7 @@ def create_vote(vote_dict, cutoff):
     """
     modified_vote = 1 if float(vote_dict['vote']) > cutoff else -1
     return Vote(
-        user=vote_dict['user'],
-        post=vote_dict['post'],
+        user=str(vote_dict['user']),
+        post=str(vote_dict['post']),
         vote=modified_vote
     )

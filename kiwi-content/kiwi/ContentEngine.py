@@ -30,8 +30,13 @@ class ContentEngine:
         Vote is a tuple, with the shape (user, item, vote).
         """
         vote_dict = {'UserId': vote[0], 'ItemId': vote[1], 'Like': vote[2]}
-        self.ratings = \
-            self.ratings.append(vote_dict, ignore_index=True)
+
+        if self.ratings.empty:
+            self.ratings = pd.DataFrame.from_records([vote], columns=['UserId', 'ItemId', 'Like'])
+        else:
+            self.ratings = \
+                self.ratings.append(vote_dict, ignore_index=True)
+        self.ratings.info()
 
     def build_feature_vectors(self):
         """
@@ -73,7 +78,6 @@ class ContentEngine:
         # normalize vector to unit length
         for_user = self.ratings[self.ratings['UserId']
                                 == uid][['ItemId', 'Like']]
-
         vector = self._build_user_vector(for_user)
         if insert and self.user_vectors is not None:
             self.user_vectors.loc[uid] = vector

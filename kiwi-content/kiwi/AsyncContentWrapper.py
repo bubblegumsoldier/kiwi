@@ -76,4 +76,4 @@ class AsyncContentWrapper:
         try:
             return self._content_engine.user_vectors.loc[uid]
         except KeyError:
-            raise Exception('User does not exist')
+            raise KeyError('User does not exist')

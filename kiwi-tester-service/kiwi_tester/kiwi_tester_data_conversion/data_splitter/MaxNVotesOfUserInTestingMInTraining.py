@@ -3,7 +3,7 @@ from numpy.random import shuffle
 
 
 class MaxNVotesOfUserInTestingMInTraining:
-    def __init__(self, n, m, decoratee=None):
+    def __init__(self, n, m decoratee=None):
         self._n = n
         self._m = m
         self._decoratee = decoratee

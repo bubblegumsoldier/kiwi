@@ -6,10 +6,10 @@ class StatisticContainer:
         
         self.execution_time_end = None
         self.testing_results = []
-        self.evaluation_score = sys.maxsize
+        self.evaluation_scores = [sys.maxsize]
     
-    def set_evaluation_score(self, score):
-        self.evaluation_score = score
+    def set_evaluation_score(self, scores):
+        self.evaluation_scores = scores
     
     def add_testing_result(self, user, item, vote, prediction, recommender, activation, duration):
         self.testing_results.append((user, item, vote, prediction, recommender, activation, duration))

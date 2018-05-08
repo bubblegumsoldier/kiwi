@@ -12,4 +12,4 @@ class RMSEEvaluator:
             matrixA = self._decoratee.convert(matrixA)
             matrixB = self._decoratee.convert(matrixB)
         
-        return sqrt(mean_squared_error(matrixA, matrixB))
+        return [sqrt(mean_squared_error(matrixA, matrixB)), "", ""]

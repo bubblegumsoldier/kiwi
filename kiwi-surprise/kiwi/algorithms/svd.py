@@ -1,5 +1,10 @@
 import random
 import surprise
+import math
+
+
+def sigmoid(x, shift, scale):
+    return 1 / (1 + math.exp(scale * x + shift))
 
 
 def create_algorithm():
@@ -12,11 +17,14 @@ def create_algorithm():
     return algo
 
 
-
-async def get_activation(heuristics, accessor):
-    voted_count, unvoted_count = await accessor.get_voted_and_unvoted_count(heuristics["user"])
+async def get_activation(heuristics, accessor, predictor):
+    voted_count, _ = await accessor.get_voted_and_unvoted_count(heuristics["user"])
+    total_ratings = await predictor.get_rating_count()
+    total_users = await accessor.count_users()
+    total_items = await accessor.count_items()
     try:
-        u = float(voted_count) / float(voted_count + unvoted_count)
+        rd = total_ratings / (total_items * total_users)
     except ZeroDivisionError:
-        u = 0
-    return min(100, u*100 + random.randrange(20))
+        rd = 0
+
+    return sigmoid(voted_count, 5, -0.5) * 50 + sigmoid(total_ratings * rd, 3, -0.5) * 30

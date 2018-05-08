@@ -36,8 +36,18 @@ class DataAccessor:
     async def insert_votes(self, votes):
         return await self._insert_votes(votes, self._conn)
 
+    async def count_users(self):
+        return await self._count_users(self._conn)
+
+    async def count_items(self):
+        return await self._count_posts(self._conn)
+
+
+    async def get_total_votes(self):
+        return await self._vote_count(self._conn)
+
     async def get_voted_and_unvoted_count(self, user):
-        voted_count = await self._vote_count(user, self._conn)
+        voted_count = await self._vote_count_user(user, self._conn)
         post_count = await self._count_posts(self._conn)
         return (voted_count, post_count - voted_count)
 
@@ -67,7 +77,13 @@ class DataAccessor:
                                      posts)
             return cursor.rowcount
 
-    async def _vote_count(self, username, conn):
+    async def _vote_count(self, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute('SELECT Count(*) FROM votes v')
+            count = await cursor.fetchone()
+            return int(count[0])
+
+    async def _vote_count_user(self, username, conn):
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT * FROM votes v WHERE v.user = %s',
                                  username)
@@ -76,6 +92,13 @@ class DataAccessor:
     async def _count_posts(self, conn):
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT COUNT(post_id) FROM products')
+            count = await cursor.fetchone()
+            return int(count[0])
+
+    
+    async def _count_users(self, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute('SELECT COUNT(*) FROM users')
             count = await cursor.fetchone()
             return int(count[0])
 

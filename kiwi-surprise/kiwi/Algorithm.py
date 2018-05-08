@@ -7,11 +7,13 @@ class AlgorithmWrapper:
         self.knn = algo
         self._loop = loop
         self._executor = executor
+        self._trainset = None
 
     async def fit(self, trainset):
         """
         Move to other class?
         """
+        self._trainset = trainset
         await self._loop.run_in_executor(None, self.knn.fit, trainset)
 
     async def get_top_n_items(self, uid, iids, n):
@@ -34,17 +36,17 @@ class AlgorithmWrapper:
     async def predict(self, uid, iid):
         return self.knn.predict(uid, iid, clip=True)
 
-    async def get_closest_known_user(self, uid, ratings):
-        """
-        Surprise does not support users that are not known to the trainset at all.
-        Therefore we need a method that gives us the closest user in the
-        trainset going by the ratings of the current user.
-        Then we can impersonate our closest user for the algorithm, while still
-        using our new users unvoted items.
-        No clue how to do this from the surprise api.
-        Would need to modify the similarity calculations of the algorithm to
-        only add one row?
-        """
+    async def get_rating_density(self):
+        n_users = self._trainset.n_users
+        n_items = self._trainset.n_items
+        n_ratings = self._trainset.n_ratings
+        try:
+            return n_ratings / (n_items * n_users)
+        except ZeroDivisionError:
+            return 0
+
+    async def get_rating_count(self):
+        return self._trainset.n_ratings
 
     async def _estimate(self, uid, items):
         return await self._loop.run_in_executor(

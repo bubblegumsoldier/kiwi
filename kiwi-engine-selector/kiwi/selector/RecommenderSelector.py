@@ -24,7 +24,7 @@ class RecommenderSelector:
         return items
 
     async def predict_for(self, session, user, item):
-        recommender, name, activation = await self.choose_recommenders(session, user)
+        recommender, name, activation = await self.choose_recommenders(session, user, item)
         return await recommender.predict_for(session, user, item), name, activation
 
     async def get_heuristics(self, params):
@@ -34,7 +34,7 @@ class RecommenderSelector:
         all_heuristics = heuristic_fetcher.get_heuristics()
         return all_heuristics
 
-    async def choose_recommenders(self, session, user):
+    async def choose_recommenders(self, session, user, item=None):
         highest_recommender = None
         highest_activation = -1000
         for recommender in self.recommenders:
@@ -45,6 +45,8 @@ class RecommenderSelector:
                 'algorithm': recommender
             }
             heuristics = await self.get_heuristics(params)
+            if item:
+                heuristics['item'] = item
 
             activation = await self.recommenders[recommender].get_activation(session, heuristics)
             getLogger("info").info(

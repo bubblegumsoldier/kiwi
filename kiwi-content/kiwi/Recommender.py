@@ -54,7 +54,5 @@ class Recommender:
         await self._accessor.register_user(user)
 
     def _scale_rating(self, similarity):
-        scaled = 0.5*(similarity+1)*self._max_vote
-        if scaled < self._min_vote:
-            return self._min_vote
-        return scaled
+        positive_sim = 0.5*(similarity+1)
+        return (1-positive_sim)*self._min_vote + positive_sim*self._max_vote

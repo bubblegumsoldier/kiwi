@@ -42,7 +42,6 @@ class DataAccessor:
     async def count_items(self):
         return await self._count_posts(self._conn)
 
-
     async def get_total_votes(self):
         return await self._vote_count(self._conn)
 
@@ -57,6 +56,9 @@ class DataAccessor:
 
     async def add_content(self, posts):
         return await self._insert_posts(posts, self._conn)
+
+    async def average_rating_count(self):
+        return await self._global_rating_count_mean(self._conn)
 
     async def _insert_votes(self, votes, conn):
         async with conn.cursor() as cursor:
@@ -95,7 +97,6 @@ class DataAccessor:
             count = await cursor.fetchone()
             return int(count[0])
 
-    
     async def _count_users(self, conn):
         async with conn.cursor() as cursor:
             await cursor.execute('SELECT COUNT(*) FROM users')
@@ -125,3 +126,10 @@ class DataAccessor:
                 'SELECT * FROM users WHERE users.uname = %s',
                 user)
             return await cursor.fetchone()
+
+    async def _global_rating_count_mean(self, conn):
+        async with conn.cursor() as cursor:
+            await cursor.execute('SELECT AVG(counts.c) from (SELECT COUNT(*) as                       c from votes v group by v.user) counts')
+
+            avg = await cursor.fetchone()
+            return int(avg[0]) if avg[0] else 0

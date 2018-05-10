@@ -1,11 +1,6 @@
 import random
 import surprise
-import math
-
-
-def sigmoid(x, shift, scale):
-    return 1 / (1 + math.exp(scale * x + shift))
-
+from kiwi.algorithms.utils import sigmoid
 
 def create_algorithm():
     """

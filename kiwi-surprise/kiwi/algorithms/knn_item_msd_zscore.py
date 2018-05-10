@@ -1,5 +1,5 @@
 import surprise
-from random import randrange
+from kiwi.algorithms.utils import sigmoid
 
 
 def create_algorithm():
@@ -19,10 +19,14 @@ def create_algorithm():
     return algo
 
 
-async def get_activation(heuristics, accessor):
-    voted_count, unvoted_count = await accessor.get_voted_and_unvoted_count(heuristics["user"])
+async def get_activation(heuristics, accessor, predictor):
+    voted_count, _ = await accessor.get_voted_and_unvoted_count(heuristics["user"])
+    total_users = await accessor.count_users()
+    global_rating_mean = await accessor.average_rating_count()
     try:
-        u = float(voted_count) / float(voted_count + unvoted_count)
+        rd = global_rating_mean / total_users
     except ZeroDivisionError:
-        u = 0
-    return min(100, u * 100 + randrange(10))
+        rd = 0
+
+    return (sigmoid(voted_count, 5, -0.5) * 30 +
+            sigmoid(rd, 10, -100) * 50)

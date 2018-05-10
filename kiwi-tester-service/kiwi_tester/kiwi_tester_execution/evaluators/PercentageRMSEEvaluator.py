@@ -30,3 +30,5 @@ def sliced_rmse(matrixA, matrixB, lower_bound, upper_bound):
     lower = floor(item_count * lower_bound)
     upper = ceil(item_count * upper_bound)
     return sqrt(mean_squared_error(matrixA[lower:upper], matrixB[lower:upper]))
+
+

@@ -12,6 +12,8 @@ class StatisticSaver:
                 f.write("\n")
                 f.write(self.execution_time_to_text(container))
                 f.write("\n")
+                f.write(self.recommender_counts_to_text(container))
+                f.write("\n")
                 f.write(self.testing_results_to_text(container))
             print("==> Successfully saved statistics to file {}".format(
                 self.config.stats_output))
@@ -32,6 +34,9 @@ class StatisticSaver:
             lines = ["{};{};{};{};{};{};{}ms".format(
                 c[0], c[1], c[2], c[3], c[4], c[5], c[6]) for c in container.testing_results]
             return "\n".join(lines)
+
+        def recommender_counts_to_text(self, container):
+            return str(container.recommender_counts)
 
     instance = None
 

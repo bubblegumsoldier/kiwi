@@ -24,4 +24,5 @@ class KiwiEvaluator:
 
         evaluation = self._config.evaluator.evaluate(original_matrix,prediction_matrix)
         self.statistic_container.set_evaluation_score(evaluation)
+        self.statistic_container.counts_of_single_recommenders()
         return evaluation

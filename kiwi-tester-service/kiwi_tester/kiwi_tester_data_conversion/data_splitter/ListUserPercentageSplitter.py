@@ -42,7 +42,7 @@ class ListUserPercentageSplitter:
             sys.stdout.flush()
 
             username = l[0]
-            next_reached_training_ratio = float(self._get_number_of_votes_for_user_in_dataset(username, training_set) + 1) / float(self._get_number_of_votes_for_user_in_dataset(username, dataset))
+            next_reached_training_ratio = float(self._get_number_of_votes_for_user_in_dataset(username, training_set)) / float(self._get_number_of_votes_for_user_in_dataset(username, dataset))
             if next_reached_training_ratio > self._training_percentage:
                 testing_set.append(l)
             else:

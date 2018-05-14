@@ -77,5 +77,5 @@ As soon as your backend-application is running and all databases were found and 
  > python app.py <test_case> <statistic_output_file>
 ```
 
-where `test_case` defines the test-case to use (a folder name that is contained within `kiwi-tester-service/kiwi_tester/test_cases/`) and <statistic_output_file> defines an absolute path to save the statistic file to.
+where `test_case` defines the test-case to use (a folder name that is contained within `kiwi-tester-service/kiwi_tester/test_cases/`) and `statistic_output_file` defines an absolute path to save the statistic file to.
 

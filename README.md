@@ -49,13 +49,13 @@ To test the architecture on your system you will need to have docker installed i
 A good tutorial for installing docker can be found [here](https://docs.docker.com/install/) and for installing docker-compose you can take a look at [this tutorial](https://docs.docker.com/compose/install/).
 
 We recommend starting the architecture using a docker-compose-file that is adapted to your specific needs. You don't always have to start all services, sometimes you might for example want to use a custom and performance-optimized database server and so on.
-But to get you started the repository delivers a working docker-compose-file that can be used for development purposes. It is called `docker-compose-upic-dev.yml`.
+But to get you started the repository delivers a working docker-compose-file that can be used for testing purposes. It is called `docker-compose-upic-test.yml`.
 
 To start your docker-compose using that file just navigate to the kiwi folder within your terminal and type in:
 
 ```
- > sudo docker-compose -f docker-compose-upic-dev.yml build
- > sudo docker-compose -f docker-compose-upic-dev.yml up
+ > sudo docker-compose -f docker-compose-upic-test.yml build
+ > sudo docker-compose -f docker-compose-upic-test.yml up
 ```
 
 Your engine service will now provide the REST-API for all necessary architectural endpoints at `http://localhost:8000/`.

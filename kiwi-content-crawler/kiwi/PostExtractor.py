@@ -7,7 +7,8 @@ class PostExtractor:
 
     async def extract_and_filter_duplicates(self, gallery_response):
         posts = await self.extract_posts_from_gallery(gallery_response)
-        return await self.filter_duplicates(posts)
+        posts = await self.filter_duplicates(posts)
+        return await self.transform_tags_for_posts(posts)
 
     async def extract_posts_from_gallery(self, gallery_response):
         '''
@@ -37,3 +38,12 @@ class PostExtractor:
         return [post
                 for post in posts
                 if not await self._duplication_predicate(post['id'])]
+
+
+    def _transform_tags(self, post):
+        changed = [tag['name'] for tag in post['tags']]
+        post['tags'] = '|'.join(changed)
+        return post
+    
+    async def transform_tags_for_posts(self, posts):
+        return [self._transform_tags(post) for post in posts]

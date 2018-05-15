@@ -21,5 +21,8 @@ def create_algorithm():
 
 async def get_activation(heuristics, accessor):
     voted_count, unvoted_count = await accessor.get_voted_and_unvoted_count(heuristics["user"])
-    u = float(voted_count) / float(voted_count + unvoted_count)
+    try:
+        u = float(voted_count) / float(voted_count + unvoted_count)
+    except ZeroDivisionError:
+        u = 0
     return min(100, u * 100 + randrange(10))

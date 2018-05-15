@@ -12,7 +12,7 @@ class Recommender:
         recs = await self.accessor.recommend_for(user, count)
         voted, unvoted = await self.accessor.get_voted_and_unvoted_count(user)
         return {
-            'recommendations': recs,
+            'posts': recs,
             'user': user,
             'voted': voted,
             'unvoted': unvoted

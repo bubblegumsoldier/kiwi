@@ -75,5 +75,5 @@ class AsyncContentWrapper:
     async def get_user_taste_vector(self, uid):
         try:
             return self._content_engine.user_vectors.loc[uid]
-        except KeyError:
+        except (KeyError, AttributeError):
             raise KeyError('User does not exist')

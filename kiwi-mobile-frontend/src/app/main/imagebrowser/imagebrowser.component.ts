@@ -19,11 +19,11 @@ export class ImagebrowserComponent implements OnInit {
   private imageCache: Image[] = [];
   private votedImages: ImageWithFeedback[] = [];
 
-  private static DEFAULT_STARTUP_IMAGE_NUMBER = 5;
+  private static DEFAULT_STARTUP_IMAGE_NUMBER = 1;
   private static DEFAULT_NEW_IMAGE_LOADING_THRESHOLD = 5;
   private static DEFAULT_NEW_IMAGE_LOADING_NUMBER = 5;
 
-  private loadingError :boolean = false;
+  private loadingError: boolean = false;
 
   constructor(private imageloader: ImageloaderService) {}
 
@@ -38,14 +38,12 @@ export class ImagebrowserComponent implements OnInit {
       .catch(this.onLoadingError.bind(this));
   }
 
-  onLoadingError()
-  {
+  onLoadingError() {
     console.log("error...");
     this.loadingError = true;
   }
 
-  onRetry()
-  {
+  onRetry() {
     this.loadingError = false;
     this.loadNextNImages(ImagebrowserComponent.DEFAULT_STARTUP_IMAGE_NUMBER);
   }
@@ -77,7 +75,6 @@ export class ImagebrowserComponent implements OnInit {
 
   onFeedback(animationDirection, feedback: boolean) {
     this.images[0][animationDirection] = true;
-    console.log(this.images[0]);
     setTimeout(_ => {
       this.addFirstImageWithFeedback(feedback);
     }, 300);
@@ -121,12 +118,10 @@ export class ImagebrowserComponent implements OnInit {
   }
 
   updateIfNecessary() {
-    console.log(this.images.length);
     if (
-      this.images.length <=
+      this.images.length <
       ImagebrowserComponent.DEFAULT_NEW_IMAGE_LOADING_THRESHOLD
     ) {
-      console.log("update");
       this.loadNextNImages(
         ImagebrowserComponent.DEFAULT_NEW_IMAGE_LOADING_NUMBER
       );

@@ -24,3 +24,6 @@ htmlcov
 Pipfile
 Pipfile.lock
 **/.pytest_cache/
+kiwi-tester-service/*.pdf
+kiwi-tester-service/*.txt
+kiwi-mobile-frontend/www/**

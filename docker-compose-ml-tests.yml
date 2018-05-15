@@ -1,0 +1,121 @@
+version: '2'
+
+services: 
+  mysqldb:
+    build:
+      context: ./kiwi-database
+      dockerfile: mysql.dockerfile
+    networks:
+      - service-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+    ports:
+      - "3306"
+
+  
+  engine:
+    build:
+      context: ./kiwi-engine-selector
+      dockerfile: engine.dockerfile
+    ports: 
+      - "8000:8000"
+    networks:
+      - service-network
+    restart: always
+    environment:
+      - RECOMMENDERS=[
+        'svd=http://svd:8000',
+        'content=http://content-rec:8000',
+        'knn=http://knn:8000',
+        'random=http://random:8000'
+        ]
+    
+  content-rec:
+    build:
+      context: ./kiwi-content
+      dockerfile: service.dockerfile
+    ports:
+      - "8000"
+    networks:
+      - service-network
+    restart: always
+    environment:
+      - MSQL_USER=content
+      - MSQL_PWD=12345
+      - MSQL_HOST=mysqldb
+      - MSQL_PORT=3306
+      - MSQL_DATABASE=content_recommender
+      - MIN_RATING=1
+      - MAX_RATING=5
+      - POS_CUTOFF=3.5
+    volumes:
+      - './kiwi-content/kiwi:/var/www/kiwi'
+
+  random:
+    build:
+      context: ./kiwi-random
+      dockerfile: service.dockerfile
+    ports:
+      - "8000"
+    networks:
+      - service-network
+    restart: always
+    environment:
+      - MIN_RATING=1
+      - MAX_RATING=5
+      - MSQL_USER=random
+      - MSQL_PWD=12345
+      - MSQL_HOST=mysqldb
+      - MSQL_PORT=3306
+      - MSQL_DATABASE=random_recommender
+    volumes:
+      - './kiwi-random/kiwi:/var/www/kiwi'
+
+  knn:
+    build: 
+      context: ./kiwi-surprise
+      dockerfile: surprise.dockerfile
+    ports:
+      - "8000"
+    networks:
+      - service-network
+    restart: always    
+    environment:
+      - MIN_RATING=1
+      - MAX_RATING=5
+      - MSQL_USER=knn
+      - MSQL_PWD=12345
+      - MSQL_HOST=mysqldb
+      - MSQL_PORT=3306
+      - MSQL_DATABASE=knn_recommender
+      - RETRAIN_ON_REQUEST=['/feedback']
+      - ALGO_PATH=algorithms/knn_item_msd_zscore.py
+    volumes:
+      - './kiwi-surprise/kiwi:/kiwi'
+
+  svd:
+    build: 
+      context: ./kiwi-surprise
+      dockerfile: surprise.dockerfile
+    ports:
+      - "8000"
+    networks:
+      - service-network
+    restart: always    
+    environment:
+      - MIN_RATING=1
+      - MAX_RATING=5
+      - MSQL_USER=svd
+      - MSQL_PWD=12345
+      - MSQL_HOST=mysqldb
+      - MSQL_PORT=3306
+      - MSQL_DATABASE=svd_recommender
+      - RETRAIN_ON_REQUEST=['/feedback']
+      - ALGO_PATH=algorithms/svd.py
+    volumes:
+     - './kiwi-surprise/kiwi:/kiwi'
+
+  
+networks:
+  service-network:
+    driver: bridge

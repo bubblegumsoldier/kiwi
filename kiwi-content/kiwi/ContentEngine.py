@@ -36,7 +36,6 @@ class ContentEngine:
         else:
             self.ratings = \
                 self.ratings.append(vote_dict, ignore_index=True)
-        self.ratings.info()
 
     def build_feature_vectors(self):
         """

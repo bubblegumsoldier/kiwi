@@ -1,5 +1,4 @@
 from aiomysql import IntegrityError
-from logging import getLogger
 import pandas as pd
 import numpy as np
 

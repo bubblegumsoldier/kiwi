@@ -3,7 +3,7 @@
         <div class="image_title">{{image.title}}</div>
         <div class="image_img">
             <img src="{{image.src}}" *ngIf="image.type != 'image/gif'" />
-            <video *ngIf="image.type == 'image/gif'" loop autoplay>
+            <video *ngIf="image.type == 'image/gif'" loop autoplay muted>
                 <source src="{{image.src}}" type="video/mp4">
             </video>
         </div>

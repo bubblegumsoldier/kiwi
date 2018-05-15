@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  kiwiAPIUrl: "http://recommsys.northeurope.cloudapp.azure.com:8080/"
+  kiwiAPIUrl: "http://localhost:8000/"
 };

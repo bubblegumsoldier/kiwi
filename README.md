@@ -79,3 +79,16 @@ As soon as your backend-application is running and all databases were found and 
 
 where `test_case` defines the test-case to use (a folder name that is contained within `kiwi-tester-service/kiwi_tester/test_cases/`) and `statistic_output_file` defines an absolute path to save the statistic file to.
 
+## Building the U:Pic Frontend (`kiwi-mobile-frontend`)
+
+To build the U:Pic application you will need to have ionic installed on your machine.
+To install ionic just follow [these](https://ionicframework.com/docs/intro/installation/) guidelines.
+
+To start the application within your browser in debug mode just type in:
+
+```
+ > ionic serve
+```
+
+Alternatively, if you want to build or deploy the app somehow you might want to follow the [official instructions by ionic](https://ionicframework.com/docs/v1/guide/publishing.html).
+All necessary files for deploying the app as a web-app can be found in the `www` folder. You can start the app by opening the index.html.

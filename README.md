@@ -1,6 +1,6 @@
 # kiwi
 
-Kiwi is a prototype-implementation of the architecture proposed in the research paper "Individual recommendations based on minimal user input" by Felix Lange, Martin Essig and Henry Müssemann.
+Kiwi is a prototype-implementation of the architecture proposed in the research project "Individual recommendations based on minimal user input" by Felix Lange, Martin Essig and Henry Müssemann within the scope of our B.Sc. at the DHBW Karlsruhe.
 Furthermore it contains all necessary code for the ionic application that was used to collect the data contained in the dataset "upic" that was also presented in the above mentioned research paper.
 
 ## Structure of the repository

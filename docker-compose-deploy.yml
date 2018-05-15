@@ -61,7 +61,7 @@ services:
       - MONGO_DB=content
       - MONGO_COLLECTION=items
       - MONGO_PWD=12345
-      - IMGUR_CLIENT_ID=***REMOVED***
+      - IMGUR_CLIENT_ID=<your-key-here>
 
   user: 
     build: 

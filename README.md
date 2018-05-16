@@ -59,7 +59,7 @@ To start your docker-compose using that file just navigate to the kiwi folder wi
 ```
 
 Your engine service will now provide the REST-API for all necessary architectural endpoints at `http://localhost:8000/`.
-To find out how to deploy a fully functioning application containing the Crawler, Service-API and User Manager you can take a look at the `docker-compose.yml` in the main folder.
+To find out how to deploy a fully functioning application containing the Crawler, Service-API and User Manager you can take a look at the `docker-compose-deploy.yml` in the main folder.
 
 ## Starting a test-case
 

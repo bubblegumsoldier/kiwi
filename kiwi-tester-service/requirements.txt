@@ -1,7 +1,8 @@
 requests
 requests-futures
 numpy
-# scipy
+sklearn
+scipy
 # matplotlib
 # ipython
 # jupyter
